@@ -1,0 +1,406 @@
+---
+title: Moving Average Examples
+sidebar_label: Moving Average Examples
+---
+import JsonOrTable from '../../src/components/JsonOrTable';
+import CodeBlock from '@theme/CodeBlock';
+import moment from 'moment';
+
+When you want to compute a moving average on your data, the main tools at your disposal will be [**mutate**](../api/tidy.md#mutate) and [**roll**](../api/vector.md#roll). Let's go over a few examples of how to use them together.
+
+## Moving Average
+
+Given input data:
+
+<JsonOrTable className="mb-leading" header="Input Data" initial="json" data={[
+{ value: 1 }, { value: 2 }, { value: 3 }, { value: 7}, { value: 5 }]} />
+
+If we want to compute a 3-item moving average of the `value` key, we can do so as follows:
+
+```js
+tidy(
+  data, 
+  mutate({
+    movingAvg: roll(3, mean('value')),
+  })
+)
+```
+
+Here we're providing a value of `3` for the window width argument of **roll** and specifying the aggregation to run as the summarizer function [**mean**](../api/summary.md#mean). This produces the following output:
+
+
+<JsonOrTable className="mb-leading" header="Output Data" initial="json" data={[
+  {"value": 1},
+  {"value": 2},
+  {"value": 3, "movingAvg": 2},
+  {"value": 7, "movingAvg": 4},
+  {"value": 5, "movingAvg": 5}
+]} />
+
+Note that by default **roll** will only compute the aggregate value if the full window width of data is available. Since the window sizes for the first and second elements are 1 and 2, which are less than our width argument of `3`, their `movingAvg` value is undefined.
+
+To compute the aggregate value even when the window width is less than our desired width, we can pass in an options argument with `partial` set to `true`:
+
+```js
+tidy(
+  data, 
+  mutate({
+    movingAvg: roll(3, mean('value'), { partial: true }),
+  })
+)
+```
+
+With this change, the output becomes:
+
+<JsonOrTable className="mb-leading" header="Output Data with Partial" initial="json" data={[
+  {"value": 1, "movingAvg": 1},
+  {"value": 2, "movingAvg": 1.5},
+  {"value": 3, "movingAvg": 2},
+  {"value": 7, "movingAvg": 4},
+  {"value": 5, "movingAvg": 5}
+]} />
+
+And that's all there is to doing simple moving averages with tidy.
+
+
+## Moving Average of Rates
+
+Working with rates is generally a bit more challenging than plain ol' numbers since we want to sum the numerator and denominator separately in each window as opposed to averaging the sum of rates from each item. Here's where the [**meanRate**](../api/summary.md#meanrate) summarizer comes in handy.
+
+<JsonOrTable className="mb-leading" header="Input Data" initial="json" data={[
+{ numer: 1, denom: 2 }, 
+{ numer: 2, denom: 6  }, 
+{ numer: 3, denom: 7 }, 
+{ numer: 7, denom: 12 }, 
+{ numer: 5, denom: 6 }]} />
+
+If we want to compute a 3-item moving average of the rate defined by `numer / denom`, we can do so as follows:
+
+```js
+tidy(
+  data, 
+  mutate({
+    movingAvg: roll(3, meanRate('numer', 'denom')),
+  })
+)
+```
+
+<JsonOrTable className="mb-leading" header="Output Data" initial="json" data={[
+  {"numer": 1, "denom": 2},
+  {"numer": 2, "denom": 6},
+  {"numer": 3, "denom": 7, "movingAvg": 0.4},
+  {"numer": 7, "denom": 12, "movingAvg": 0.48},
+  {"numer": 5, "denom": 6, "movingAvg": 0.6}
+]} />
+
+Note that the **incorrect** way of doing it would involve averaging the rates:
+
+```js {4-5}
+tidy(
+  data, 
+  mutate({
+    rate: rate('numer', 'denom'),
+    movingAvgWrong: roll(3, mean('rate')),
+    movingAvgRight: roll(3, meanRate('numer', 'denom')),
+  })
+)
+```
+
+<JsonOrTable className="mb-leading" header="Output Data with Wrong" initial="table" data={
+[
+  {"numer": 1, "denom": 2, "rate": 0.5},
+  {"numer": 2, "denom": 6, "rate": 0.333},
+  {
+    "numer": 3,
+    "denom": 7,
+    "rate": 0.429,
+    "movingAvgWrong": 0.421,
+    "movingAvgRight": 0.4
+  },
+  {
+    "numer": 7,
+    "denom": 12,
+    "rate": 0.583,
+    "movingAvgWrong": 0.448,
+    "movingAvgRight": 0.48
+  },
+  {
+    "numer": 5,
+    "denom": 6,
+    "rate": 0.833,
+    "movingAvgWrong": 0.615,
+    "movingAvgRight": 0.6
+  }
+]} />
+
+
+
+
+## Moving Average by Date 
+
+When working with time series data, we often want be able to re-aggregate the data to a variety of different granularities: e.g., a 7-day moving average (7DMA), 45DMA, 5-week moving average (5WMA), daily, weekly, and so on. For this purpose, we can use the [**summarizeMomentGranularity**](../api/tidy.md#summarizemomentgranularity) tidy function. Note this requires our dates to be stored as [moment](https://momentjs.com) objects and that moment is installed as a dependency in our project. 
+
+*If projects are not using moment but would like this functionality, please get in touch and we can figure out a reusable solution.*
+
+Let's look at an example where we compute a 2-week moving average of `value`.
+
+<JsonOrTable className="mb-leading" header="Input Data" initial="table" data={[
+  { date: moment.utc('2020-01-01'), value: 3 },
+  { date: moment.utc('2020-01-02'), value: 1 },
+  { date: moment.utc('2020-01-03'), value: 4 },
+  { date: moment.utc('2020-01-04'), value: 5 },
+  { date: moment.utc('2020-01-05'), value: 2 },
+  { date: moment.utc('2020-01-06'), value: 4 },
+  { date: moment.utc('2020-01-07'), value: 3 },
+  { date: moment.utc('2020-01-08'), value: 1 },
+  { date: moment.utc('2020-01-09'), value: 3 },
+  { date: moment.utc('2020-01-10'), value: 3 },
+  { date: moment.utc('2020-01-11'), value: 2 },
+  { date: moment.utc('2020-01-12'), value: 5 },
+  { date: moment.utc('2020-01-13'), value: 6 },
+  { date: moment.utc('2020-01-14'), value: 1 },
+  { date: moment.utc('2020-01-15'), value: 2 },
+  { date: moment.utc('2020-01-16'), value: 4 },
+  { date: moment.utc('2020-01-17'), value: 3 },
+  { date: moment.utc('2020-01-18'), value: 1 },
+  { date: moment.utc('2020-01-19'), value: 3 },
+  { date: moment.utc('2020-01-20'), value: 3 },
+  { date: moment.utc('2020-01-21'), value: 2 },
+  { date: moment.utc('2020-01-22'), value: 5 },
+  { date: moment.utc('2020-01-23'), value: 6 },
+  { date: moment.utc('2020-01-24'), value: 1 },
+  { date: moment.utc('2020-01-25'), value: 2 },
+]} />
+
+The first step is to rollup our data from being at a daily granularity to say a weekly granularity before we compute our moving average.
+
+```js
+tidy(
+  data,
+  summarizeMomentGranularity('w', { value: sum('value') })
+);
+```
+
+At this point, our data has been summed up per week.
+
+
+<JsonOrTable className="mb-leading" header="Output Weekly Data" initial="table" data={[
+  {
+    "value": 15,
+    "date": "2019-12-30T00:00:00.000Z",
+    "timestamp": "2019-12-30T00:00:00.000Z"
+  },
+  {
+    "value": 21,
+    "date": "2020-01-06T00:00:00.000Z",
+    "timestamp": "2020-01-06T00:00:00.000Z"
+  },
+  {
+    "value": 20,
+    "date": "2020-01-13T00:00:00.000Z",
+    "timestamp": "2020-01-13T00:00:00.000Z"
+  },
+  {
+    "value": 19,
+    "date": "2020-01-20T00:00:00.000Z",
+    "timestamp": "2020-01-20T00:00:00.000Z"
+  }
+]} />
+
+We are now ready to compute our moving average:
+
+
+```js
+tidy(
+  data,
+  summarizeMomentGranularity('w', { value: sum('value') }),
+  mutate({
+    movingAvg: roll(2, mean('value'))
+  })
+);
+```
+
+<JsonOrTable className="mb-leading" header="Output Data" initial="table" data={[
+  {
+    "value": 15,
+    "date": "2019-12-23T00:00:00.000Z",
+    "timestamp": "2019-12-23T00:00:00.000Z"
+  },
+  {
+    "value": 21,
+    "date": "2019-12-30T00:00:00.000Z",
+    "timestamp": "2019-12-30T00:00:00.000Z",
+    "movingAvg": 18
+  },
+  {
+    "value": 20,
+    "date": "2020-01-06T00:00:00.000Z",
+    "timestamp": "2020-01-06T00:00:00.000Z",
+    "movingAvg": 20.5
+  },
+  {
+    "value": 19,
+    "date": "2020-01-13T00:00:00.000Z",
+    "timestamp": "2020-01-13T00:00:00.000Z",
+    "movingAvg": 19.5
+  }
+]} />
+
+And we're done, in two steps we've moved from daily values in our input data to weekly values which include a 2-week moving average.
+
+
+## Moving Average by Date with Zerofill
+
+We often end up with data that is missing values for some dates, which throws off the windows used to compute moving averages. To get around this, we can use [**complete**](../api/tidy.md#complete) to expand our data to include zeroes (or other values) where data is missing in a sequence.
+
+Consider the following data:
+
+
+<JsonOrTable className="mb-leading" header="Input Data" initial="table" data={[
+  { date: moment.utc('2020-01-06'), value: 4 },
+  { date: moment.utc('2020-01-07'), value: 3 },
+  { date: moment.utc('2020-01-08'), value: 1 },
+  { date: moment.utc('2020-01-11'), value: 2 },
+  { date: moment.utc('2020-01-12'), value: 5 },
+  { date: moment.utc('2020-01-13'), value: 6 },
+  { date: moment.utc('2020-01-14'), value: 1 },
+  { date: moment.utc('2020-01-17'), value: 3 },
+  { date: moment.utc('2020-01-19'), value: 3 },
+]} />
+
+It's missing values for January 9, 10, 15, 16, and 18. If we run our tidy flow on it to compute a 7-day moving average without accounting for these missing values we get
+
+```js
+tidy(
+  data,
+  mutate({
+    movingAvg: roll(7, mean('value'), { partial: true })
+  })
+);
+```
+
+
+<JsonOrTable className="mb-leading" header="Output Data" initial="table" data={[
+  {"date": "2020-01-06T00:00:00.000Z", "value": 4, "movingAvg": 4},
+  {"date": "2020-01-07T00:00:00.000Z", "value": 3, "movingAvg": 3.5},
+  {
+    "date": "2020-01-08T00:00:00.000Z",
+    "value": 1,
+    "movingAvg": 2.6666666666666665
+  },
+  {"date": "2020-01-11T00:00:00.000Z", "value": 2, "movingAvg": 2.5},
+  {"date": "2020-01-12T00:00:00.000Z", "value": 5, "movingAvg": 3},
+  {"date": "2020-01-13T00:00:00.000Z", "value": 6, "movingAvg": 3.5},
+  {
+    "date": "2020-01-14T00:00:00.000Z",
+    "value": 1,
+    "movingAvg": 3.142857142857143
+  },
+  {"date": "2020-01-17T00:00:00.000Z", "value": 3, "movingAvg": 3},
+  {"date": "2020-01-19T00:00:00.000Z", "value": 3, "movingAvg": 3}
+]}/>
+
+As you can see, the moving average doesn't account for the missing days. 
+
+To get around this, we can use [**complete**](../api/tidy.md#complete) on the data to expand it to include rows for when there is data missing from the expected day-by-day sequence. Since our `date` column uses moments, we will have to convert it to an ISO timestamp string first so we can use [**fullSeqDateISOString**](../api/sequences#fullseqdateisostring) on it. This can be done via [**summarizeMomentGranularity**](../api/tidy.md#summarizemomentgranularity) as shown above or with a simple mutate since we're going to work with daily data.
+
+```js {3-7}
+tidy(
+  data,
+  mutate({ timestamp: byItem(d => d.date.toISOString() )}),
+  complete(
+    { timestamp: fullSeqDateISOString('timestamp', 'day') },
+    { value: 0 }
+  ),
+  mutate({
+    movingAvg: roll(7, mean('value'), { partial: true })
+  })
+);
+```
+
+*Alternative example with summarizeMomentGranularity – granularity should match in **fullSeqDateISOString** and **summarizeMomentGranularity** *
+
+
+```js {3-7}
+tidy(
+  data,
+  summarizeMomentGranularity('day', { value: sum('value') }),
+  complete(
+    { timestamp: fullSeqDateISOString('timestamp', 'day') },
+    { value: 0 }
+  ),
+  mutate({
+    movingAvg: roll(7, mean('value'), { partial: true })
+  })
+);
+```
+
+
+
+<JsonOrTable className="mb-leading" header="Output Data" initial="table" data={[
+  {
+    "timestamp": "2020-01-06T00:00:00.000Z",
+    "date": "2020-01-06T00:00:00.000Z",
+    "value": 4,
+    "movingAvg": 4
+  },
+  {
+    "timestamp": "2020-01-07T00:00:00.000Z",
+    "date": "2020-01-07T00:00:00.000Z",
+    "value": 3,
+    "movingAvg": 3.5
+  },
+  {
+    "timestamp": "2020-01-08T00:00:00.000Z",
+    "date": "2020-01-08T00:00:00.000Z",
+    "value": 1,
+    "movingAvg": 2.6666666666666665
+  },
+  {"timestamp": "2020-01-09T00:00:00.000Z", "value": 0, "movingAvg": 2},
+  {"timestamp": "2020-01-10T00:00:00.000Z", "value": 0, "movingAvg": 1.6},
+  {
+    "timestamp": "2020-01-11T00:00:00.000Z",
+    "date": "2020-01-11T00:00:00.000Z",
+    "value": 2,
+    "movingAvg": 1.6666666666666667
+  },
+  {
+    "timestamp": "2020-01-12T00:00:00.000Z",
+    "date": "2020-01-12T00:00:00.000Z",
+    "value": 5,
+    "movingAvg": 2.142857142857143
+  },
+  {
+    "timestamp": "2020-01-13T00:00:00.000Z",
+    "date": "2020-01-13T00:00:00.000Z",
+    "value": 6,
+    "movingAvg": 2.4285714285714284
+  },
+  {
+    "timestamp": "2020-01-14T00:00:00.000Z",
+    "date": "2020-01-14T00:00:00.000Z",
+    "value": 1,
+    "movingAvg": 2.142857142857143
+  },
+  {"timestamp": "2020-01-15T00:00:00.000Z", "value": 0, "movingAvg": 2},
+  {"timestamp": "2020-01-16T00:00:00.000Z", "value": 0, "movingAvg": 2},
+  {
+    "timestamp": "2020-01-17T00:00:00.000Z",
+    "date": "2020-01-17T00:00:00.000Z",
+    "value": 3,
+    "movingAvg": 2.4285714285714284
+  },
+  {
+    "timestamp": "2020-01-18T00:00:00.000Z",
+    "value": 0,
+    "movingAvg": 2.142857142857143
+  },
+  {
+    "timestamp": "2020-01-19T00:00:00.000Z",
+    "date": "2020-01-19T00:00:00.000Z",
+    "value": 3,
+    "movingAvg": 1.8571428571428572
+  }
+]}/>
+
+Now we can see that rows have been added with `value: 0` for the missing dates in the sequence, which enables our moving average to be computed correctly.

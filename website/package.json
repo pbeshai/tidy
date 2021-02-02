@@ -1,0 +1,53 @@
+{
+  "name": "@tidyjs/tidy-website",
+  "version": "2.0.0",
+  "private": true,
+  "scripts": {
+    "start": "docusaurus start",
+    "build": "docusaurus build",
+    "swizzle": "docusaurus swizzle",
+    "deploy": "docusaurus deploy"
+  },
+  "dependencies": {
+    "@docusaurus/core": "^2.0.0-alpha.70",
+    "@docusaurus/preset-classic": "^2.0.0-alpha.70",
+    "@docusaurus/theme-live-codeblock": "^2.0.0-alpha.70",
+    "@monaco-editor/react": "^3.8.3",
+    "@tidyjs/tidy": "2.0.0",
+    "autocomplete.js": "^0.38.0",
+    "cheerio": "^1.0.0-rc.5",
+    "clsx": "^1.1.1",
+    "d3-format": "^2.0.0",
+    "hogan.js": "^3.0.2",
+    "json-stringify-pretty-compact": "^2.0.0",
+    "lodash.debounce": "^4.0.8",
+    "lunr": "^2.3.9",
+    "moment": "^2.29.1",
+    "monaco-editor": "^0.21.2",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-error-boundary": "^3.1.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.17.0",
+    "eslint-config-react-app": "^6.0.0",
+    "eslint-plugin-flowtype": "^5.2.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-react-hooks": "^4.2.0"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "name": "@tidyjs/tidy-moment",
+  "version": "2.0.0",
+  "description": "Moment.js extensions for tidyjs",
+  "main": "dist/lib/index.js",
+  "module": "dist/es/index.js",
+  "files": [
+    "dist"
+  ],
+  "types": "dist/tidy.d.ts",
+  "typings": "dist/tidy.d.ts",
+  "scripts": {
+    "build": "rollup -c",
+    "clean": "rimraf dist",
+    "dev": "NODE_ENV=development tsc -m esNext --outDir dist/es -w",
+    "prepublishOnly": "npm run test && npm run test:build && npm run clean && npm run build",
+    "lint": "eslint --ext js,ts,tsx src",
+    "prettier": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
+    "test": "jest",
+    "test:build": "tsc --noEmit -p tsconfig.json",
+    "test:watch": "jest --watchAll",
+    "test:coverage": "jest --coverage"
+  },
+  "keywords": [
+    "data",
+    "moment",
+    "dates",
+    "tidy data",
+    "data wrangling",
+    "dplyr",
+    "tidyr"
+  ],
+  "author": "Peter Beshai <peter.beshai@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pbeshai/tidy.git"
+  },
+  "dependencies": {
+    "@tidyjs/tidy": "^2.0.0",
+    "moment": "2",
+    "ts-toolbelt": "^8.0.7"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "5febe0911742ca11867ef623b5edeedc74860f1b"
+}

@@ -1,0 +1,74 @@
+{
+  "name": "tidy-packages",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "build": "lerna run build --ignore \"@tidyjs/tidy-website\" --stream",
+    "build:web": "yarn workspace @tidyjs/tidy-website build",
+    "jest": "jest --projects ./packages/*/",
+    "test": "lerna run test --stream",
+    "test:build": "lerna run test:build --stream",
+    "lint": "lerna run lint",
+    "prettier": "lerna run prettier",
+    "start:web": "yarn workspace @tidyjs/tidy-website start"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/plugin-proposal-export-namespace-from": "^7.12.1",
+    "@babel/preset-env": "^7.12.11",
+    "@babel/preset-typescript": "^7.12.7",
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
+    "@rollup/plugin-commonjs": "^17.0.0",
+    "@rollup/plugin-node-resolve": "^11.0.1",
+    "@types/d3-array": "^2.8.0",
+    "@types/jest": "^26.0.19",
+    "@typescript-eslint/eslint-plugin": "^4.10.0",
+    "@typescript-eslint/parser": "^4.10.0",
+    "conventional-changelog-cli": "^2.1.1",
+    "esbuild": "^0.8.31",
+    "eslint": "^7.15.0",
+    "eslint-config-prettier": "^7.0.0",
+    "eslint-plugin-import": "^2.22.1",
+    "husky": "^4.3.6",
+    "jest": "^26.6.3",
+    "lerna": "^3.22.1",
+    "lerna-changelog": "^1.0.1",
+    "lint-staged": "^10.5.3",
+    "moment": "^2.27.0",
+    "prettier": "^2.2.1",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.36.1",
+    "rollup-plugin-esbuild": "^2.6.1",
+    "ts-jest": "^26.4.4",
+    "typescript": "^4.1.3"
+  },
+  "workspaces": {
+    "packages": [
+      "packages/*",
+      "website"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ],
+    "rules": {
+      "body-max-line-length": [
+        0
+      ]
+    }
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "packages/*/src/*.{js,jsx,ts,tsx}": [
+      "prettier --write",
+      "eslint --fix"
+    ]
+  }
+}
