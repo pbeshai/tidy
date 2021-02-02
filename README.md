@@ -18,6 +18,7 @@ Secondarily, this project aims to provide acceptable types for the functions pro
 * [API reference documentation](https://pbeshai.github.io/tidy/docs/api/tidy)
 * [Playground](https://pbeshai.github.io/tidy/playground)
 * [Observable Notebook](https://observablehq.com/@pbeshai/tidy-js-intro-demo)
+* [GitHub Discussions for Q&A](https://github.com/pbeshai/tidy/discussions)
 
 #### Related work
 
