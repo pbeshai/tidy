@@ -1,6 +1,6 @@
 {
   "name": "@tidyjs/tidy-moment",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Moment.js extensions for tidyjs",
   "main": "dist/lib/index.js",
   "module": "dist/es/index.js",
@@ -37,7 +37,7 @@
     "url": "https://github.com/pbeshai/tidy.git"
   },
   "dependencies": {
-    "@tidyjs/tidy": "^2.0.0",
+    "@tidyjs/tidy": "^2.0.1",
     "moment": "2",
     "ts-toolbelt": "^8.0.7"
   },
