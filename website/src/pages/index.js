@@ -176,7 +176,7 @@ function Home() {
   const context = useDocusaurusContext();
   const { siteConfig = {} } = context;
   return (
-    <Layout description="Description will go into a meta tag in <head />">
+    <Layout description="Tidy up your data with JavaScript, inspired by dplyr and the tidyverse from R.">
       <header className={clsx('hero hero--tidy', styles.heroBanner)}>
         <div className="container">
           <img
