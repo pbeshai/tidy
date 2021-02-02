@@ -15,7 +15,7 @@ module.exports = {
       disableSwitch: false,
       respectPrefersColorScheme: true,
     },
-    image: 'img/logo.png',
+    image: 'img/tidy_social.png',
     navbar: {
       hideOnScroll: true,
       // title: 'tidy.js',
@@ -71,6 +71,19 @@ module.exports = {
         },
       ],
       copyright: `Built with Docusaurus`,
+    },
+
+    algolia: {
+      apiKey: 'YOUR_API_KEY',
+      indexName: 'tidyjs',
+
+      // Optional: see doc section bellow
+      contextualSearch: false,
+
+      // Optional: Algolia search parameters
+      searchParameters: {},
+
+      //... other Algolia params
     },
   },
   presets: [
