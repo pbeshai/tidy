@@ -15,12 +15,12 @@ describe('groupBy / ungroup', () => {
         { str: 'a', ing: 'z', foo: 'G', value: 6 },
       ];
 
-      const results = tidy(data, groupBy('str', [], { export: 'grouped' }));
+      const results = tidy(data, groupBy('str', [], { export: 'map' }));
 
       expect(results).toEqual(
         new Map([
           [
-            ['str', 'a'],
+            'a',
             [
               { str: 'a', ing: 'x', foo: 'G', value: 1 },
               { str: 'a', ing: 'y', foo: 'G', value: 2 },
@@ -31,7 +31,7 @@ describe('groupBy / ungroup', () => {
             ],
           ],
           [
-            ['str', 'b'],
+            'b',
             [
               { str: 'b', ing: 'x', foo: 'H', value: 100 },
               { str: 'b', ing: 'x', foo: 'K', value: 200 },
@@ -42,7 +42,7 @@ describe('groupBy / ungroup', () => {
         ])
       );
 
-      const results2 = tidy(data, groupBy('str', [], groupBy.grouped()));
+      const results2 = tidy(data, groupBy('str', [], groupBy.map()));
       expect(results2).toEqual(results);
     });
 
@@ -62,28 +62,28 @@ describe('groupBy / ungroup', () => {
 
       const results = tidy(
         data,
-        groupBy((d) => d.str, [], { export: 'grouped' })
+        groupBy((d) => d.str, [], { export: 'map' })
       );
       expect(results).toEqual(
         new Map([
           [
-            ['group_0', 'a'],
+            'a',
             [
-              { str: 'a', ing: 'x', foo: 'G', value: 1 },
-              { str: 'a', ing: 'y', foo: 'G', value: 2 },
-              { str: 'a', ing: 'y', foo: 'H', value: 3 },
-              { str: 'a', ing: 'y', foo: 'K', value: 4 },
-              { str: 'a', ing: 'z', foo: 'K', value: 5 },
-              { str: 'a', ing: 'z', foo: 'G', value: 6 },
+              { str: 'a', ing: 'x', foo: 'G', value: 1, group_0: 'a' },
+              { str: 'a', ing: 'y', foo: 'G', value: 2, group_0: 'a' },
+              { str: 'a', ing: 'y', foo: 'H', value: 3, group_0: 'a' },
+              { str: 'a', ing: 'y', foo: 'K', value: 4, group_0: 'a' },
+              { str: 'a', ing: 'z', foo: 'K', value: 5, group_0: 'a' },
+              { str: 'a', ing: 'z', foo: 'G', value: 6, group_0: 'a' },
             ],
           ],
           [
-            ['group_0', 'b'],
+            'b',
             [
-              { str: 'b', ing: 'x', foo: 'H', value: 100 },
-              { str: 'b', ing: 'x', foo: 'K', value: 200 },
-              { str: 'b', ing: 'y', foo: 'G', value: 300 },
-              { str: 'b', ing: 'z', foo: 'H', value: 400 },
+              { str: 'b', ing: 'x', foo: 'H', value: 100, group_0: 'b' },
+              { str: 'b', ing: 'x', foo: 'K', value: 200, group_0: 'b' },
+              { str: 'b', ing: 'y', foo: 'G', value: 300, group_0: 'b' },
+              { str: 'b', ing: 'z', foo: 'H', value: 400, group_0: 'b' },
             ],
           ],
         ])
@@ -106,16 +106,16 @@ describe('groupBy / ungroup', () => {
 
       const results = tidy(
         data,
-        groupBy(['str', 'ing'], [], { export: 'grouped' })
+        groupBy(['str', 'ing'], [], { export: 'map' })
       );
       expect(results).toEqual(
         new Map([
           [
-            ['str', 'a'],
+            'a',
             new Map([
-              [['ing', 'x'], [{ str: 'a', ing: 'x', foo: 'G', value: 1 }]],
+              ['x', [{ str: 'a', ing: 'x', foo: 'G', value: 1 }]],
               [
-                ['ing', 'y'],
+                'y',
                 [
                   { str: 'a', ing: 'y', foo: 'G', value: 2 },
                   { str: 'a', ing: 'y', foo: 'H', value: 3 },
@@ -123,7 +123,7 @@ describe('groupBy / ungroup', () => {
                 ],
               ],
               [
-                ['ing', 'z'],
+                'z',
                 [
                   { str: 'a', ing: 'z', foo: 'K', value: 5 },
                   { str: 'a', ing: 'z', foo: 'G', value: 6 },
@@ -132,17 +132,17 @@ describe('groupBy / ungroup', () => {
             ]),
           ],
           [
-            ['str', 'b'],
+            'b',
             new Map([
               [
-                ['ing', 'x'],
+                'x',
                 [
                   { str: 'b', ing: 'x', foo: 'H', value: 100 },
                   { str: 'b', ing: 'x', foo: 'K', value: 200 },
                 ],
               ],
-              [['ing', 'y'], [{ str: 'b', ing: 'y', foo: 'G', value: 300 }]],
-              [['ing', 'z'], [{ str: 'b', ing: 'z', foo: 'H', value: 400 }]],
+              ['y', [{ str: 'b', ing: 'y', foo: 'G', value: 300 }]],
+              ['z', [{ str: 'b', ing: 'z', foo: 'H', value: 400 }]],
             ]),
           ],
         ])
