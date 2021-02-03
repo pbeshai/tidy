@@ -253,6 +253,64 @@ Visit the [API reference docs](https://pbeshai.github.io/tidy/docs/api/tidy) to 
 * groupBy.map()
 * groupBy.values()
 
+---
+
+## Developing
+
+clone the repo:
+
+```
+git clone git@github.com:pbeshai/tidy.git
+```
+
+install dependencies:
+
+```
+yarn
+```
+
+initialize lerna:
+
+```
+lerna bootstrap
+```
+
+build tidy:
+
+```
+yarn run build
+```
+
+test all of tidy:
+
+```
+yarn run test
+```
+
+test:watch a single package
+
+```
+yarn workspace @tidyjs/tidy test:watch
+```
+
+### Conventional commits
+
+This library uses [conventional commits](https://www.conventionalcommits.org/), following the angular convention. Prefixes are:
+
+- **build**: Changes that affect the build system or external dependencies (example scopes: yarn, npm)
+- **ci**: Changes to our CI configuration files and scripts (e.g. CircleCI)
+- **chore**
+- **docs**: Documentation only changes
+- **feat** : A new feature
+- **fix**: A bug fix
+- **perf**: A code change that improves performance
+- **refactor**: A code change that neither fixes a bug nor adds a feature
+- **revert**
+- **style**: Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
+- **test**: Adding missing tests or correcting existing tests
+
+
+
 
 ---
 
