@@ -74,7 +74,7 @@ module.exports = {
     },
 
     algolia: {
-      apiKey: 'YOUR_API_KEY',
+      apiKey: '28ec6a5936dd807831d61e0f52ce2852',
       indexName: 'tidyjs',
 
       // Optional: see doc section bellow
