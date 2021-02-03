@@ -1,112 +1,31 @@
-/**
- * These functions compute the sum, cumsum, and mean of an array with the same API as d3-array
- * instead of using a plain sum, they use the "improved Kahan-Babuška summation algorithm" to
- * correct some of the floating point error:
- * https://en.wikipedia.org/wiki/Kahan_summation_algorithm#Further_enhancements
- * originally from page 40 of https://www.mat.univie.ac.at/~neum/scan/01.pdf
- */
-export function sum<T>(
+import { fsum, Adder } from 'd3-array';
+
+// See also https://observablehq.com/@fil/fcumsum
+export function fcumsum<T>(
   items: T[],
-  accessor?: (element: T, i: number, array: Iterable<T>) => any
-): number {
-  let sum: number = 0,
-    correction: number = 0,
-    temp: number = 0;
-
-  for (let i = 0; i < items.length; i++) {
-    let value: number =
-      accessor === undefined ? items[i] : accessor(items[i], i, items);
-
-    if (+value !== value) {
-      value = 0;
-    }
-
-    if (i === 0) {
-      sum = value;
-    } else {
-      temp = sum + value;
-
-      if (Math.abs(sum) >= Math.abs(value)) {
-        correction += sum - temp + value;
-      } else {
-        correction += value - temp + sum;
-      }
-
-      sum = temp;
-    }
-  }
-  return sum + correction;
-}
-
-export function cumsum<T>(
-  items: T[],
-  accessor?: (element: T, i: number, array: Iterable<T>) => any
+  accessor: (element: T, i: number, array: Iterable<T>) => any
 ): Float64Array {
-  let sum: number = 0,
-    correction: number = 0,
-    temp: number = 0,
-    cumsums: Float64Array = new Float64Array(items.length);
-  for (let i = 0; i < items.length; i++) {
-    let value: number =
-      accessor === undefined ? items[i] : accessor(items[i], i, items);
+  let sum = new Adder(),
+    i = 0;
 
-    if (+value !== value) {
-      value = 0;
-    }
-
-    if (i === 0) {
-      sum = value;
-    } else {
-      temp = sum + value;
-
-      if (Math.abs(sum) >= Math.abs(value)) {
-        correction += sum - temp + value;
-      } else {
-        correction += value - temp + sum;
-      }
-
-      sum = temp;
-    }
-
-    cumsums[i] = sum + correction;
-  }
-
-  return cumsums;
+  return Float64Array.from(
+    items,
+    (value: T): number => +sum.add(+(accessor(value, i++, items) || 0))
+  );
 }
 
 export function mean<T>(
   items: T[],
-  accessor?: (element: T, i: number, array: Iterable<T>) => any
+  accessor: (element: T, i: number, array: Iterable<T>) => any
 ): number | undefined {
-  let n: number = 0,
-    sum: number = 0,
-    correction: number = 0,
-    temp: number = 0;
-
-  for (let i = 0; i < items.length; i++) {
-    let value: number =
-      accessor === undefined ? items[i] : accessor(items[i], i, items);
-
-    if (+value !== value) {
-      value = 0;
-    } else {
-      n++;
-    }
-
-    if (i === 0) {
-      sum = value;
-    } else {
-      temp = sum + value;
-
-      if (Math.abs(sum) >= Math.abs(value)) {
-        correction += sum - temp + value;
-      } else {
-        correction += value - temp + sum;
-      }
-
-      sum = temp;
+  let n = 0;
+  for (let i = 0; i < items.length; ++i) {
+    const value = accessor(items[i], i, items);
+    // count it if we have a valid number
+    if (+value === value) {
+      n += 1;
     }
   }
 
-  return n ? (sum + correction) / n : undefined;
+  return n ? fsum(items, accessor) / n : undefined;
 }
