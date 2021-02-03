@@ -1,5 +1,9 @@
 # tidy.js
 
+
+[![CircleCI](https://img.shields.io/circleci/build/gh/pbeshai/tidy)](https://app.circleci.com/pipelines/github/pbeshai/tidy)
+[![npm](https://img.shields.io/npm/v/@tidyjs/tidy)](https://www.npmjs.com/package/@tidyjs/tidy)
+
 **Tidy up your data with JavaScript!** Inspired by [dplyr](https://dplyr.tidyverse.org/) and the [tidyverse](https://www.tidyverse.org/), tidy.js attempts to bring the ergonomics of data manipulation from R to javascript (and typescript). The primary goals of the project are:
 
 * **Readable code**. Tidy.js prioritizes making your data transformations readable, so future you and your teammates can get up and running quickly.
