@@ -8,7 +8,7 @@ Mapping functions that given a collection of items produce an array of values (a
 
 ## cumsum 
 
-Returns a function that computes a cumulative sum as per [d3-array::cumsum](https://github.com/d3/d3-array#cumsum), using the ["improved Kahan–Babuška algorithm"](https://en.wikipedia.org/wiki/Kahan_summation_algorithm#Further_enhancements) to reduce floating point errors.
+Returns a function that computes a cumulative sum as per [d3-array::cumsum](https://github.com/d3/d3-array#cumsum), using [d3-array::fsum](https://github.com/d3/d3-array#fsum) to reduce floating point errors.
 
 ### Parameters
 
