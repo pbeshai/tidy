@@ -5,7 +5,7 @@
   "scripts": {
     "build": "lerna run build --ignore \"@tidyjs/tidy-website\" --stream",
     "build:web": "yarn workspace @tidyjs/tidy-website build",
-    "jest": "jest --projects ./packages/*/",
+    "jest": "jest -w 1 --projects ./packages/*/",
     "test": "lerna run test --stream",
     "test:build": "lerna run test:build --stream",
     "lint": "lerna run lint",
