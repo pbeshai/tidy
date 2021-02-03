@@ -7,6 +7,8 @@ export type ResolvedObj<Obj extends Record<Key, MutateSpecValue<any>>> = {
   [K in keyof Obj]: Obj[K] extends (...args: any) => any
     ? ReturnType<Obj[K]> extends any[]
       ? ReturnType<Obj[K]>[number]
+      : ReturnType<Obj[K]> extends Float64Array
+      ? number
       : ReturnType<Obj[K]>
     : Obj[K];
 };

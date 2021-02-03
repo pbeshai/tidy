@@ -1,4 +1,4 @@
-import { sum as d3sum } from 'd3-array';
+import { sum as sumInternal } from '../helpers/summation';
 
 /**
  * Returns a function that computes the sum over an array of items
@@ -8,5 +8,5 @@ export function sum<T extends object>(key: keyof T | ((d: T) => number)) {
   const keyFn =
     typeof key === 'function' ? key : (d: T) => (d[key] as unknown) as number;
 
-  return (items: T[]) => d3sum(items, keyFn);
+  return (items: T[]) => sumInternal(items, keyFn);
 }

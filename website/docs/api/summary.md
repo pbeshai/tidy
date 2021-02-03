@@ -163,7 +163,7 @@ tidy(data, summarize({
 
 ## mean 
 
-Computes the mean value as per [d3-array::mean](https://github.com/d3/d3-array#mean).
+Computes the mean value as per [d3-array::mean](https://github.com/d3/d3-array#mean), using the ["improved Kahan–Babuška algorithm"](https://en.wikipedia.org/wiki/Kahan_summation_algorithm#Further_enhancements) for the numerator to reduce floating point errors.
 
 ### Parameters
 
@@ -349,7 +349,7 @@ tidy(data, summarize({
 
 ## sum 
 
-Computes the sum as per [d3-array::sum](https://github.com/d3/d3-array#sum).
+Computes the sum as per [d3-array::sum](https://github.com/d3/d3-array#sum), using the ["improved Kahan–Babuška algorithm"](https://en.wikipedia.org/wiki/Kahan_summation_algorithm#Further_enhancements) to reduce floating point errors.
 
 ### Parameters
 
