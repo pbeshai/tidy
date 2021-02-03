@@ -310,6 +310,26 @@ This library uses [conventional commits](https://www.conventionalcommits.org/), 
 - **test**: Adding missing tests or correcting existing tests
 
 
+### Docs website
+
+start the local site:
+
+```
+yarn start:web
+```
+
+build the site:
+
+```
+yarn build:web
+```
+
+deploy the site via github-pages:
+```
+USE_SSH=true GIT_USER=pbeshai yarn workspace @tidyjs/tidy-website deploy
+```
+
+Ideally we can automate this via github actions one day!
 
 
 ---
