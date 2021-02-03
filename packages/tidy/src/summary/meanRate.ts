@@ -1,5 +1,5 @@
-import { sum as d3sum } from 'd3-array';
 import { rate } from '../math/math';
+import { sum } from '../helpers/summation';
 
 /**
  * Returns a function that computes the mean of a rate over an array of items
@@ -20,8 +20,8 @@ export function meanRate<T extends object>(
       : (d: T) => (d[denominator] as unknown) as number;
 
   return (items: T[]) => {
-    const numerator = d3sum(items, numeratorFn);
-    const denominator = d3sum(items, denominatorFn);
+    const numerator = sum(items, numeratorFn);
+    const denominator = sum(items, denominatorFn);
     return rate(numerator, denominator);
   };
 }
