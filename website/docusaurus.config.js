@@ -75,7 +75,7 @@ module.exports = {
 
     algolia: {
       apiKey: '28ec6a5936dd807831d61e0f52ce2852',
-      indexName: 'tidyjs',
+      indexName: 'tidy',
 
       // Optional: see doc section bellow
       contextualSearch: false,
