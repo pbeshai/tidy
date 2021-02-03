@@ -18,6 +18,16 @@
       "conventionalCommits": true,
       "message": "chore(release): publish %v",
       "push": false
+    },
+    "changelog": {
+      "repo": "pbeshai/tidy",
+      "cacheDir": ".changelog",
+      "labels": {
+        "breaking": "BREAKING CHANGE",
+        "feature": "FEATURE",
+        "bug": "BUGFIX",
+        "docs": "DOCUMENTATION"
+      }
     }
   }
 }

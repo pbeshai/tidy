@@ -70,5 +70,9 @@
       "prettier --write",
       "eslint --fix"
     ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pbeshai/tidy.git"
   }
 }

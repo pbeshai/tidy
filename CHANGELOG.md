@@ -4,6 +4,17 @@ Tidy follows semver.
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 2.0.3 (2021-02-03)
+
+## Fixes 
+
+- **sum**, **cumsum**, **mean**, **meanRate** updated to use the "improved Kahan-Babuška" algorithm for reduced floating point errors #2
+- improves typing on **mutateWithSummary** to handle Float64Arrays #2
+
+# 2.0.1, 2.0.2 (2021-02-02)
+
+* patch releases to get npm published correctly, sorry!!
+
 
 # 2.0.0 (2021-02-01)
 
