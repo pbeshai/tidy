@@ -20,7 +20,7 @@ If we want to compute a 3-item moving average of the `value` key, we can do so a
 ```js
 tidy(
   data, 
-  mutate({
+  mutateWithSummary({
     movingAvg: roll(3, mean('value')),
   })
 )
@@ -44,7 +44,7 @@ To compute the aggregate value even when the window width is less than our desir
 ```js
 tidy(
   data, 
-  mutate({
+  mutateWithSummary({
     movingAvg: roll(3, mean('value'), { partial: true }),
   })
 )
@@ -79,7 +79,7 @@ If we want to compute a 3-item moving average of the rate defined by `numer / de
 ```js
 tidy(
   data, 
-  mutate({
+  mutateWithSummary({
     movingAvg: roll(3, meanRate('numer', 'denom')),
   })
 )
@@ -100,6 +100,8 @@ tidy(
   data, 
   mutate({
     rate: rate('numer', 'denom'),
+  }),
+  mutateWithSummary({
     movingAvgWrong: roll(3, mean('rate')),
     movingAvgRight: roll(3, meanRate('numer', 'denom')),
   })
@@ -214,7 +216,7 @@ We are now ready to compute our moving average:
 tidy(
   data,
   summarizeMomentGranularity('w', { value: sum('value') }),
-  mutate({
+  mutateWithSummary({
     movingAvg: roll(2, mean('value'))
   })
 );
@@ -273,7 +275,7 @@ It's missing values for January 9, 10, 15, 16, and 18. If we run our tidy flow o
 ```js
 tidy(
   data,
-  mutate({
+  mutateWithSummary({
     movingAvg: roll(7, mean('value'), { partial: true })
   })
 );
@@ -307,12 +309,12 @@ To get around this, we can use [**complete**](../api/tidy.md#complete) on the da
 ```js {3-7}
 tidy(
   data,
-  mutate({ timestamp: byItem(d => d.date.toISOString() )}),
+  mutate({ timestamp: d => d.date.toISOString() }),
   complete(
     { timestamp: fullSeqDateISOString('timestamp', 'day') },
     { value: 0 }
   ),
-  mutate({
+  mutateWithSummary({
     movingAvg: roll(7, mean('value'), { partial: true })
   })
 );
@@ -329,7 +331,7 @@ tidy(
     { timestamp: fullSeqDateISOString('timestamp', 'day') },
     { value: 0 }
   ),
-  mutate({
+  mutateWithSummary({
     movingAvg: roll(7, mean('value'), { partial: true })
   })
 );

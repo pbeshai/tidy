@@ -50,7 +50,7 @@ import { tidy, mutate, arrange, desc } from '@tidyjs/tidy'
 
 ```html
 <script src="https://d3js.org/d3-array.v2.min.js"></script>
-<script src="https://www.unpkg.com/@tidyjs/tidy/dist/umd/tidy.js"></script>
+<script src="https://www.unpkg.com/@tidyjs/tidy/dist/umd/tidy.min.js"></script>
 <script>
   const { tidy, mutate, arrange, desc } = Tidy;
   // ...

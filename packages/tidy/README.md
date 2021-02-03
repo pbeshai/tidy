@@ -18,6 +18,7 @@ Secondarily, this project aims to provide acceptable types for the functions pro
 * [API reference documentation](https://pbeshai.github.io/tidy/docs/api/tidy)
 * [Playground](https://pbeshai.github.io/tidy/playground)
 * [Observable Notebook](https://observablehq.com/@pbeshai/tidy-js-intro-demo)
+* [CodeSandbox showing basic HTML usage (UMD)](https://codesandbox.io/s/tidyjs-umd-example-n1g4r?file=/index.html)
 
 #### Related work
 
@@ -38,6 +39,17 @@ Then import the functions you need:
 
 ```js
 import { tidy, mutate, arrange, desc } from '@tidyjs/tidy'
+```
+
+**Note** if you're just trying tidy in a browser, you can use the UMD version hosted on unpkg ([codesandbox example](https://codesandbox.io/s/tidyjs-umd-example-n1g4r?file=/index.html)):
+
+```html
+<script src="https://d3js.org/d3-array.v2.min.js"></script>
+<script src="https://www.unpkg.com/@tidyjs/tidy/dist/umd/tidy.min.js"></script>
+<script>
+  const { tidy, mutate, arrange, desc } = Tidy;
+  // ...
+</script>  
 ```
 
 And use them on an array of objects:
