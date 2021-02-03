@@ -30,7 +30,13 @@ jobs:
 workflows:
   build-test-lint:
     jobs:
-      - build-test
-      - lint
-    
-
+      - build-test:
+          filters:
+            branches:
+              ignore:
+                - gh-pages
+      - lint:
+          filters:
+            branches:
+              ignore:
+                - gh-pages
