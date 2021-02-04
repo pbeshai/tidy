@@ -10,7 +10,11 @@ export function fcumsum<T>(
 
   return Float64Array.from(
     items,
-    (value: T): number => +sum.add(+(accessor(value, i++, items) || 0))
+    // we do not actually need to coerce the Adder to number,
+    // as @Fil demonstrated here: https://github.com/pbeshai/tidy/pull/5
+    // so we can just tell typescript to be quiet.
+    (value: T): number =>
+      (sum.add(+(accessor(value, i++, items) || 0)) as unknown) as number
   );
 }
 
