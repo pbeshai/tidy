@@ -59,7 +59,7 @@ export function processSelectors<T extends object, Keys extends KeysInput<T>>(
   }
 
   // if the first key is negative, add in everything at the front
-  if (processedSelectKeys[0][0] === '-') {
+  if (processedSelectKeys.length && processedSelectKeys[0][0] === '-') {
     processedSelectKeys = [...everything()(items), ...processedSelectKeys];
   }
 
@@ -96,6 +96,8 @@ export function select<T extends object, Keys extends KeysInput<T>>(
   type OutputT = Output<T, Keys>;
   const _select: TidyFn<T, OutputT> = (items: T[]): OutputT[] => {
     let processedSelectKeys: string[] = processSelectors(items, selectKeys);
+
+    if (!processedSelectKeys.length) return items as OutputT[];
 
     // use the processed keys to create reduced objects
     return items.map((d: T) => {

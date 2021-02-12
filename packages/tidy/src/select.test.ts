@@ -31,6 +31,19 @@ describe('select', () => {
     expect(results2).toEqual([{ b: 10 }, { b: 20 }, { b: 30 }]);
   });
 
+  it('handles no keys being selected', () => {
+    const data = [
+      { a: 1, b: 10, c: 100, d: 'foo' },
+      { a: 2, b: 20, c: 200, d: 'foo' },
+      { a: 3, b: 30, c: 300, d: 'foo' },
+    ];
+    const results = tidy(data, select([]));
+    expect(results).toEqual(data);
+
+    const results2 = tidy(data, select([startsWith('p')]));
+    expect(results2).toEqual(data);
+  });
+
   it('works with selectors', () => {
     const data = [
       { foo: 1, bar: 20, foobar: 300, FoObAR: 90, a: 'a1', b: 'b1' },

@@ -134,7 +134,7 @@ function Playground() {
   // prettier-ignore
   const initialCodeStr = `${''
 }// {T.*}    - all Tidy.js functions are available directly and as T.* 
-// {input}  - read input from the predefined input variable
+// {input}  - \`input\` variable matches mtcars or iris based on input selection
 // {output} - put your output in the predefined output variable
 
 output = tidy(input,
