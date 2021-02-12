@@ -7,8 +7,8 @@
   "files": [
     "dist"
   ],
-  "types": "dist/tidy.d.ts",
-  "typings": "dist/tidy.d.ts",
+  "types": "dist/tidy-moment.d.ts",
+  "typings": "dist/tidy-moment.d.ts",
   "scripts": {
     "build": "rollup -c",
     "clean": "rimraf dist",
