@@ -4,6 +4,10 @@ Tidy follows semver.
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 2.0.4 (2021-02-12)
+
+* #11 fixes bug where select() failed if given no keys to select.
+
 # 2.0.3 (2021-02-03)
 
 ## Fixes 
