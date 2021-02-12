@@ -1,6 +1,6 @@
 {
   "name": "@tidyjs/tidy-moment",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Moment.js extensions for tidyjs",
   "main": "dist/lib/index.js",
   "module": "dist/es/index.js",
