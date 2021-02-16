@@ -545,7 +545,7 @@ tidy(
   data,
   groupBy(['str', 'ing'], [
     summarize({ total: sum('value') })
-  ], groupBy.values({ 
+  ], groupBy.levels({ 
     levels: ['entries-object', 'object'], 
     single: true 
   }))
@@ -574,7 +574,7 @@ tidy(
   data,
   groupBy(['str', 'ing'], [
     summarize({ total: sum('value') })
-  ], groupBy.values({ 
+  ], groupBy.levels({ 
     levels: ['object', 'entries-object'], // swapped order
     single: true 
   }))
