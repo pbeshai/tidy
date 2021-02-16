@@ -6,6 +6,8 @@ sidebar_label: Pivot
 
 Lengthens data by increasing the number of rows (items) and decreasing the number of columns (keys) in a collection. The inverse transformation is [**pivotWider**](#pivotwider).
 
+Note this functionality is similar to what is achieved with the tidyr function [gather](https://tidyr.tidyverse.org/reference/gather.html) that has been superceded by [pivot_longer](https://tidyr.tidyverse.org/reference/pivot_longer.html).
+
 ### Parameters
 
 #### `options`
@@ -123,6 +125,9 @@ tidy(
 ##  pivotWider 
 
 Widens data by increasing the number of columns (keys) and decreasing the number of rows (items) in a collection. The inverse transformation is [**pivotLonger**](#pivotlonger).
+
+Note this functionality is similar to what is achieved with the tidyr function [spread](https://tidyr.tidyverse.org/reference/spread.html) that has been superceded by [pivot_wider](https://tidyr.tidyverse.org/reference/pivot_wider.html).
+
 
 ### Parameters
 
