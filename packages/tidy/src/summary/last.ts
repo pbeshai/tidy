@@ -6,5 +6,6 @@ export function last<T extends object>(key: keyof T | ((d: T) => number)) {
   const keyFn =
     typeof key === 'function' ? key : (d: T) => (d[key] as unknown) as number;
 
-  return (items: T[]) => keyFn(items[items.length - 1]);
+  return (items: T[]) =>
+    items.length ? keyFn(items[items.length - 1]) : undefined;
 }

@@ -6,5 +6,5 @@ export function first<T extends object>(key: keyof T | ((d: T) => number)) {
   const keyFn =
     typeof key === 'function' ? key : (d: T) => (d[key] as unknown) as number;
 
-  return (items: T[]) => keyFn(items[0]);
+  return (items: T[]) => (items.length ? keyFn(items[0]) : undefined);
 }
