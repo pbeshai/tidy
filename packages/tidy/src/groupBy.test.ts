@@ -1,4 +1,4 @@
-import { tidy, groupBy, summarize, sum, LevelSpec } from './index';
+import { tidy, map, groupBy, summarize, sum, LevelSpec } from './index';
 describe('groupBy / ungroup', () => {
   describe('groupBy', () => {
     it('groupBy works single keys', () => {
@@ -653,6 +653,89 @@ describe('groupBy / ungroup', () => {
             { str: 'b', ing: 'y', foo: 'G', value: 300 },
             { str: 'b', ing: 'z', foo: 'H', value: 400 },
           ],
+        });
+      });
+
+      it('object - addGroupKeys false works', () => {
+        const data = [
+          { str: 'a', ing: 'x', foo: 'G', value: 1 },
+          { str: 'b', ing: 'x', foo: 'H', value: 100 },
+          { str: 'b', ing: 'x', foo: 'K', value: 200 },
+          { str: 'a', ing: 'y', foo: 'G', value: 2 },
+          { str: 'a', ing: 'y', foo: 'H', value: 3 },
+          { str: 'a', ing: 'y', foo: 'K', value: 4 },
+          { str: 'b', ing: 'y', foo: 'G', value: 300 },
+          { str: 'b', ing: 'z', foo: 'H', value: 400 },
+          { str: 'a', ing: 'z', foo: 'K', value: 5 },
+          { str: 'a', ing: 'z', foo: 'G', value: 6 },
+        ];
+
+        const results = tidy(
+          data,
+          groupBy(
+            ['str', 'ing'],
+            [summarize({ summedValue: sum('value') })],
+            groupBy.object({
+              addGroupKeys: false,
+              single: true,
+            })
+          )
+        );
+        expect(results).toEqual({
+          a: {
+            x: { summedValue: 1 },
+            y: { summedValue: 9 },
+            z: { summedValue: 11 },
+          },
+          b: {
+            x: { summedValue: 300 },
+            y: { summedValue: 300 },
+            z: { summedValue: 400 },
+          },
+        });
+
+        const results2 = tidy(
+          data,
+          groupBy(
+            ['str', 'ing'],
+            [
+              summarize({ summedValue: sum('value') }),
+              map((d: any) => d.summedValue),
+            ],
+            groupBy.object({
+              addGroupKeys: false,
+              single: true,
+            })
+          )
+        );
+        expect(results2).toEqual({
+          a: {
+            x: 1,
+            y: 9,
+            z: 11,
+          },
+          b: {
+            x: 300,
+            y: 300,
+            z: 400,
+          },
+        });
+
+        const results3 = tidy(
+          data,
+          groupBy(['str', 'ing'], [summarize({ summedValue: sum('value') })]),
+          groupBy(
+            ['str'],
+            [map((d: any) => d.summedValue)],
+
+            groupBy.object({
+              addGroupKeys: false,
+            })
+          )
+        );
+        expect(results3).toEqual({
+          a: [1, 9, 11],
+          b: [300, 300, 400],
         });
       });
 

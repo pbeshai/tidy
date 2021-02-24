@@ -361,7 +361,13 @@ const defaultCompositeKey = (keys: any[]) => keys.join('/');
 export function processFromGroupsOptions<T extends object>(
   options: GroupByOptions
 ) {
-  const { flat, single, mapLeaf = identity, mapLeaves = identity } = options;
+  const {
+    flat,
+    single,
+    mapLeaf = identity,
+    mapLeaves = identity,
+    addGroupKeys,
+  } = options;
   let compositeKey: (keys: any[]) => string;
   if (options.flat) {
     compositeKey = options.compositeKey! ?? defaultCompositeKey;
@@ -369,8 +375,14 @@ export function processFromGroupsOptions<T extends object>(
 
   const groupFn = (values: T[], keys: any[]) => {
     return single
-      ? mapLeaf(assignGroupKeys(values[0], keys))
-      : mapLeaves(values.map((d) => mapLeaf(assignGroupKeys(d, keys))));
+      ? mapLeaf(
+          addGroupKeys === false ? values[0] : assignGroupKeys(values[0], keys)
+        )
+      : mapLeaves(
+          values.map((d) =>
+            mapLeaf(addGroupKeys === false ? d : assignGroupKeys(d, keys))
+          )
+        );
   };
 
   const keyFn = flat
