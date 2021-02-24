@@ -413,9 +413,10 @@ function exportLevels<T extends object>(
       case 'entries-obj' as any:
       case 'entriesObject' as any: {
         const levelMapEntry =
-          levelOption === 'entries-object' ||
-          levelOption === ('entries-obj' as any) ||
-          levelOption === ('entriesObject' as any)
+          (levelOption === 'entries-object' ||
+            levelOption === ('entries-obj' as any) ||
+            levelOption === ('entriesObject' as any)) &&
+          options.mapEntry == null
             ? ([key, values]: any) => ({ key, values })
             : mapEntry;
 
