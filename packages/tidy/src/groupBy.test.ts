@@ -621,6 +621,37 @@ describe('groupBy / ungroup', () => {
           { key: 'b', values: [{ str: 'b', summedValue: 1000 }] },
         ]);
       });
+
+      it('entries-obj - works with mapEntry', () => {
+        const data = [
+          { str: 'a', ing: 'x', foo: 'G', value: 1 },
+          { str: 'b', ing: 'x', foo: 'H', value: 100 },
+          { str: 'b', ing: 'x', foo: 'K', value: 200 },
+          { str: 'a', ing: 'y', foo: 'G', value: 2 },
+          { str: 'a', ing: 'y', foo: 'H', value: 3 },
+          { str: 'a', ing: 'y', foo: 'K', value: 4 },
+          { str: 'b', ing: 'y', foo: 'G', value: 300 },
+          { str: 'b', ing: 'z', foo: 'H', value: 400 },
+          { str: 'a', ing: 'z', foo: 'K', value: 5 },
+          { str: 'a', ing: 'z', foo: 'G', value: 6 },
+        ];
+
+        const results = tidy(
+          data,
+          groupBy(
+            'str',
+            [summarize({ summedValue: sum('value') })],
+            groupBy.entriesObject({
+              mapEntry: ([key, values]) => ({ name: key, items: values }),
+            })
+          )
+        );
+
+        expect(results).toEqual([
+          { name: 'a', items: [{ str: 'a', summedValue: 21 }] },
+          { name: 'b', items: [{ str: 'b', summedValue: 1000 }] },
+        ]);
+      });
     });
 
     describe('object', () => {
