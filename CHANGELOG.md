@@ -4,6 +4,10 @@ Tidy follows semver.
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 2.0.6 (2021-02-23)
+
+* fixes #19 by interpreting the addGroupKeys flag in groupBy exports
+
 # 2.0.5 (2021-02-18)
 
 * fixes #16 by checking if we have items before indexing in first() and last()
