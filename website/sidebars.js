@@ -4,7 +4,14 @@ module.exports = {
     {
       type: 'category',
       label: 'Examples',
-      items: ['examples/moving_average_example'],
+      items: [
+        'examples/moving_average_example',
+        {
+          type: 'link',
+          href: 'https://observablehq.com/collection/@pbeshai/tidy-js',
+          label: 'Observable Collection ↗',
+        },
+      ],
     },
     {
       type: 'category',

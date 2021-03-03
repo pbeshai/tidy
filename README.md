@@ -21,7 +21,8 @@ Secondarily, this project aims to provide acceptable types for the functions pro
 * [Project homepage](https://pbeshai.github.io/tidy)
 * [API reference documentation](https://pbeshai.github.io/tidy/docs/api/tidy)
 * [Playground](https://pbeshai.github.io/tidy/playground)
-* [Observable Notebook](https://observablehq.com/@pbeshai/tidy-js-intro-demo)
+* [Observable Intro](https://observablehq.com/@pbeshai/tidy-js-intro-demo)
+* [Observable Examples Collection](https://observablehq.com/collection/@pbeshai/tidy-js)
 * [GitHub Discussions for Q&A](https://github.com/pbeshai/tidy/discussions)
 * [CodeSandbox showing basic HTML usage (UMD)](https://codesandbox.io/s/tidyjs-umd-example-n1g4r?file=/index.html)
 
