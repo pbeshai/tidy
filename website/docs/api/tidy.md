@@ -355,7 +355,7 @@ tidy(data, debug('test label', { limit: 1 }))
 
 ## distinct
 
-Removes items with duplicate values for the specified keys. If no keys provided, uses strict equality for comparison.
+Removes items with duplicate values for the specified keys. If no keys provided, uses strict equality for comparison. You may also think of this as reducing a dataset to just unique values for the specified columns.
 
 ### Parameters
 
