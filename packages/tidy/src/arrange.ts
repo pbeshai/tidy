@@ -1,4 +1,4 @@
-import { ascending, descending } from 'd3-array';
+import { ascending } from 'd3-array';
 import { SingleOrArray, singleOrArray } from './helpers/singleOrArray';
 import { Comparator, Key, KeyOrFn, Primitive, TidyFn } from './types';
 
@@ -34,9 +34,10 @@ export function arrange<T extends object>(
  */
 export function asc<T>(key: Key): Comparator<T> {
   return function _asc(a: T, b: T) {
-    return ascending(
+    return emptyAwareComparator(
       (a[key as keyof T] as unknown) as Primitive,
-      (b[key as keyof T] as unknown) as Primitive
+      (b[key as keyof T] as unknown) as Primitive,
+      false
     );
   };
 }
@@ -47,9 +48,10 @@ export function asc<T>(key: Key): Comparator<T> {
  */
 export function desc<T>(key: Key): Comparator<T> {
   return function _desc(a: T, b: T) {
-    return descending(
+    return emptyAwareComparator(
       (a[key as keyof T] as unknown) as Primitive,
-      (b[key as keyof T] as unknown) as Primitive
+      (b[key as keyof T] as unknown) as Primitive,
+      true
     );
   };
 }
@@ -96,4 +98,33 @@ export function fixedOrder<T>(
 
     return 0;
   };
+}
+
+function emptyAwareComparator(aInput: any, bInput: any, desc: boolean) {
+  // we swap order to get descending behavior
+  let a = desc ? bInput : aInput;
+  let b = desc ? aInput : bInput;
+
+  // NaN, null, undefined is the order for emptys
+  if (isEmpty(a) && isEmpty(b)) {
+    const rankA = a !== a ? 0 : a === null ? 1 : 2;
+    const rankB = b !== b ? 0 : b === null ? 1 : 2;
+    const order = rankA - rankB;
+    return desc ? -order : order;
+  }
+
+  // keep empty values at the bottom
+  if (isEmpty(a)) {
+    return desc ? -1 : 1;
+  }
+  if (isEmpty(b)) {
+    return desc ? 1 : -1;
+  }
+
+  // descending is handled by swapping the a and b args at the start
+  return ascending(a, b);
+}
+
+function isEmpty(value: any) {
+  return value == null || value !== value /* NaN check */;
 }
