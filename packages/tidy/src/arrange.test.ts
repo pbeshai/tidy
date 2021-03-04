@@ -44,6 +44,46 @@ describe('arrange', () => {
     ]);
   });
 
+  it('treats NaN comparisons as 0', () => {
+    const results = tidy(
+      [
+        { str: 'foo', value: 3 },
+        { str: 'foo', value: 1 },
+        { str: 'bar', value: 3 },
+        { str: 'bar', value: 1 },
+        { str: 'bar', value: 7 },
+      ],
+      arrange(['doesntexist', 'str', 'value'])
+    );
+
+    expect(results).toEqual([
+      { str: 'bar', value: 1 },
+      { str: 'bar', value: 3 },
+      { str: 'bar', value: 7 },
+      { str: 'foo', value: 1 },
+      { str: 'foo', value: 3 },
+    ]);
+
+    expect(
+      tidy(
+        [
+          { str: 'foo', value: 3 },
+          { str: 'foo', value: 1 },
+          { str: 'bar', value: 3 },
+          { str: 'bar', value: 1 },
+          { str: 'bar', value: 7 },
+        ],
+        arrange(['str', desc('doesntexist'), asc('value')])
+      )
+    ).toEqual([
+      { str: 'bar', value: 1 },
+      { str: 'bar', value: 3 },
+      { str: 'bar', value: 7 },
+      { str: 'foo', value: 1 },
+      { str: 'foo', value: 3 },
+    ]);
+  });
+
   it('arranges with multiple keys desc', () => {
     expect(
       tidy(

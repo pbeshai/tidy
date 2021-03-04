@@ -18,7 +18,7 @@ export function arrange<T extends object>(
     return items.slice().sort((a, b) => {
       for (const comparator of comparatorFns) {
         const result = comparator(a, b);
-        if (result !== 0) return result;
+        if (result) return result;
       }
 
       return 0;
