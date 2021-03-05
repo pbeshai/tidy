@@ -1,8 +1,6 @@
 import { tidy, arrange, asc, desc, fixedOrder } from './index';
 import { ascending } from 'd3-array';
 
-type MixedDatum = { str: string; value: number };
-
 describe('arrange', () => {
   it('arranges with multiple keys asc', () => {
     const results = tidy(
@@ -41,6 +39,77 @@ describe('arrange', () => {
       { str: 'bar', value: 7 },
       { str: 'foo', value: 1 },
       { str: 'foo', value: 3 },
+    ]);
+  });
+
+  it('treats NaN comparisons as 0', () => {
+    const results = tidy(
+      [
+        { str: 'foo', value: 3 },
+        { str: 'foo', value: 1 },
+        { str: 'bar', value: 3 },
+        { str: 'bar', value: 1 },
+        { str: 'bar', value: 7 },
+      ],
+      arrange(['doesntexist', 'str', 'value'])
+    );
+
+    expect(results).toEqual([
+      { str: 'bar', value: 1 },
+      { str: 'bar', value: 3 },
+      { str: 'bar', value: 7 },
+      { str: 'foo', value: 1 },
+      { str: 'foo', value: 3 },
+    ]);
+
+    expect(
+      tidy(
+        [
+          { str: 'foo', value: 3 },
+          { str: 'foo', value: 1 },
+          { str: 'bar', value: 3 },
+          { str: 'bar', value: 1 },
+          { str: 'bar', value: 7 },
+        ],
+        arrange(['str', desc('doesntexist'), asc('value')])
+      )
+    ).toEqual([
+      { str: 'bar', value: 1 },
+      { str: 'bar', value: 3 },
+      { str: 'bar', value: 7 },
+      { str: 'foo', value: 1 },
+      { str: 'foo', value: 3 },
+    ]);
+
+    expect(
+      tidy(
+        [
+          { str: 'foo', value: null },
+          { str: 'foo', value: NaN },
+          { str: 'foo', value: 9 },
+          { str: 'foo', value: 1 },
+          { str: 'foo', value: '' },
+          { str: 'foo', value: undefined },
+          { str: 'foo', value: null, o: 1 },
+          { str: 'bar', value: 3 },
+          { str: 'bar', value: null },
+          { str: 'bar', value: 7 },
+          { str: 'bar', value: 2 },
+        ],
+        arrange(['str', desc('doesntexist'), asc('value')])
+      )
+    ).toEqual([
+      { str: 'bar', value: 2 },
+      { str: 'bar', value: 3 },
+      { str: 'bar', value: 7 },
+      { str: 'bar', value: null },
+      { str: 'foo', value: '' },
+      { str: 'foo', value: 1 },
+      { str: 'foo', value: 9 },
+      { str: 'foo', value: NaN },
+      { str: 'foo', value: null },
+      { str: 'foo', value: null, o: 1 },
+      { str: 'foo', value: undefined },
     ]);
   });
 
