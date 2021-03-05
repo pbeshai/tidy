@@ -4,6 +4,10 @@ Tidy follows semver.
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 2.0.8 (2021-03-05)
+
+* fixes #23 by having arrange/sort move NaN, null, undefined values to the bottom
+
 # 2.0.7 (2021-02-24)
 
 * fixes #21 by having mapEntry be interpreted on entriesObject if provided
