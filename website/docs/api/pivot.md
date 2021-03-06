@@ -144,8 +144,8 @@ Note this functionality is similar to what is achieved with the tidyr function [
 ```
 
 - `namesFrom`: Used in combination with `valuesFrom` to get the name of the output key and the value respectively. If `valuesFrom` contains multiple values, the value key will be prefixed to the output keys, using `nameSep`. 
-- `valuesFill`: any values missing after widening will be filled with this value if specified. Ignored is `valuesFillMap` is provided.
-- `valuesFillMap`: a map from keys to their default value to be used when the value is not present in the widened item.
+- `valuesFill`: any values missing after widening will be filled with this value if specified. Ignored if `valuesFillMap` is provided.
+- `valuesFillMap`: a map from pre-pivot keys to their default value when a value is not present in the widened item. See also [**replaceNully**](./tidy.md#replacenully) as a way to set defaults for keys after widening.
 
 
 ### Usage
