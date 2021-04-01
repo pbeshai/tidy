@@ -6,9 +6,10 @@ sidebar_label: tidy-moment API
 
 **Dependency: moment >= 2.0.0**
 
-Note these functions are not included in the core tidy.js package and most be installed separately.
+Note these functions are not included in the core tidy.js package and must be installed separately.
 
 ## summarizeMomentGranularity
+
 Summarizes input data into bins set by a granularity (day, week, month, year) of UTC moment dates. Assumes input data is by day. By default uses `date` and `timestamp` as the keys to track the date, but can be configured via options.
 
 Typically used as a precursor to a moving average computed by a subsequence `mutate({ value: roll(...) })` command.
