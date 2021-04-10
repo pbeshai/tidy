@@ -35,6 +35,37 @@ describe('fullSeqDate', () => {
   });
 });
 
+describe('fullSeqDate', () => {
+  it('seconds granularity works', () => {
+    const data = [
+      { str: 'foo', date: new Date('2077-01-01T00:00:00.000Z') },
+      { str: 'foo', date: new Date('2077-01-01T00:00:04.000Z') },
+    ];
+    expect(fullSeqDate('date', 'second', 2)(data)).toEqual([
+      new Date('2077-01-01T00:00:00.000Z'),
+      new Date('2077-01-01T00:00:02.000Z'),
+      new Date('2077-01-01T00:00:04.000Z'),
+    ]);
+  });
+});
+
+describe('fullSeqDate', () => {
+  it('minute granularity works', () => {
+    const data = [
+      { str: 'foo', date: new Date('2077-01-01T00:01:00.000Z') },
+      { str: 'foo', date: new Date('2077-01-01T00:05:00.000Z') },
+      { str: 'foo', date: new Date('2077-01-01T00:03:00.000Z') },
+    ];
+    expect(fullSeqDate('date', 'minute', 1)(data)).toEqual([
+      new Date('2077-01-01T00:01:00.000Z'),
+      new Date('2077-01-01T00:02:00.000Z'),
+      new Date('2077-01-01T00:03:00.000Z'),
+      new Date('2077-01-01T00:04:00.000Z'),
+      new Date('2077-01-01T00:05:00.000Z'),
+    ]);
+  });
+});
+
 describe('fullSeqDateISOString', () => {
   it('it works', () => {
     const data = [

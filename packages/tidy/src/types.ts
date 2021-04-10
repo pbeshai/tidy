@@ -40,6 +40,12 @@ export type TidyGroupExportFn<InputT extends object, ExportedT> = (
 ) => ExportedT;
 
 export type Granularity =
+  | 's'
+  | 'seconds'
+  | 'second'
+  | 'min'
+  | 'minutes'
+  | 'minute'
   | 'd'
   | 'days'
   | 'day' // for backwards compatibility

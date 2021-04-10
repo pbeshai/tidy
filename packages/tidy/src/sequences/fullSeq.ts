@@ -33,29 +33,17 @@ export function vectorSeqDate(
     sequence.push(new Date(value));
 
     // increment date
-    if (
-      granularity === 'day' ||
-      granularity === 'd' ||
-      granularity === 'days'
-    ) {
+    if (['second', 's', 'seconds'].includes(granularity)) {
+      value.setUTCSeconds(value.getUTCSeconds() + 1 * period);
+    } else if (['minute', 'min', 'minutes'].includes(granularity)) {
+      value.setUTCMinutes(value.getUTCMinutes() + 1 * period);
+    } else if (['day', 'd', 'days'].includes(granularity)) {
       value.setUTCDate(value.getUTCDate() + 1 * period);
-    } else if (
-      granularity === 'week' ||
-      granularity === 'w' ||
-      granularity === 'weeks'
-    ) {
+    } else if (['week', 'w', 'weeks'].includes(granularity)) {
       value.setUTCDate(value.getUTCDate() + 7 * period);
-    } else if (
-      granularity === 'month' ||
-      granularity === 'm' ||
-      granularity === 'months'
-    ) {
+    } else if (['month', 'm', 'months'].includes(granularity)) {
       value.setUTCMonth(value.getUTCMonth() + 1 * period);
-    } else if (
-      granularity === 'year' ||
-      granularity === 'y' ||
-      granularity === 'years'
-    ) {
+    } else if (['year', 'y', 'years'].includes(granularity)) {
       value.setUTCFullYear(value.getUTCFullYear() + 1 * period);
     } else {
       throw new Error('Invalid granularity for date sequence: ' + granularity);
