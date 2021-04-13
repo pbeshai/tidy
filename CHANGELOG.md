@@ -4,6 +4,10 @@ Tidy follows semver.
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 2.1.0 (2021-04-13)
+
+* adds minute and second granularity to sequences and tidy-moment #29
+
 # 2.0.8 (2021-03-05)
 
 * fixes #23 by having arrange/sort move NaN, null, undefined values to the bottom
