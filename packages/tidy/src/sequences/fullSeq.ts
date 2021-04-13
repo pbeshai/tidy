@@ -34,6 +34,18 @@ export function vectorSeqDate(
 
     // increment date
     if (
+      granularity === 'second' ||
+      granularity === 's' ||
+      granularity === 'seconds'
+    ) {
+      value.setUTCSeconds(value.getUTCSeconds() + 1 * period);
+    } else if (
+      granularity === 'minute' ||
+      granularity === 'min' ||
+      granularity === 'minutes'
+    ) {
+      value.setUTCMinutes(value.getUTCMinutes() + 1 * period);
+    } else if (
       granularity === 'day' ||
       granularity === 'd' ||
       granularity === 'days'

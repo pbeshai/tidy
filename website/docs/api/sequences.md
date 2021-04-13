@@ -12,12 +12,11 @@ Creates a full sequence of number values for a key given a set of data. The boun
 #### `key`
 
 ```ts
-| string 
+| string
 | (item: object) => number
 ```
 
 The key within the data to expand the sequence across.
-
 
 #### `period`
 
@@ -26,7 +25,6 @@ number = 1
 ```
 
 The gap between each value in the data (how much the sequence increments by).
-
 
 ### Usage
 
@@ -57,21 +55,19 @@ Similar to [**fullSeq**](#fullseq).
 #### `key`
 
 ```ts
-| string 
+| string
 | (item: object) => Date
 ```
 
 The key within the data to expand the sequence across.
 
-
 #### `granularity`
 
 ```ts
-'day' | 'week' | 'month' | 'year' = 'day'
+'second' | 'minute' | 'day' | 'week' | 'month' | 'year' = 'day'
 ```
 
 The granularity to increment the data by.
-
 
 #### `period`
 
@@ -80,7 +76,6 @@ number = 1
 ```
 
 The gap between each value in the data (how much the sequence increments by).
-
 
 ### Usage
 
@@ -126,15 +121,13 @@ Similar to [**fullSeq**](#fullseq).
 
 The key within the data to expand the sequence across.
 
-
 #### `granularity`
 
 ```ts
-'day' | 'week' | 'month' | 'year' = 'day'
+'second' | 'minute' | 'day' | 'week' | 'month' | 'year' = 'day'
 ```
 
 The granularity to increment the data by.
-
 
 #### `period`
 
@@ -143,7 +136,6 @@ number = 1
 ```
 
 The gap between each value in the data (how much the sequence increments by).
-
 
 ### Usage
 

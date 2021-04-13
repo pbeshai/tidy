@@ -56,6 +56,12 @@ export function summarizeMomentGranularity<
     } = options;
 
     const dateFormats = {
+      s: 'YYYY-MM-DDTHH:mm:ss',
+      seconds: 'YYYY-MM-DDTHH:mm:ss',
+      second: 'YYYY-MM-DDTHH:mm:ss',
+      min: 'YYYY-MM-DDTHH:mm',
+      minutes: 'YYYY-MMDDTHH:mm',
+      minute: 'YYYY-MM-DDTHH:mm',
       d: 'YYYY-MM-DD',
       days: 'YYYY-MM-DD',
       day: 'YYYY-MM-DD',
