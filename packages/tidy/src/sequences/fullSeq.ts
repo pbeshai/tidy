@@ -33,17 +33,41 @@ export function vectorSeqDate(
     sequence.push(new Date(value));
 
     // increment date
-    if (['second', 's', 'seconds'].includes(granularity)) {
+    if (
+      granularity === 'second' ||
+      granularity === 's' ||
+      granularity === 'seconds'
+    ) {
       value.setUTCSeconds(value.getUTCSeconds() + 1 * period);
-    } else if (['minute', 'min', 'minutes'].includes(granularity)) {
+    } else if (
+      granularity === 'minute' ||
+      granularity === 'min' ||
+      granularity === 'minutes'
+    ) {
       value.setUTCMinutes(value.getUTCMinutes() + 1 * period);
-    } else if (['day', 'd', 'days'].includes(granularity)) {
+    } else if (
+      granularity === 'day' ||
+      granularity === 'd' ||
+      granularity === 'days'
+    ) {
       value.setUTCDate(value.getUTCDate() + 1 * period);
-    } else if (['week', 'w', 'weeks'].includes(granularity)) {
+    } else if (
+      granularity === 'week' ||
+      granularity === 'w' ||
+      granularity === 'weeks'
+    ) {
       value.setUTCDate(value.getUTCDate() + 7 * period);
-    } else if (['month', 'm', 'months'].includes(granularity)) {
+    } else if (
+      granularity === 'month' ||
+      granularity === 'm' ||
+      granularity === 'months'
+    ) {
       value.setUTCMonth(value.getUTCMonth() + 1 * period);
-    } else if (['year', 'y', 'years'].includes(granularity)) {
+    } else if (
+      granularity === 'year' ||
+      granularity === 'y' ||
+      granularity === 'years'
+    ) {
       value.setUTCFullYear(value.getUTCFullYear() + 1 * period);
     } else {
       throw new Error('Invalid granularity for date sequence: ' + granularity);
