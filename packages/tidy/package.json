@@ -1,6 +1,6 @@
 {
   "name": "@tidyjs/tidy",
-  "version": "2.0.8",
+  "version": "2.1.0",
   "description": "Tidy up your data with JavaScript, inspired by dplyr and the tidyverse",
   "main": "dist/lib/index.js",
   "module": "dist/es/index.js",
