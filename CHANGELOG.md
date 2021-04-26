@@ -4,6 +4,11 @@ Tidy follows semver.
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 2.2.0 (2021-04-26)
+
+* adds fullJoin for completing a full join (now in addition to innerJoin and leftJoin) #31
+* adds the summarizer nDistinct for counting the number of distinct values for a key #30
+
 # 2.1.0 (2021-04-13)
 
 * adds minute and second granularity to sequences and tidy-moment #29
