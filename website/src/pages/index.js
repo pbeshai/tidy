@@ -111,6 +111,7 @@ const functions = [
       'median',
       'min',
       'n',
+      'nDistinct',
       'sum',
       'variance',
     ],
