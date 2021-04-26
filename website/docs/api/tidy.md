@@ -540,6 +540,98 @@ tidy(data, filter((d) => d.value % 2 === 1))
 ```
 
 
+---
+
+## fullJoin 
+
+Performs a full join on two collections of items.
+
+### Parameters
+
+#### `itemsToJoin`
+
+```ts
+object[] /* the join dataset */
+```
+
+The collection of items to join.
+
+#### `options`
+
+```ts
+{
+  by?:
+  | string /* key in both datasets */
+  | string[]
+  | {
+      [string /* key in join */]: string /* key in original */
+    }
+}
+```
+
+An options object specifying with the following options:
+
+- **`by`** The key (`string`) or keys (`string[]`) to join the two collections on. This form only works if both sets of data have the same column names. If you need to map more specifically, provide an object mapping from key in the original data set to key in the join dataset. Note that if `by` is not provided, then overlapping columns will be autodetected and used.
+
+
+### Usage
+
+```js
+tidy([{ a: 1, b: 2 }, { a: 2, b: 5 }],
+  fullJoin(
+    [{ a: 1, c: 3 }, { a: 4, c: 4 }],
+    { by: 'a' }
+  )
+)
+// output:
+[
+  { a: 1, b: 2, c: 3 },
+  { a: 2, b: 5 },
+  { a: 4, c: 4 },
+];
+
+const data = [
+  { a: 1, J: 'j', b: 10, c: 100 },
+  { a: 1, J: 'k', b: 60, c: 600 },
+  { a: 1, J: 'J', b: 30, c: 300 },
+  { a: 2, J: 'j', b: 20, c: 200 },
+  { a: 3, J: 'x', b: 50, c: 500 },
+];
+
+const joinData = [
+  { a: 1, J: 'j', altJ: 'j', x: 'x1', y: 'y1' },
+  { a: 1, J: 'J', altJ: 'J', x: 'x9', y: 'y9' },
+  { a: 2, J: 'j', altJ: 'j', x: 'x2', y: 'y2' },
+  { a: 2, J: 'X', altJ: 'x', x: 'x5', y: 'y5' },
+];
+
+tidy(data, fullJoin(joinData, { by: ['a', 'J'] }));
+// output:
+[
+  { a: 1, J: 'j', altJ: 'j', b: 10, c: 100, x: 'x1', y: 'y1' },
+  { a: 1, J: 'k', b: 60, c: 600 },
+  { a: 1, J: 'J', altJ: 'J', b: 30, c: 300, x: 'x9', y: 'y9' },
+  { a: 2, J: 'j', altJ: 'j', b: 20, c: 200, x: 'x2', y: 'y2' },
+  { a: 3, J: 'x', b: 50, c: 500 },
+  { a: 2, J: 'X', altJ: 'x', x: 'x5', y: 'y5' },
+] 
+
+tidy(data, fullJoin(joinData, { by: { a: 'a', altJ: 'J' } }))
+// output:
+[
+  { a: 1, J: 'j', altJ: 'j', b: 10, c: 100, x: 'x1', y: 'y1' },
+  { a: 1, J: 'k', b: 60, c: 600 },
+  { a: 1, J: 'J', altJ: 'J', b: 30, c: 300, x: 'x9', y: 'y9' },
+  { a: 2, J: 'j', altJ: 'j', b: 20, c: 200, x: 'x2', y: 'y2' },
+  { a: 3, J: 'x', b: 50, c: 500 },
+  { a: 2, J: 'X', altJ: 'x', x: 'x5', y: 'y5' },
+] 
+
+
+```
+
+
+
 
 ---
 
