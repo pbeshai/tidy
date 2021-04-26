@@ -113,7 +113,7 @@ Sorts items by the specified keys and comparators.
 
 A key or set of keys of the item to sort by, or comparator functions that return -1, 0, or 1 if a < b, a == b, a > b respectively. You can mix and match keys and comparator functions when supplying an array.
 
-For convenience, you can flip to descending order for keys by wrapping the key string with the `desc(key: string)` function.
+For convenience, you can flip to descending order for keys by wrapping the key string with the `desc(key: string)` function. There is a corresponding `asc(key: string)` function for ascending data, but this is the default, so is unnecessary to use.
 
 You can also sort the values for a key in a pre-specified order with the fixedOrder function:
 

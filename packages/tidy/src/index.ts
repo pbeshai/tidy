@@ -73,6 +73,7 @@ export { median } from './summary/median';
 export { deviation } from './summary/deviation';
 export { variance } from './summary/variance';
 export { n } from './summary/n';
+export { nDistinct } from './summary/nDistinct';
 export { first } from './summary/first';
 export { last } from './summary/last';
 

@@ -343,6 +343,72 @@ tidy(data, summarize({
 ```
 
 
+
+---
+
+
+
+## nDistinct
+
+Computes the number of distinct values for a key in the collection.
+
+### Parameters
+
+#### `key`
+
+```ts
+| string /* key of object */
+| (item: object) => any
+```
+
+The key or function to compute the distinct values over.
+
+
+#### `options`
+
+```ts
+{ 
+  includeNull?: boolean = true
+  includeUndefined?: boolean = false
+}
+```
+
+* `includeNull = true` whether or not to count `null` as a distinct value
+* `includeUndefined = false` whether or not to count `undefined` as a distinct value
+
+
+### Usage
+
+```js
+const data = [
+  { str: 'foo', value: 3 },
+  { str: 'foo', value: 1 },
+  { str: 'bar', value: 3 },
+  { str: 'bar', value: 1 },
+  { str: 'bar', value: 7 },
+  { str: 'bar', value: undefined },
+];
+
+tidy(data, summarize({
+  numStr: nDistinct('str'),
+})
+// output:
+[{ numStr: 2 }]
+
+tidy(data, summarize({
+  numValue: nDistinct(d => d.value),
+})
+// output:
+[{ numValue: 3 }]
+
+tidy(data, summarize({
+  numValue: nDistinct(d => d.value, { includeUndefined: true }),
+})
+// output:
+[{ numValue: 4 }]
+```
+
+
 ---
 
 
