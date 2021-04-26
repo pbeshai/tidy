@@ -55,6 +55,7 @@ const functions = [
       'expand',
       'fill',
       'filter',
+      'fullJoin',
       'groupBy',
       'innerJoin',
       'leftJoin',

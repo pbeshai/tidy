@@ -29,6 +29,7 @@ export {
 
 export { innerJoin } from './innerJoin';
 export { leftJoin } from './leftJoin';
+export { fullJoin } from './fullJoin';
 
 export { mutateWithSummary } from './mutateWithSummary';
 export { mutate } from './mutate';
