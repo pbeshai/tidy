@@ -63,6 +63,8 @@ export { rate } from './item/rate';
 // vector
 export { cumsum } from './vector/cumsum';
 export { roll } from './vector/roll';
+export { lag } from './vector/lag';
+export { lead } from './vector/lead';
 
 // summary
 export { sum } from './summary/sum';

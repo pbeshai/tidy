@@ -52,6 +52,136 @@ tidy(
 ---
 
 
+## lag 
+
+Lags a vector by a specified offset (`options.n`, default 1). Useful for finding previous values to compute deltas with later. It can be convenient to use [**TMath::subtract**](./math.md#subtract) and[**TMath::add**](./math.md#add) with these values to handle nulls.
+
+### Parameters
+
+#### `key`
+
+```ts
+| string /* key of object */
+| (item: object) => any
+```
+
+Either the key to compute the value over or an accessor function that maps a given item to the value to compute over.
+
+
+#### `options`
+
+```ts
+{
+  n?: number = 1
+  default?: any
+}
+```
+
+- `n = 1` The number of positions to lag by. e.g. given `[1,2,3,4]` a lag `n` of 1 would produce `[undefined,1,2,3]`
+- `default = undefined` The default value for non-existent rows (e.g. we've lagged before the first element).
+
+
+### Usage
+
+```js
+const data = [
+  { str: 'foo', value: 1 },
+  { str: 'foo', value: 2 },
+  { str: 'bar', value: 4 },
+]
+
+tidy(
+  data,
+  mutateWithSummary({
+    prev1: lag('value'),
+    prev1_0: lag('value', { default: 0 }),
+    prev2: lag('value', { n: 2 }),
+    prev3: lag('value', { n: 3 }),
+    other: lag('other'),
+  }),
+  mutate({
+    delta1_0: (d) => d.value - d.prev1_0,
+  })
+)
+
+// output:
+[
+  { str: 'foo', value: 1, prev1: undefined, prev1_0: 0, delta1_0: 1 },
+  { str: 'foo', value: 2, prev1: 1, prev1_0: 1, delta1_0: 1 },
+  { str: 'bar', value: 4, prev1: 2, prev1_0: 2, prev2: 1 , delta1_0: 2 },
+]
+```
+
+
+
+---
+
+
+## lead 
+
+Leads a vector by a specified offset (`options.n`, default 1). Useful for finding next values to compute deltas with later. It can be convenient to use [**TMath::subtract**](./math.md#subtract) and[**TMath::add**](./math.md#add) with these values to handle nulls.
+
+### Parameters
+
+#### `key`
+
+```ts
+| string /* key of object */
+| (item: object) => any
+```
+
+Either the key to compute the value over or an accessor function that maps a given item to the value to compute over.
+
+
+#### `options`
+
+```ts
+{
+  n?: number = 1
+  default?: any
+}
+```
+
+- `n = 1` The number of positions to lead by. e.g. given `[1,2,3,4]` a lead `n` of 1 would produce `[2,3,4,undefined]`
+- `default = undefined` The default value for non-existent rows (e.g. we've lagged before the first element).
+
+
+### Usage
+
+```js
+const data = [
+  { str: 'foo', value: 1 },
+  { str: 'foo', value: 2 },
+  { str: 'bar', value: 4 },
+]
+
+tidy(
+  data,
+  mutateWithSummary({
+    next1: lead('value'),
+    next1_0: lead('value', { default: 0 }),
+    next2: lead('value', { n: 2 }),
+    next3: lead('value', { n: 3 }),
+    other: lead('other'),
+  }),
+  mutate({
+    delta1: (d) => TMath.subtract(d.value, d.next1),
+  })
+)
+
+// output:
+[
+  { str: 'foo', value: 1, next1: 2, next1_0: 2, next2: 4, delta1: -1 },
+  { str: 'foo', value: 2, next1: 4, next1_0: 4, delta1: -2 },
+  { str: 'bar', value: 4, next1: undefined, next1_0: 0, delta1: undefined },
+]
+```
+
+
+
+---
+
+
 ## roll 
 
 Computes values over a rolling window. Typically used for calculating moving averages or running sums.

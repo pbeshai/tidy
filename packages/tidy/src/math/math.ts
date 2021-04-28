@@ -14,3 +14,27 @@ export function rate(
     ? undefined
     : numerator / denominator;
 }
+
+export function subtract(
+  a: number | null | undefined,
+  b: number | null | undefined,
+  nullyZero?: boolean
+) {
+  return a == null || b == null
+    ? nullyZero
+      ? (a ?? 0) - (b ?? 0)
+      : undefined
+    : a - b;
+}
+
+export function add(
+  a: number | null | undefined,
+  b: number | null | undefined,
+  nullyZero?: boolean
+) {
+  return a == null || b == null
+    ? nullyZero
+      ? (a ?? 0) + (b ?? 0)
+      : undefined
+    : a + b;
+}
