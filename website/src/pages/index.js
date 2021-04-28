@@ -155,7 +155,7 @@ const functions = [
   {
     heading: 'TMath',
     url: 'docs/api/math',
-    items: ['rate'],
+    items: ['add', 'rate', 'subtract'],
   },
 ];
 
