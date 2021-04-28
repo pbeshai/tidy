@@ -125,7 +125,7 @@ const functions = [
   {
     heading: 'Vector Functions',
     url: 'docs/api/vector',
-    items: ['cumsum', 'roll'],
+    items: ['cumsum', 'lag', 'lead', 'roll'],
   },
   {
     heading: 'Pivot',
@@ -155,7 +155,7 @@ const functions = [
   {
     heading: 'TMath',
     url: 'docs/api/math',
-    items: ['rate'],
+    items: ['add', 'rate', 'subtract'],
   },
 ];
 
