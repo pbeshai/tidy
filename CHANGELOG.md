@@ -4,6 +4,12 @@ Tidy follows semver.
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 2.3.0 (2021-04-28)
+
+* adds vector functions: lead, lag (use with mutateWithSummary typically) #32 
+* adds TMath.add, TMath.subtract for convenience in handling nully values #32
+
+
 # 2.2.0 (2021-04-26)
 
 * adds fullJoin for completing a full join (now in addition to innerJoin and leftJoin) #31
