@@ -51,6 +51,7 @@ describe('slice', () => {
       { value: 3 },
       { value: 1 },
       { value: 4 },
+      { value: null },
       { value: 5 },
       { value: 2 },
     ];
@@ -63,6 +64,7 @@ describe('slice', () => {
       { value: 3 },
       { value: 1 },
       { value: 4 },
+      { value: null },
       { value: 5 },
       { value: 2 },
     ];

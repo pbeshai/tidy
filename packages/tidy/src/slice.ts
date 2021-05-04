@@ -1,5 +1,5 @@
 import { shuffle } from 'd3-array';
-import { arrange } from './arrange';
+import { arrange, desc } from './arrange';
 import { SingleOrArray } from './helpers/singleOrArray';
 import { Comparator, Key, TidyFn } from './types';
 
@@ -51,8 +51,12 @@ export function sliceMax<T extends object>(
   n: number,
   orderBy: SingleOrArray<Key | Comparator<T>>
 ): TidyFn<T> {
+  // note: we use desc() so we get proper handling of nullish values
+  // unless they provided an explicit comparator.
   const _sliceMax: TidyFn<T> = (items: T[]): T[] =>
-    arrange<T>(orderBy)(items).slice(-n).reverse();
+    typeof orderBy === 'function'
+      ? arrange<T>(orderBy)(items).slice(-n).reverse()
+      : arrange<T>(desc(orderBy as any))(items).slice(0, n);
 
   return _sliceMax;
 }
