@@ -4,6 +4,11 @@ Tidy follows semver.
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 2.3.1 (2021-05-04)
+
+* fixes a bug where sliceMax would return nulls instead of max values #33
+* ignores falsy values passed to `tidy()` so you can more easily opt out of things (or you can use `when()`). #33
+
 # 2.3.0 (2021-04-28)
 
 * adds vector functions: lead, lag (use with mutateWithSummary typically) #32 
