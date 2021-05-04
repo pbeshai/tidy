@@ -39,7 +39,10 @@ export function tidy<InputT extends object>(
 
   let result: any = items;
   for (const fn of fns) {
-    result = fn(result);
+    if (fn) {
+      // skip falsy values
+      result = fn(result);
+    }
   }
 
   return result;
