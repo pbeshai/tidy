@@ -4,6 +4,19 @@ Tidy follows semver.
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 2.4.0 (2021-05-07)
+
+* groupBy now allows you to not pass any functions or array of functions. e.g. `groupBy(['str'])` or `groupBy(['str'], groupBy.entries())`. Note you could also do `groupBy('str')` (the first argument doesn't need to be an array) #37
+* groupBy now allows you to pass a single function instead of an array if only one: `groupBy(['str'], summarize({ ... }))` #37 
+* groupBy prepends group keys instead of appends when assigning them #34 #35
+* groupBy doesn't assign group keys to non objects #34 #35
+* groupBy doesn't ever assign function group keys #34 #35
+* groupBy ignores falsy values  passed to a groupby flow #35
+
+* makes it so you can pass an accessor to `asc()` or `desc()` when using arrange. Previously you would have to use your own comparator and would miss out on the cool empty aware comparator we use. #36
+
+* internal update typescript to 4.2.4 #37
+
 # 2.3.1 (2021-05-04)
 
 * fixes a bug where sliceMax would return nulls instead of max values #33
