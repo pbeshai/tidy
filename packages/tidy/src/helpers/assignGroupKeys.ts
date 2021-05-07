@@ -6,8 +6,13 @@ import { GroupKey } from '../types';
  * (creates a new object with these properties added)
  */
 export function assignGroupKeys<T extends object>(d: T, keys: GroupKey[]) {
-  return {
-    ...d,
-    ...keys.reduce((accum: any, key) => ((accum[key[0]] = key[1]), accum), {}),
-  };
+  // abort if atypical input
+  if (d == null || typeof d !== 'object' || Array.isArray(d)) return d;
+
+  // transform to { groupKey1: value, ... } excluding function group keys
+  const keysObj = Object.fromEntries(
+    keys.filter((key) => typeof key[0] !== 'function')
+  );
+
+  return Object.assign(keysObj, d);
 }
