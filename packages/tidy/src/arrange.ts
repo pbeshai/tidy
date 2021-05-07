@@ -1,6 +1,6 @@
 import { ascending } from 'd3-array';
 import { SingleOrArray, singleOrArray } from './helpers/singleOrArray';
-import { Comparator, Key, KeyOrFn, Primitive, TidyFn } from './types';
+import { Comparator, Key, KeyOrFn, TidyFn } from './types';
 
 /**
  * Sorts items
@@ -32,13 +32,11 @@ export function arrange<T extends object>(
  * Creates an ascending comparator based on a key
  * @param key property key of T
  */
-export function asc<T>(key: Key): Comparator<T> {
+export function asc<T>(key: Key | ((d: T) => any)): Comparator<T> {
+  const keyFn = typeof key === 'function' ? key : (d: any) => d[key];
+
   return function _asc(a: T, b: T) {
-    return emptyAwareComparator(
-      (a[key as keyof T] as unknown) as Primitive,
-      (b[key as keyof T] as unknown) as Primitive,
-      false
-    );
+    return emptyAwareComparator(keyFn(a), keyFn(b), false);
   };
 }
 
@@ -46,13 +44,10 @@ export function asc<T>(key: Key): Comparator<T> {
  * Creates a descending comparator based on a key
  * @param key property key of T
  */
-export function desc<T>(key: Key): Comparator<T> {
+export function desc<T>(key: Key | ((d: T) => any)): Comparator<T> {
+  const keyFn = typeof key === 'function' ? key : (d: any) => d[key];
   return function _desc(a: T, b: T) {
-    return emptyAwareComparator(
-      (a[key as keyof T] as unknown) as Primitive,
-      (b[key as keyof T] as unknown) as Primitive,
-      true
-    );
+    return emptyAwareComparator(keyFn(a), keyFn(b), true);
   };
 }
 
