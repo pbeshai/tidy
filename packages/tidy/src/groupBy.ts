@@ -161,6 +161,8 @@ type GroupByFn<
  * Nests the data by the specified groupings
  */
 // prettier-ignore
+export function groupBy<T extends object, T1 extends object, Keys extends GK<T>, Opts extends GroupByOptions>(groupKeys: Keys, fns: F<T, T1>, options?: Opts): GroupByFn<T, T1, Keys, Opts>;
+// prettier-ignore
 export function groupBy<T extends object, T1 extends object, T2 extends object, T3 extends object, T4 extends object, T5 extends object, T6 extends object, T7 extends object, Keys extends GK<T>, Opts extends GroupByOptions>(groupKeys: Keys, fns: [F<T, T1>, F<T1, T2>, F<T2, T3>, F<T3, T4>, F<T4, T5>, F<T5, T6>, F<T6, T7>], options?: Opts): GroupByFn<T, T7, Keys, Opts>;
 // prettier-ignore
 export function groupBy<T extends object, T1 extends object, T2 extends object, T3 extends object, T4 extends object, T5 extends object, T6 extends object, Keys extends GK<T>, Opts extends GroupByOptions>(groupKeys: Keys, fns: [F<T, T1>, F<T1, T2>, F<T2, T3>, F<T3, T4>, F<T4, T5>, F<T5, T6>], options?: Opts): GroupByFn<T, T6, Keys, Opts>;
@@ -176,6 +178,8 @@ export function groupBy<T extends object, T1 extends object, T2 extends object, 
 export function groupBy<T extends object, T1 extends object, Keys extends GK<T>, Opts extends GroupByOptions>(groupKeys: Keys, fns: [F<T, T1>], options?: Opts): GroupByFn<T, T1, Keys, Opts>;
 // prettier-ignore
 export function groupBy<T extends object, Keys extends GK<T>, Opts extends GroupByOptions>(groupKeys: Keys, fns: [], options?: Opts): GroupByFn<T, T, Keys, Opts>;
+// prettier-ignore
+export function groupBy<T extends object, Keys extends GK<T>, Opts extends GroupByOptions>(groupKeys: Keys, options?: Opts): GroupByFn<T, T, Keys, Opts>;
 export function groupBy<
   T extends object,
   O extends object,
@@ -183,15 +187,25 @@ export function groupBy<
   Opts extends GroupByOptions
 >(
   groupKeys: Keys,
-  fns: TidyFn<any, any>[],
+  fns: TidyFn<any, any>[] | TidyFn<any, any>,
   options?: Opts
 ): GroupByFn<T, O, Keys, Opts> {
+  if (typeof fns === 'function') {
+    fns = [fns];
+  } else if (arguments.length === 2 && fns != null && !Array.isArray(fns)) {
+    options = fns as any;
+  }
+
   const _groupBy: GroupByFn<T, O, Keys, Opts> = ((items: T[]) => {
     // form into a nested map
     const grouped = makeGrouped(items, groupKeys);
 
     // run group functions
-    const results = runFlow(grouped, fns, options?.addGroupKeys);
+    const results = runFlow(
+      grouped,
+      fns as TidyFn<any, any>[],
+      options?.addGroupKeys
+    );
 
     // export
     if (options?.export) {
