@@ -320,4 +320,43 @@ describe('arrange', () => {
       ['A', 'B', 'C'].sort(fixedOrder((d) => d, ['C', 'A', 'B']))
     ).toEqual(['C', 'A', 'B']);
   });
+
+  it('works with function accessors passed to asc or desc', () => {
+    const results = tidy(
+      [
+        { str: 'foo', value: 3 },
+        { str: 'foo', value: 1 },
+        { str: 'bar', value: 3 },
+        { str: 'bar', value: 1 },
+        { str: 'bar', value: 7 },
+      ],
+      arrange([asc((d) => d.str), desc((d) => d.value)])
+    );
+    expect(results).toEqual([
+      { str: 'bar', value: 7 },
+      { str: 'bar', value: 3 },
+      { str: 'bar', value: 1 },
+      { str: 'foo', value: 3 },
+      { str: 'foo', value: 1 },
+    ]);
+
+    expect(arrange(asc((d) => d))([5, 0, null, 1, 3, -2, 0] as any)).toEqual([
+      -2,
+      0,
+      0,
+      1,
+      3,
+      5,
+      null,
+    ]);
+    expect(arrange(desc((d) => d))([5, 0, null, 1, 3, -2, 0] as any)).toEqual([
+      5,
+      3,
+      1,
+      0,
+      0,
+      -2,
+      null,
+    ]);
+  });
 });
