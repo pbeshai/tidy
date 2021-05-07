@@ -385,6 +385,78 @@ describe('groupBy / ungroup', () => {
       );
       expect(results3).toEqual(results2);
     });
+
+    it('works with flexible arguments', () => {
+      const data = [
+        { str: 'a', ing: 'x', foo: 'G', value: 1 },
+        { str: 'b', ing: 'x', foo: 'H', value: 100 },
+        { str: 'b', ing: 'x', foo: 'K', value: 200 },
+        { str: 'a', ing: 'y', foo: 'G', value: 2 },
+        { str: 'a', ing: 'z', foo: 'K', value: 5 },
+        { str: 'a', ing: 'y', foo: 'H', value: 3 },
+        { str: 'a', ing: 'y', foo: 'K', value: 4 },
+        { str: 'b', ing: 'y', foo: 'G', value: 300 },
+        { str: 'b', ing: 'z', foo: 'H', value: 400 },
+        { str: 'a', ing: 'z', foo: 'G', value: 6 },
+      ];
+
+      const results = tidy(data, groupBy('str'));
+
+      expect(results).toEqual([
+        { str: 'a', ing: 'x', foo: 'G', value: 1 },
+        { str: 'a', ing: 'y', foo: 'G', value: 2 },
+        { str: 'a', ing: 'z', foo: 'K', value: 5 },
+        { str: 'a', ing: 'y', foo: 'H', value: 3 },
+        { str: 'a', ing: 'y', foo: 'K', value: 4 },
+        { str: 'a', ing: 'z', foo: 'G', value: 6 },
+        { str: 'b', ing: 'x', foo: 'H', value: 100 },
+        { str: 'b', ing: 'x', foo: 'K', value: 200 },
+        { str: 'b', ing: 'y', foo: 'G', value: 300 },
+        { str: 'b', ing: 'z', foo: 'H', value: 400 },
+      ]);
+
+      const results2 = tidy(data, groupBy('str', groupBy.entries()));
+      expect(results2).toEqual([
+        [
+          'a',
+          [
+            { str: 'a', ing: 'x', foo: 'G', value: 1 },
+            { str: 'a', ing: 'y', foo: 'G', value: 2 },
+            { str: 'a', ing: 'z', foo: 'K', value: 5 },
+            { str: 'a', ing: 'y', foo: 'H', value: 3 },
+            { str: 'a', ing: 'y', foo: 'K', value: 4 },
+            { str: 'a', ing: 'z', foo: 'G', value: 6 },
+          ],
+        ],
+        [
+          'b',
+          [
+            { str: 'b', ing: 'x', foo: 'H', value: 100 },
+            { str: 'b', ing: 'x', foo: 'K', value: 200 },
+            { str: 'b', ing: 'y', foo: 'G', value: 300 },
+            { str: 'b', ing: 'z', foo: 'H', value: 400 },
+          ],
+        ],
+      ]);
+
+      const results3 = tidy(
+        data,
+        groupBy('str', summarize({ total: sum('value') }), groupBy.entries())
+      );
+      expect(results3).toEqual([
+        ['a', [{ str: 'a', total: 21 }]],
+        ['b', [{ str: 'b', total: 1000 }]],
+      ]);
+
+      const results4 = tidy(
+        data,
+        groupBy('str', summarize({ total: sum('value') }))
+      );
+      expect(results4).toEqual([
+        { str: 'a', total: 21 },
+        { str: 'b', total: 1000 },
+      ]);
+    });
   });
 
   describe('exports', () => {
