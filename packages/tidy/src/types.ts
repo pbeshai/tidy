@@ -19,7 +19,7 @@ export type Grouped<T> = Map<GroupKey<any>, T[] | Grouped<T>>;
 
 export interface TidyContext {
   /** when grouped, tidy functions can access the grouping keys here */
-  groupKeys?: Key[];
+  groupKeys?: GroupKey[];
 }
 
 /**

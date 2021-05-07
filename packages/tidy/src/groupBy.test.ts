@@ -62,28 +62,28 @@ describe('groupBy / ungroup', () => {
 
       const results = tidy(
         data,
-        groupBy((d) => d.str, [], { export: 'map' })
+        groupBy((d) => d.str, [], { export: 'map', addGroupKeys: true })
       );
       expect(results).toEqual(
         new Map([
           [
             'a',
             [
-              { str: 'a', ing: 'x', foo: 'G', value: 1, group_0: 'a' },
-              { str: 'a', ing: 'y', foo: 'G', value: 2, group_0: 'a' },
-              { str: 'a', ing: 'y', foo: 'H', value: 3, group_0: 'a' },
-              { str: 'a', ing: 'y', foo: 'K', value: 4, group_0: 'a' },
-              { str: 'a', ing: 'z', foo: 'K', value: 5, group_0: 'a' },
-              { str: 'a', ing: 'z', foo: 'G', value: 6, group_0: 'a' },
+              { str: 'a', ing: 'x', foo: 'G', value: 1 },
+              { str: 'a', ing: 'y', foo: 'G', value: 2 },
+              { str: 'a', ing: 'y', foo: 'H', value: 3 },
+              { str: 'a', ing: 'y', foo: 'K', value: 4 },
+              { str: 'a', ing: 'z', foo: 'K', value: 5 },
+              { str: 'a', ing: 'z', foo: 'G', value: 6 },
             ],
           ],
           [
             'b',
             [
-              { str: 'b', ing: 'x', foo: 'H', value: 100, group_0: 'b' },
-              { str: 'b', ing: 'x', foo: 'K', value: 200, group_0: 'b' },
-              { str: 'b', ing: 'y', foo: 'G', value: 300, group_0: 'b' },
-              { str: 'b', ing: 'z', foo: 'H', value: 400, group_0: 'b' },
+              { str: 'b', ing: 'x', foo: 'H', value: 100 },
+              { str: 'b', ing: 'x', foo: 'K', value: 200 },
+              { str: 'b', ing: 'y', foo: 'G', value: 300 },
+              { str: 'b', ing: 'z', foo: 'H', value: 400 },
             ],
           ],
         ])
@@ -223,22 +223,32 @@ describe('groupBy / ungroup', () => {
         { str: 'a', ing: 'z', foo: 'G', value: 6 },
       ];
 
+      expect(tidy(data, groupBy([(d) => d.str], []))).toEqual([
+        { str: 'a', ing: 'x', foo: 'G', value: 1 },
+        { str: 'a', ing: 'y', foo: 'G', value: 2 },
+        { str: 'a', ing: 'z', foo: 'K', value: 5 },
+        { str: 'a', ing: 'y', foo: 'H', value: 3 },
+        { str: 'a', ing: 'y', foo: 'K', value: 4 },
+        { str: 'a', ing: 'z', foo: 'G', value: 6 },
+        { str: 'b', ing: 'x', foo: 'H', value: 100 },
+        { str: 'b', ing: 'x', foo: 'K', value: 200 },
+        { str: 'b', ing: 'y', foo: 'G', value: 300 },
+        { str: 'b', ing: 'z', foo: 'H', value: 400 },
+      ]);
+
       expect(
-        tidy(
-          data,
-          groupBy((d) => d.str, [])
-        )
+        tidy(data, groupBy([(d) => d.str, 'ing', (d) => d.foo], []))
       ).toEqual([
-        { group_0: 'a', str: 'a', ing: 'x', foo: 'G', value: 1 },
-        { group_0: 'a', str: 'a', ing: 'y', foo: 'G', value: 2 },
-        { group_0: 'a', str: 'a', ing: 'z', foo: 'K', value: 5 },
-        { group_0: 'a', str: 'a', ing: 'y', foo: 'H', value: 3 },
-        { group_0: 'a', str: 'a', ing: 'y', foo: 'K', value: 4 },
-        { group_0: 'a', str: 'a', ing: 'z', foo: 'G', value: 6 },
-        { group_0: 'b', str: 'b', ing: 'x', foo: 'H', value: 100 },
-        { group_0: 'b', str: 'b', ing: 'x', foo: 'K', value: 200 },
-        { group_0: 'b', str: 'b', ing: 'y', foo: 'G', value: 300 },
-        { group_0: 'b', str: 'b', ing: 'z', foo: 'H', value: 400 },
+        { str: 'a', ing: 'x', foo: 'G', value: 1 },
+        { str: 'a', ing: 'y', foo: 'G', value: 2 },
+        { str: 'a', ing: 'y', foo: 'H', value: 3 },
+        { str: 'a', ing: 'y', foo: 'K', value: 4 },
+        { str: 'a', ing: 'z', foo: 'K', value: 5 },
+        { str: 'a', ing: 'z', foo: 'G', value: 6 },
+        { str: 'b', ing: 'x', foo: 'H', value: 100 },
+        { str: 'b', ing: 'x', foo: 'K', value: 200 },
+        { str: 'b', ing: 'y', foo: 'G', value: 300 },
+        { str: 'b', ing: 'z', foo: 'H', value: 400 },
       ]);
     });
   });
@@ -333,6 +343,47 @@ describe('groupBy / ungroup', () => {
         { summedValue: 300 },
         { summedValue: 400 },
       ]);
+    });
+
+    it('works as expected on non-object inputs (issue 34)', () => {
+      const states = {
+        '01': { name: 'Alabama', count: 0 },
+        '02': { name: 'Alaska', count: 1 },
+        '04': { name: 'Arizona', count: 2 },
+        '05': { name: 'Arkansas', count: 20 },
+      } as any;
+
+      // explicitly say no group keys
+      const results = tidy(
+        Object.keys(states) as any, // ['01', '02', '04', '05']
+        groupBy(
+          (d: any) => states[d].count === 0,
+          [],
+          groupBy.entries({ addGroupKeys: false })
+        )
+      );
+      expect(results).toEqual([
+        [true, ['01']],
+        [false, ['02', '04', '05']],
+      ]);
+
+      // group keys shoud do nothing since input is an array of strings
+      const results2 = tidy(
+        ['01', '02', '04', '05'] as any,
+        groupBy(
+          (d: any) => states[d].count === 0,
+          [],
+          groupBy.entries({ addGroupKeys: true })
+        )
+      );
+      expect(results2).toEqual(results);
+
+      // default should be the same as any of the above
+      const results3 = tidy(
+        Object.keys(states) as any,
+        groupBy((d: any) => states[d].count === 0, [], groupBy.entries())
+      );
+      expect(results3).toEqual(results2);
     });
   });
 

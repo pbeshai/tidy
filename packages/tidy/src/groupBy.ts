@@ -198,13 +198,8 @@ export function groupBy<
       switch (options.export) {
         case 'grouped':
           return results;
-        case 'entries':
-          return exportLevels(results, {
-            ...options,
-            export: 'levels',
-            levels: ['entries'],
-          });
-        case 'entries-object':
+        case 'levels':
+          return exportLevels(results, options);
         case 'entries-obj' as any:
         case 'entriesObject' as any:
           return exportLevels(results, {
@@ -212,32 +207,12 @@ export function groupBy<
             export: 'levels',
             levels: ['entries-object'],
           });
-        case 'object':
+        default:
           return exportLevels(results, {
             ...options,
             export: 'levels',
-            levels: ['object'],
+            levels: [options.export],
           });
-        case 'map':
-          return exportLevels(results, {
-            ...options,
-            export: 'levels',
-            levels: ['map'],
-          });
-        case 'keys':
-          return exportLevels(results, {
-            ...options,
-            export: 'levels',
-            levels: ['keys'],
-          });
-        case 'values':
-          return exportLevels(results, {
-            ...options,
-            export: 'levels',
-            levels: ['values'],
-          });
-        case 'levels':
-          return exportLevels(results, options);
       }
     }
 
@@ -276,6 +251,8 @@ function runFlow<T extends object>(
   if (!fns?.length) return result;
 
   for (const fn of fns) {
+    if (!fn) continue;
+
     // otherwise break it up and call it on each leaf set
     result = groupMap(result, (items, keys) => {
       // ensure we kept the group keys in the object
@@ -295,19 +272,12 @@ function runFlow<T extends object>(
   return result;
 }
 
-export function makeGrouped<T extends object>(
+function makeGrouped<T extends object>(
   items: T[],
   groupKeys: SingleOrArray<keyof T | ((d: T) => any)>
 ): Grouped<T> {
   // convert string based keys to functions and keep the key name with the key value in a tuple
   const groupKeyFns = singleOrArray(groupKeys).map((key, i) => {
-    let keyName: string;
-    if (typeof key === 'function') {
-      keyName = key.name ? key.name : `group_${i}`;
-    } else {
-      keyName = key.toString();
-    }
-
     const keyFn = typeof key === 'function' ? key : (d: T) => d[key];
 
     // use a cache so we don't generate new keys for the same tuple
@@ -320,7 +290,7 @@ export function makeGrouped<T extends object>(
         return keyCache.get(keyValue) as GroupKey;
       }
 
-      const keyWithName = [keyName, keyValue];
+      const keyWithName = [key, keyValue];
       keyCache.set(keyValue, keyWithName);
 
       return keyWithName;
@@ -336,7 +306,7 @@ export function makeGrouped<T extends object>(
  */
 function ungroup<T extends object>(
   grouped: Grouped<T>,
-  addGroupKeys?: boolean
+  addGroupKeys: boolean | undefined
 ): T[] {
   // flatten the groups
   const items: T[] = [];
@@ -358,9 +328,7 @@ function ungroup<T extends object>(
 // -----------------------------------------------------------------------
 const defaultCompositeKey = (keys: any[]) => keys.join('/');
 
-export function processFromGroupsOptions<T extends object>(
-  options: GroupByOptions
-) {
+function processFromGroupsOptions<T extends object>(options: GroupByOptions) {
   const {
     flat,
     single,
