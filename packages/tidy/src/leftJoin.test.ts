@@ -1,4 +1,4 @@
-import { tidy, leftJoin } from './index';
+import { tidy, leftJoin, select, everything } from './index';
 
 describe('leftJoin', () => {
   it('leftJoin works', () => {
@@ -36,6 +36,36 @@ describe('leftJoin', () => {
     expect(results3).toEqual([
       { a: 1, b: 10, c: 100, x: 'x1', y: 'y1' },
       { a: 2, b: 20, c: 200 },
+    ]);
+  });
+
+  // note we need this so our lazy functions that just look at first item find all the keys
+  it('puts in explicit undefined for columns when there is no joined item', () => {
+    const results = tidy(
+      [
+        { a: 123, b: 345 },
+        { a: 452, b: 999 },
+      ],
+      leftJoin([{ a: 452, c: 456 }], { by: 'a' })
+    );
+
+    expect(Object.keys(results[0])).toEqual(['a', 'b', 'c']);
+    expect(Object.keys(results[1])).toEqual(['a', 'b', 'c']);
+  });
+
+  it('does not lose columns with select', () => {
+    const results = tidy(
+      [
+        { a: 123, b: 345 },
+        { a: 452, b: 999 },
+      ],
+      leftJoin([{ a: 452, c: 456 }], { by: 'a' }),
+      select([everything()])
+    );
+
+    expect(results).toEqual([
+      { a: 123, b: 345, c: undefined },
+      { a: 452, b: 999, c: 456 },
     ]);
   });
 
