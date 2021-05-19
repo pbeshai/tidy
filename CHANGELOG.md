@@ -4,6 +4,14 @@ Tidy follows semver.
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 2.4.2 (2021-05-19)
+
+* Fixes bug where leftJoin and fullJoin didn't include all columns on all objects, which may have resulted in weird behavior using select or arrange. #41
+
+# 2.4.1 (2021-05-12)
+
+* Allows type guards on filter (only affeects typescript) #39
+
 # 2.4.0 (2021-05-07)
 
 * groupBy now allows you to not pass any functions or array of functions. e.g. `groupBy(['str'])` or `groupBy(['str'], groupBy.entries())`. Note you could also do `groupBy('str')` (the first argument doesn't need to be an array) #37
