@@ -4,6 +4,10 @@ Tidy follows semver.
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 2.4.3 (2021-08-17)
+
+* Fix: groupBy now works on columns containing objects with valueOf() e.g. Dates #46
+
 # 2.4.2 (2021-05-19)
 
 * Fixes bug where leftJoin and fullJoin didn't include all columns on all objects, which may have resulted in weird behavior using select or arrange. #41
