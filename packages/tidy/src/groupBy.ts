@@ -299,13 +299,15 @@ function makeGrouped<T extends object>(
     return (d: T) => {
       const keyValue = keyFn(d);
 
+      const keyValueOf =
+        typeof keyValue === 'object' ? keyValue.valueOf() : keyValue;
       // used cache tuple if available
-      if (keyCache.has(keyValue)) {
-        return keyCache.get(keyValue) as GroupKey;
+      if (keyCache.has(keyValueOf)) {
+        return keyCache.get(keyValueOf) as GroupKey;
       }
 
       const keyWithName = [key, keyValue];
-      keyCache.set(keyValue, keyWithName);
+      keyCache.set(keyValueOf, keyWithName);
 
       return keyWithName;
     };
