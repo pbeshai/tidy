@@ -148,6 +148,28 @@ describe('groupBy / ungroup', () => {
         ])
       );
     });
+
+    it('groupBy works with Dates / valueOf()', () => {
+      const data = [
+        { date: new Date(2021, 0, 1), value: 10 },
+        { date: new Date(2021, 1, 1), value: 20 },
+        { date: new Date(2021, 2, 1), value: 30 },
+        { date: new Date(2021, 0, 1), value: 100 },
+        { date: new Date(2021, 1, 1), value: 200 },
+        { date: new Date(2021, 2, 1), value: 300 },
+      ];
+
+      const results = tidy(
+        data,
+        groupBy('date', [summarize({ value: sum('value') })])
+      );
+
+      expect(results).toEqual([
+        { date: new Date(2021, 0, 1), value: 110 },
+        { date: new Date(2021, 1, 1), value: 220 },
+        { date: new Date(2021, 2, 1), value: 330 },
+      ]);
+    });
   });
 
   describe('ungroup', () => {
