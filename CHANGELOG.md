@@ -4,6 +4,9 @@ Tidy follows semver.
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 2.4.4 (2021-09-23)
+* Feat: arrange now works with accessors: `arrange([d => d.foo.bar])` instead of requiring comparators or wrapping with asc or desc
+
 # 2.4.3 (2021-08-17)
 
 * Fix: groupBy now works on columns containing objects with valueOf() e.g. Dates #46
