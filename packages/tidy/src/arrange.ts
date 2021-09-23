@@ -7,12 +7,19 @@ import { Comparator, Key, KeyOrFn, TidyFn } from './types';
  * @param comparators Given a, b return -1 if a comes before b, 0 if equal, 1 if after
  */
 export function arrange<T extends object>(
-  comparators: SingleOrArray<Key | Comparator<T>>
+  // note: had to switch to returning `any` instead of using Comparator<T> (returns number)
+  // for #49 - otherwise typescript failed to do type inference on accessors
+  comparators: SingleOrArray<Key | ((a: T, b: T) => any)>
 ): TidyFn<T> {
   const _arrange: TidyFn<T> = (items: T[]): T[] => {
     // expand strings `key` to `asc(key)`
     const comparatorFns = singleOrArray(comparators).map((comp) =>
-      typeof comp === 'function' ? comp : asc<T>(comp)
+      typeof comp === 'function'
+        ? // length === 1 means it is an accessor (1 argument). convert to comparator via asc
+          comp.length === 1
+          ? asc(comp as (d: T) => unknown)
+          : (comp as Comparator<T>)
+        : asc<T>(comp)
     );
 
     return items.slice().sort((a, b) => {

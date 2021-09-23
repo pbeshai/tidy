@@ -321,6 +321,28 @@ describe('arrange', () => {
     ).toEqual(['C', 'A', 'B']);
   });
 
+  it('arranges with accessor functions', () => {
+    expect(
+      tidy(
+        [
+          { str: 'foo', value: 3 },
+          { str: 'foo', value: 1 },
+          { str: 'bar', value: 3 },
+          { str: 'bar', value: 1 },
+          { str: 'bar', value: 7 },
+        ],
+        (d) => d,
+        arrange((a) => a.str),
+        arrange([(a) => a.str, (a) => a.value])
+      )
+    ).toEqual([
+      { str: 'bar', value: 1 },
+      { str: 'bar', value: 3 },
+      { str: 'bar', value: 7 },
+      { str: 'foo', value: 1 },
+      { str: 'foo', value: 3 },
+    ]);
+  });
   it('works with function accessors passed to asc or desc', () => {
     const results = tidy(
       [
