@@ -4,6 +4,10 @@ Tidy follows semver.
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 2.4.5 (2021-12-15)
+* Fix: groupBy works now with nullish keys #53
+
+
 # 2.4.4 (2021-09-23)
 * Feat: arrange now works with accessors: `arrange([d => d.foo.bar])` instead of requiring comparators or wrapping with asc or desc
 
