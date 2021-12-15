@@ -194,9 +194,6 @@ describe('groupBy / ungroup', () => {
           ],
         ])
       );
-
-      const results2 = tidy(data, groupBy('str', [], groupBy.map()));
-      expect(results2).toEqual(results);
     });
 
     it('groupBy works with Dates / valueOf()', () => {
