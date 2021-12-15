@@ -149,6 +149,53 @@ describe('groupBy / ungroup', () => {
       );
     });
 
+    it('groupBy works with null values', () => {
+      const data = [
+        { str: 'a', ing: 'x', foo: 'G', value: 1 },
+        { str: null, ing: 'x', foo: 'H', value: 100 },
+        { str: 'b', ing: 'x', foo: 'K', value: 200 },
+        { str: null, ing: 'y', foo: 'G', value: 2 },
+        { str: 'a', ing: 'y', foo: 'H', value: 3 },
+        { str: 'a', ing: 'y', foo: 'K', value: 4 },
+        { str: 'b', ing: 'y', foo: 'G', value: 300 },
+        { str: 'b', ing: 'z', foo: 'H', value: 400 },
+        { str: null, ing: 'z', foo: 'K', value: 5 },
+        { str: null, ing: 'z', foo: 'G', value: 6 },
+      ];
+
+      const results = tidy(data, groupBy('str', [], { export: 'map' }));
+
+      expect(results).toEqual(
+        new Map([
+          [
+            null,
+            [
+              { str: null, ing: 'x', foo: 'H', value: 100 },
+              { str: null, ing: 'y', foo: 'G', value: 2 },
+              { str: null, ing: 'z', foo: 'K', value: 5 },
+              { str: null, ing: 'z', foo: 'G', value: 6 },
+            ],
+          ],
+          [
+            'a',
+            [
+              { str: 'a', ing: 'x', foo: 'G', value: 1 },
+              { str: 'a', ing: 'y', foo: 'H', value: 3 },
+              { str: 'a', ing: 'y', foo: 'K', value: 4 },
+            ],
+          ],
+          [
+            'b',
+            [
+              { str: 'b', ing: 'x', foo: 'K', value: 200 },
+              { str: 'b', ing: 'y', foo: 'G', value: 300 },
+              { str: 'b', ing: 'z', foo: 'H', value: 400 },
+            ],
+          ],
+        ])
+      );
+    });
+
     it('groupBy works with Dates / valueOf()', () => {
       const data = [
         { date: new Date(2021, 0, 1), value: 10 },

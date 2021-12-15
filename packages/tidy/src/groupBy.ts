@@ -4,6 +4,7 @@ import { assignGroupKeys } from './helpers/assignGroupKeys';
 import { groupMap } from './helpers/groupMap';
 import { groupTraversal } from './helpers/groupTraversal';
 import { identity } from './helpers/identity';
+import { isObject } from './helpers/isObject';
 import { SingleOrArray, singleOrArray } from './helpers/singleOrArray';
 import { Grouped, GroupKey, TidyGroupExportFn, Key, TidyFn } from './types';
 
@@ -299,8 +300,7 @@ function makeGrouped<T extends object>(
     return (d: T) => {
       const keyValue = keyFn(d);
 
-      const keyValueOf =
-        typeof keyValue === 'object' ? keyValue.valueOf() : keyValue;
+      const keyValueOf = isObject(keyValue) ? keyValue.valueOf() : keyValue;
       // used cache tuple if available
       if (keyCache.has(keyValueOf)) {
         return keyCache.get(keyValueOf) as GroupKey;
