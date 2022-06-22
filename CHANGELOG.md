@@ -1,8 +1,14 @@
 # Change Log
 
+
 Tidy follows semver.
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# 2.4.6 (2022-06-22)
+* Fix: types of `first` and `last` return values of `any` not `number`
+* Feat: add `align` option to `roll`
+* Docs: correct order of keys in group by documentation (#54)
 
 # 2.4.5 (2021-12-15)
 * Fix: groupBy works now with nullish keys #53
