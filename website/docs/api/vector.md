@@ -211,11 +211,15 @@ The function used to apply to the window, reduces to a single value for the wind
 ```ts
 {
   partial?: boolean
+  align?: 'right' | 'center' | 'left'
 }
 ```
 
 - `partial = false` If true, will compute the value even if the size of the window is less than the specified width. Otherwise, the rolled up value will be undefined.
-
+- `align = 'right'` which direction the window is aligned to (default: right, looking back)
+  - right: current row is the last item [ 1, 2, **3** ]
+  - left: current row is the first item [ **1**, 2, 3 ]
+  - center: current row is the center item [ 1, **2**, 3 ]
 
 ### Usage
 

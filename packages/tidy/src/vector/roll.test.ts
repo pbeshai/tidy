@@ -66,6 +66,76 @@ describe('roll', () => {
     ]);
   });
 
+  it('different alignments', () => {
+    const data = [
+      { str: 'foo', value: 3 },
+      { str: 'foo', value: 1 },
+      { str: 'bar', value: 3 },
+      { str: 'bar', value: 1 },
+      { str: 'bar', value: 7 },
+    ];
+
+    expect(
+      tidy(
+        data,
+        mutateWithSummary({
+          movingAvg: roll(3, mean('value'), { partial: true, align: 'center' }),
+        })
+      )
+    ).toEqual([
+      { str: 'foo', value: 3, movingAvg: 4 / 2 },
+      { str: 'foo', value: 1, movingAvg: 7 / 3 },
+      { str: 'bar', value: 3, movingAvg: 5 / 3 },
+      { str: 'bar', value: 1, movingAvg: 11 / 3 },
+      { str: 'bar', value: 7, movingAvg: 8 / 2 },
+    ]);
+
+    expect(
+      tidy(
+        data,
+        mutateWithSummary({
+          movingAvg: roll(3, mean('value'), { align: 'center' }),
+        })
+      )
+    ).toEqual([
+      { str: 'foo', value: 3, movingAvg: undefined },
+      { str: 'foo', value: 1, movingAvg: 7 / 3 },
+      { str: 'bar', value: 3, movingAvg: 5 / 3 },
+      { str: 'bar', value: 1, movingAvg: 11 / 3 },
+      { str: 'bar', value: 7, movingAvg: undefined },
+    ]);
+
+    expect(
+      tidy(
+        data,
+        mutateWithSummary({
+          movingAvg: roll(3, mean('value'), { partial: true, align: 'left' }),
+        })
+      )
+    ).toEqual([
+      { str: 'foo', value: 3, movingAvg: 7 / 3 },
+      { str: 'foo', value: 1, movingAvg: 5 / 3 },
+      { str: 'bar', value: 3, movingAvg: 11 / 3 },
+      { str: 'bar', value: 1, movingAvg: 8 / 2 },
+      { str: 'bar', value: 7, movingAvg: 7 / 1 },
+    ]);
+
+    expect(
+      tidy(
+        data,
+        mutateWithSummary({
+          movingAvg: roll(3, mean('value'), { align: 'left' }),
+        })
+      )
+    ).toEqual([
+      { str: 'foo', value: 3, movingAvg: 7 / 3 },
+      { str: 'foo', value: 1, movingAvg: 5 / 3 },
+      { str: 'bar', value: 3, movingAvg: 11 / 3 },
+      { str: 'bar', value: 1, movingAvg: undefined },
+      { str: 'bar', value: 7, movingAvg: undefined },
+    ]);
+  });
+
   it('works with rates', () => {
     const data = [
       { str: 'foo', value: 3, value2: 4 },
