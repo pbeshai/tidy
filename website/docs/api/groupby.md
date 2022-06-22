@@ -176,8 +176,8 @@ tidy(
 )
 // output:
 [
-  ["a", [{"total": 21, "str": "a"}]], 
-  ["b", [{"total": 1000, "str": "b"}]]
+  ["a", [{"str": "a", "total": 21}]], 
+  ["b", [{"str": "b", "total": 1000}]]
 ]
 
 tidy(
@@ -191,17 +191,17 @@ tidy(
   [
     "a",
     [
-      ["x", {"total": 1, "str": "a", "ing": "x"}],
-      ["y", {"total": 9, "str": "a", "ing": "y"}],
-      ["z", {"total": 11, "str": "a", "ing": "z"}]
+      ["x", {"str": "a", "ing": "x", "total": 1}],
+      ["y", {"str": "a", "ing": "y", "total": 9}],
+      ["z", {"str": "a", "ing": "z", "total": 11}]
     ]
   ],
   [
     "b",
     [
-      ["x", {"total": 300, "str": "b", "ing": "x"}],
-      ["y", {"total": 300, "str": "b", "ing": "y"}],
-      ["z", {"total": 400, "str": "b", "ing": "z"}]
+      ["x", {"str": "b", "ing": "x", "total": 300}],
+      ["y", {"str": "b", "ing": "y", "total": 300}],
+      ["z", {"str": "b", "ing": "z", "total": 400}]
     ]
   ]
 ]
@@ -235,8 +235,8 @@ tidy(
 )
 // output:
 [
-  {"key": "a", "values": [{"total": 21, "str": "a"}]},
-  {"key": "b", "values": [{"total": 1000, "str": "b"}]}
+  {"key": "a", "values": [{"str": "a", "total": 21}]},
+  {"key": "b", "values": [{"str": "b", "total": 1000}]}
 ]
 
 tidy(
@@ -250,17 +250,17 @@ tidy(
   {
     "key": "a",
     "values": [
-      {"key": "x", "values": {"total": 1, "str": "a", "ing": "x"}},
-      {"key": "y", "values": {"total": 9, "str": "a", "ing": "y"}},
-      {"key": "z", "values": {"total": 11, "str": "a", "ing": "z"}}
+      {"key": "x", "values": {"str": "a", "ing": "x", "total": 1}},
+      {"key": "y", "values": {"str": "a", "ing": "y", "total": 9}},
+      {"key": "z", "values": {"str": "a", "ing": "z", "total": 11}}
     ]
   },
   {
     "key": "b",
     "values": [
-      {"key": "x", "values": {"total": 300, "str": "b", "ing": "x"}},
-      {"key": "y", "values": {"total": 300, "str": "b", "ing": "y"}},
-      {"key": "z", "values": {"total": 400, "str": "b", "ing": "z"}}
+      {"key": "x", "values": {"str": "b", "ing": "x", "total": 300}},
+      {"key": "y", "values": {"str": "b", "ing": "y", "total": 300}},
+      {"key": "z", "values": {"str": "b", "ing": "z", "total": 400}}
     ]
   }
 ] 
@@ -445,8 +445,8 @@ tidy(
 )
 // output:
 {
-  "a": [{"total": 21, "str": "a"}], 
-  "b": [{"total": 1000, "str": "b"}]
+  "a": [{"str": "a", "total": 21}], 
+  "b": [{"str": "b", "total": 1000}]
 }
 
 tidy(
@@ -458,14 +458,14 @@ tidy(
 // output:
 {
   "a": {
-    "x": {"total": 1, "str": "a", "ing": "x"},
-    "y": {"total": 9, "str": "a", "ing": "y"},
-    "z": {"total": 11, "str": "a", "ing": "z"}
+    "x": {"str": "a", "ing": "x", "total": 1},
+    "y": {"str": "a", "ing": "y", "total": 9},
+    "z": {"str": "a", "ing": "z", "total": 11}
   },
   "b": {
-    "x": {"total": 300, "str": "b", "ing": "x"},
-    "y": {"total": 300, "str": "b", "ing": "y"},
-    "z": {"total": 400, "str": "b", "ing": "z"}
+    "x": {"str": "b", "ing": "x", "total": 300},
+    "y": {"str": "b", "ing": "y", "total": 300},
+    "z": {"str": "b", "ing": "z", "total": 400}
   }
 }
 ```
@@ -497,8 +497,8 @@ tidy(
   ], groupBy.values())
 )
 // output:
-[[{"total": 21, "str": "a"}], 
- [{"total": 1000, "str": "b"}]]
+[[{"str": "a", "total": 21}], 
+ [{"str": "b", "total": 1000}]]
 
 tidy(
   data,
@@ -509,14 +509,14 @@ tidy(
 // output:
 [
   [
-    {"total": 1, "str": "a", "ing": "x"},
-    {"total": 9, "str": "a", "ing": "y"},
-    {"total": 11, "str": "a", "ing": "z"}
+    {"str": "a", "ing": "x", "total": 1},
+    {"str": "a", "ing": "y", "total": 9},
+    {"str": "a", "ing": "z", "total": 11}
   ],
   [
-    {"total": 300, "str": "b", "ing": "x"},
-    {"total": 300, "str": "b", "ing": "y"},
-    {"total": 400, "str": "b", "ing": "z"}
+    {"str": "b", "ing": "x", "total": 300},
+    {"str": "b", "ing": "y", "total": 300},
+    {"str": "b", "ing": "z", "total": 400}
   ]
 ]
 ```
@@ -555,17 +555,17 @@ tidy(
   { // <-- this level is an "entries object"
     "key": "a",
     "values": { // <-- this level is an "object"
-      "x": {"total": 1, "str": "a", "ing": "x"},
-      "y": {"total": 9, "str": "a", "ing": "y"},
-      "z": {"total": 11, "str": "a", "ing": "z"}
+      "x": {"str": "a", "ing": "x", "total": 1},
+      "y": {"str": "a", "ing": "y", "total": 9},
+      "z": {"str": "a", "ing": "z", "total": 11}
     }
   },
   {
     "key": "b",
     "values": {
-      "x": {"total": 300, "str": "b", "ing": "x"},
-      "y": {"total": 300, "str": "b", "ing": "y"},
-      "z": {"total": 400, "str": "b", "ing": "z"}
+      "x": {"str": "b", "ing": "x", "total": 300},
+      "y": {"str": "b", "ing": "y", "total": 300},
+      "z": {"str": "b", "ing": "z", "total": 400}
     }
   }
 ]
@@ -582,14 +582,14 @@ tidy(
 // output:
 { // <-- this level is an "object"
   "a": [ // <-- this level is "entries object"s
-    {"key": "x", "values": {"total": 1, "str": "a", "ing": "x"}},
-    {"key": "y", "values": {"total": 9, "str": "a", "ing": "y"}},
-    {"key": "z", "values": {"total": 11, "str": "a", "ing": "z"}}
+    {"key": "x", "values": {"str": "a", "ing": "x", "total": 1}},
+    {"key": "y", "values": {"str": "a", "ing": "y", "total": 9}},
+    {"key": "z", "values": {"str": "a", "ing": "z", "total": 11}}
   ],
   "b": [
-    {"key": "x", "values": {"total": 300, "str": "b", "ing": "x"}},
-    {"key": "y", "values": {"total": 300, "str": "b", "ing": "y"}},
-    {"key": "z", "values": {"total": 400, "str": "b", "ing": "z"}}
+    {"key": "x", "values": {"str": "b", "ing": "x", "total": 300}},
+    {"key": "y", "values": {"str": "b", "ing": "y", "total": 300}},
+    {"key": "z", "values": {"str": "b", "ing": "z", "total": 400}}
   ]
 }
 ```
