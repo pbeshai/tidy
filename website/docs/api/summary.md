@@ -343,6 +343,44 @@ tidy(data, summarize({
 ```
 
 
+---
+
+
+
+## nWhere
+
+Computes the number of items in the collection that match the specified condition.
+
+### Parameters
+
+#### `predicateFn`
+
+```ts
+(item: object, index: number, items: object[]) => boolean
+```
+
+A function that returns true if this item should be included in the count.
+
+
+### Usage
+
+```js
+const data = [
+  { str: 'foo', value: 3 },
+  { str: 'foo', value: 1 },
+  { str: 'bar', value: 3 },
+  { str: 'bar', value: 1 },
+  { str: 'bar', value: 7 },
+];
+
+tidy(data, summarize({
+  count: nWhere(d => d.str === 'foo'),
+})
+// output:
+[{ count: 2 }]
+```
+
+
 
 ---
 
