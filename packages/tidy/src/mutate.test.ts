@@ -169,4 +169,20 @@ describe('mutate', () => {
       })
     );
   });
+
+  it('works with index', () => {
+    const data = [{ value: 10 }, { value: 5 }];
+
+    const results = tidy(
+      data,
+      mutate({
+        row: (_, i) => i,
+      })
+    );
+
+    expect(results).toEqual([
+      { value: 10, row: 0 },
+      { value: 5, row: 1 },
+    ]);
+  });
 });

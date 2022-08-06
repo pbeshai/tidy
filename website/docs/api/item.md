@@ -17,7 +17,7 @@ Returns a function that computes a rate (numerator / denominator), setting the v
 
 ```ts
 | string /* key of object */
-| (item: object) => number
+| (item: object, index: number, array: object[]) => number
 ```
 
 Either a key of the object or an accessor function that returns a number given the object. This will be used as the numerator when computing the rate.
@@ -26,7 +26,7 @@ Either a key of the object or an accessor function that returns a number given t
 
 ```ts
 | string /* key of object */
-| (item: object) => number
+| (item: object, index: number, array: object[]) => number
 ```
 
 Either a key of the object or an accessor function that returns a number given the object. This will be used as the denominator when computing the rate.
@@ -36,7 +36,7 @@ Either a key of the object or an accessor function that returns a number given t
 
 ```ts
 { 
-  predicate?: (item: object) => boolean
+  predicate?: (item: object, index: number, array: object[]) => boolean
   allowDivideByZero?: boolean
 }   
 ```
