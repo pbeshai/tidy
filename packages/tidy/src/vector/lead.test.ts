@@ -15,7 +15,7 @@ describe('lead', () => {
         next1_0: lead('value', { default: 0 }),
         next2: lead('value', { n: 2 }),
         next3: lead('value', { n: 3 }),
-        other: lead('other'),
+        other: lead('other' as any),
       }),
       mutate({
         delta1: (d) => TMath.subtract(d.value, d.next1),

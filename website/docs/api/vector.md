@@ -17,7 +17,7 @@ Returns a function that computes a cumulative sum as per [d3-array::cumsum](http
 
 ```ts
 | string /* key of object */
-| (item: object) => number | null | undefined
+| (item: object, index: number, array: object[]) => number | null | undefined
 ```
 
 Either the key to compute the value over or an accessor function that maps a given item to the value to compute over.
@@ -62,7 +62,7 @@ Lags a vector by a specified offset (`options.n`, default 1). Useful for finding
 
 ```ts
 | string /* key of object */
-| (item: object) => any
+| (item: object, index: number, array: object[]) => any
 ```
 
 Either the key to compute the value over or an accessor function that maps a given item to the value to compute over.
@@ -127,7 +127,7 @@ Leads a vector by a specified offset (`options.n`, default 1). Useful for findin
 
 ```ts
 | string /* key of object */
-| (item: object) => any
+| (item: object, index: number, array: object[]) => any
 ```
 
 Either the key to compute the value over or an accessor function that maps a given item to the value to compute over.

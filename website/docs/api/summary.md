@@ -17,7 +17,7 @@ Computes the standard deviation as per [d3-array::deviation](https://github.com/
 
 ```ts
 | string /* key of object */
-| (item: object) => number
+| (item: object, index: number, array: object[]) => number
 ```
 
 Either the key to compute the value over or an accessor function that maps a given item to the value to compute over.
@@ -133,7 +133,7 @@ Computes the max value as per [d3-array::max](https://github.com/d3/d3-array#max
 
 ```ts
 | string /* key of object */
-| (item: object) => number
+| (item: object, index: number, array: object[]) => number
 ```
 
 Either the key to compute the value over or an accessor function that maps a given item to the value to compute over.
@@ -171,7 +171,7 @@ Computes the mean value as per [d3-array::mean](https://github.com/d3/d3-array#m
 
 ```ts
 | string /* key of object */
-| (item: object) => number
+| (item: object, index: number, array: object[]) => number
 ```
 
 Either the key to compute the value over or an accessor function that maps a given item to the value to compute over.
@@ -208,7 +208,7 @@ Computes the mean for fractional values by summing over the numerator and denomi
 
 ```ts
 | string /* key of object */
-| (item: object) => number
+| (item: object, index: number, array: object[]) => number
 ```
 
 Either the key to compute the numerator over or an accessor function that maps a given item to the numerator value to compute over.
@@ -217,7 +217,7 @@ Either the key to compute the numerator over or an accessor function that maps a
 
 ```ts
 | string /* key of object */
-| (item: object) => number
+| (item: object, index: number, array: object[]) => number
 ```
 
 Either the key to compute the denominator over or an accessor function that maps a given item to the denominator value to compute over.
@@ -255,7 +255,7 @@ Computes the median value as per [d3-array::median](https://github.com/d3/d3-arr
 
 ```ts
 | string /* key of object */
-| (item: object) => number
+| (item: object, index: number, array: object[]) => number
 ```
 
 Either the key to compute the value over or an accessor function that maps a given item to the value to compute over.
@@ -292,7 +292,7 @@ Computes the min value as per [d3-array::min](https://github.com/d3/d3-array#min
 
 ```ts
 | string /* key of object */
-| (item: object) => number
+| (item: object, index: number, array: object[]) => number
 ```
 
 Either the key to compute the value over or an accessor function that maps a given item to the value to compute over.
@@ -371,7 +371,7 @@ Computes the number of distinct values for a key in the collection.
 
 ```ts
 | string /* key of object */
-| (item: object) => any
+| (item: object, index: number, array: object[]) => any
 ```
 
 The key or function to compute the distinct values over.
@@ -436,7 +436,7 @@ Computes the sum as per [d3-array::fsum](https://github.com/d3/d3-array#fsum).
 
 ```ts
 | string /* key of object */
-| (item: object) => number
+| (item: object, index: number, array: object[]) => number
 ```
 
 Either the key to compute the value over or an accessor function that maps a given item to the value to compute over.
@@ -488,7 +488,7 @@ Computes the variance as per [d3-array::variance](https://github.com/d3/d3-array
 
 ```ts
 | string /* key of object */
-| (item: object) => number
+| (item: object, index: number, array: object[]) => number
 ```
 
 Either the key to compute the value over or an accessor function that maps a given item to the value to compute over.

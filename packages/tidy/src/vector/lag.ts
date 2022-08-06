@@ -12,17 +12,17 @@ type LagOptions = {
  * @param options Options to configure roll. e.g. whether to run on partial windows.
  */
 export function lag<T extends object>(
-  key: keyof T | ((d: T) => any),
+  key: keyof T | ((d: T, index: number, array: Iterable<T>) => any),
   options?: LagOptions | undefined | null
 ) {
   const keyFn = typeof key === 'function' ? key : (d: T) => d[key];
 
   const { n = 1, default: defaultValue } = options ?? {};
 
-  return (items: any[]) => {
+  return (items: T[]) => {
     return items.map((_, i) => {
       const lagItem = items[i - n];
-      return lagItem == null ? defaultValue : keyFn(lagItem);
+      return lagItem == null ? defaultValue : keyFn(lagItem, i, items);
     });
   };
 }

@@ -1,7 +1,9 @@
 import { TidyFn, NonFunctionValue, Key } from './types';
 import { A } from 'ts-toolbelt';
 
-type MutateSpecValue<T, O = any> = ((item: T) => O) | NonFunctionValue;
+type MutateSpecValue<T, O = any> =
+  | ((item: T, index: number, array: Iterable<T>) => O)
+  | NonFunctionValue;
 export type MutateSpec<T> = Record<Key, MutateSpecValue<T>>;
 export type ResolvedObj<Obj extends Record<Key, MutateSpecValue<any>>> = {
   [K in keyof Obj]: Obj[K] extends (...args: any) => any
@@ -29,25 +31,26 @@ export function mutate<T extends object, MSpec extends MutateSpec<T>>(
     items: T[]
   ): Compute<MutatedT>[] => {
     // create the base items to merge mutated values into
-    const mutatedItems: MutatedT[] = [];
+    // note we start with the original array so when we pass it as the third argument
+    // to a mutate function, you get the values that have been changed so far
+    const mutatedItems: MutatedT[] = items.map((d) => ({ ...d })) as MutatedT[];
 
     // we can update each item completely one at a time, since mutate doesn't
     // support looking across items. Use mutateWithSummary for that.
-    for (const item of items) {
-      const mutatedItem = { ...item } as MutatedT;
-
+    let i = 0;
+    for (const mutatedItem of mutatedItems) {
       for (const key in mutateSpec) {
         // get the mutated value for this item (either run the fn or use the constant)
         const mutateSpecValue = mutateSpec[key];
         const mutatedResult =
           typeof mutateSpecValue === 'function'
-            ? mutateSpecValue(mutatedItem)
+            ? mutateSpecValue(mutatedItem, i, mutatedItems)
             : mutateSpecValue;
 
         mutatedItem[key as keyof MutatedT] = mutatedResult;
       }
 
-      mutatedItems.push(mutatedItem);
+      ++i;
     }
 
     return mutatedItems as Compute<MutatedT>[];

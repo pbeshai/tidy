@@ -7,8 +7,8 @@ import { rate } from '../math/math';
  * @param denominator A string key of the object or an accessor converting the object to a number
  */
 export function meanRate<T extends object>(
-  numerator: keyof T | ((d: T) => number),
-  denominator: keyof T | ((d: T) => number)
+  numerator: keyof T | ((d: T, index: number, array: Iterable<T>) => number),
+  denominator: keyof T | ((d: T, index: number, array: Iterable<T>) => number)
 ) {
   const numeratorFn =
     typeof numerator === 'function'

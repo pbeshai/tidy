@@ -15,7 +15,7 @@ describe('lag', () => {
         prev1_0: lag('value', { default: 0 }),
         prev2: lag('value', { n: 2 }),
         prev3: lag('value', { n: 3 }),
-        other: lag('other'),
+        other: lag('other' as any),
       }),
       mutate({
         delta1_0: (d) => d.value - d.prev1_0,

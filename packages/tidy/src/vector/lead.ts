@@ -12,17 +12,17 @@ type LeadOptions = {
  * @param options Options to configure roll. e.g. whether to run on partial windows.
  */
 export function lead<T extends object>(
-  key: keyof T | ((d: T) => any),
+  key: keyof T | ((d: T, index: number, array: Iterable<T>) => any),
   options?: LeadOptions | undefined | null
 ) {
   const keyFn = typeof key === 'function' ? key : (d: T) => d[key];
 
   const { n = 1, default: defaultValue } = options ?? {};
 
-  return (items: any[]) => {
+  return (items: T[]) => {
     return items.map((_, i) => {
       const leadItem = items[i + n];
-      return leadItem == null ? defaultValue : keyFn(leadItem);
+      return leadItem == null ? defaultValue : keyFn(leadItem, i, items);
     });
   };
 }
