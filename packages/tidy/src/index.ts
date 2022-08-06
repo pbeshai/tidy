@@ -68,6 +68,7 @@ export { lead } from './vector/lead';
 
 // summary
 export { sum } from './summary/sum';
+export { sumWhere } from './summary/sumWhere';
 export { min } from './summary/min';
 export { max } from './summary/max';
 export { mean } from './summary/mean';
@@ -76,6 +77,7 @@ export { median } from './summary/median';
 export { deviation } from './summary/deviation';
 export { variance } from './summary/variance';
 export { n } from './summary/n';
+export { nWhere } from './summary/nWhere';
 export { nDistinct } from './summary/nDistinct';
 export { first } from './summary/first';
 export { last } from './summary/last';

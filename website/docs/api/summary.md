@@ -343,6 +343,44 @@ tidy(data, summarize({
 ```
 
 
+---
+
+
+
+## nWhere
+
+Computes the number of items in the collection that match the specified condition.
+
+### Parameters
+
+#### `predicateFn`
+
+```ts
+(item: object, index: number, items: object[]) => boolean
+```
+
+A function that returns true if this item should be included in the count.
+
+
+### Usage
+
+```js
+const data = [
+  { str: 'foo', value: 3 },
+  { str: 'foo', value: 1 },
+  { str: 'bar', value: 3 },
+  { str: 'bar', value: 1 },
+  { str: 'bar', value: 7 },
+];
+
+tidy(data, summarize({
+  count: nWhere(d => d.str === 'foo'),
+})
+// output:
+[{ count: 2 }]
+```
+
+
 
 ---
 
@@ -446,6 +484,50 @@ tidy(data, summarize({
 [{ value: 15 }]
 ```
 
+---
+
+
+
+## sumWhere 
+
+Computes the sum of items that match a condition.
+
+### Parameters
+
+#### `predicateFn`
+
+```ts
+(item: object, index: number, items: object[]) => boolean
+```
+
+A function that returns true if this item should be included in the sum.
+
+#### `key`
+
+```ts
+| string /* key of object */
+| (item: object) => number
+```
+
+Either the key to compute the value over or an accessor function that maps a given item to the value to compute over.
+
+### Usage
+
+```js
+const data = [
+  { str: 'foo', value: 3 },
+  { str: 'foo', value: 1 },
+  { str: 'bar', value: 3 },
+  { str: 'bar', value: 1 },
+  { str: 'bar', value: 7 },
+];
+
+tidy(data, summarize({
+  value: sumWhere(d => d.str === 'foo', 'value'),
+})
+// output:
+[{ value: 4 }]
+```
 
 ---
 
