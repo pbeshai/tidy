@@ -20,9 +20,12 @@ describe('sum', () => {
           megaSum: sum((d: MixedDatum) => d.value * 100),
           summedValue: sum<MixedDatum>('value'),
           summedValue2: sum('value'),
+          sumWhere: sum('value', { predicate: (d) => d.str === 'foo' }),
         })
       )
-    ).toEqual([{ summedValue: 15, summedValue2: 15, megaSum: 1500 }]);
+    ).toEqual([
+      { summedValue: 15, summedValue2: 15, megaSum: 1500, sumWhere: 4 },
+    ]);
   });
   it('corrects floating point errors', () => {
     const data = [

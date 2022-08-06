@@ -17,8 +17,9 @@ describe('n', () => {
         data,
         summarize({
           n: n(),
+          nWhere: n({ predicate: (d) => d.str === 'bar' }),
         })
       )
-    ).toEqual([{ n: 5 }]);
+    ).toEqual([{ n: 5, nWhere: 3 }]);
   });
 });
