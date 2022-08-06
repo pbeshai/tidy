@@ -324,6 +324,18 @@ tidy(data, summarize({
 
 Computes the number of items in the collection.
 
+### Parameters
+
+#### `options?` 
+
+```ts
+{ 
+  predicate?: (item: object, index: number, items: object[]) => boolean
+}   
+```
+
+* `predicate`: When provided, only count items that return true when passed to this function.
+
 ### Usage
 
 ```js
@@ -337,47 +349,10 @@ const data = [
 
 tidy(data, summarize({
   count: n(),
+  countFoo: n({ predicate: d => d.str === 'foo' })
 })
 // output:
-[{ count: 5 }]
-```
-
-
----
-
-
-
-## nWhere
-
-Computes the number of items in the collection that match the specified condition.
-
-### Parameters
-
-#### `predicateFn`
-
-```ts
-(item: object, index: number, items: object[]) => boolean
-```
-
-A function that returns true if this item should be included in the count.
-
-
-### Usage
-
-```js
-const data = [
-  { str: 'foo', value: 3 },
-  { str: 'foo', value: 1 },
-  { str: 'bar', value: 3 },
-  { str: 'bar', value: 1 },
-  { str: 'bar', value: 7 },
-];
-
-tidy(data, summarize({
-  count: nWhere(d => d.str === 'foo'),
-})
-// output:
-[{ count: 2 }]
+[{ count: 5, countFoo: 2 }]
 ```
 
 
@@ -466,6 +441,18 @@ Computes the sum as per [d3-array::fsum](https://github.com/d3/d3-array#fsum).
 
 Either the key to compute the value over or an accessor function that maps a given item to the value to compute over.
 
+#### `options?` 
+
+```ts
+{ 
+  predicate?: (item: object, index: number, items: object[]) => boolean
+}   
+```
+
+* `predicate`: When provided, only sum items that return true when passed to this function.
+
+
+
 ### Usage
 
 ```js
@@ -479,55 +466,12 @@ const data = [
 
 tidy(data, summarize({
   value: sum('value'),
+  valueFoo: sum('value', { predicate: d => d.str === 'foo' })
 })
 // output:
-[{ value: 15 }]
+[{ value: 15, valueFoo: 4 }]
 ```
 
----
-
-
-
-## sumWhere 
-
-Computes the sum of items that match a condition.
-
-### Parameters
-
-#### `predicateFn`
-
-```ts
-(item: object, index: number, items: object[]) => boolean
-```
-
-A function that returns true if this item should be included in the sum.
-
-#### `key`
-
-```ts
-| string /* key of object */
-| (item: object) => number
-```
-
-Either the key to compute the value over or an accessor function that maps a given item to the value to compute over.
-
-### Usage
-
-```js
-const data = [
-  { str: 'foo', value: 3 },
-  { str: 'foo', value: 1 },
-  { str: 'bar', value: 3 },
-  { str: 'bar', value: 1 },
-  { str: 'bar', value: 7 },
-];
-
-tidy(data, summarize({
-  value: sumWhere(d => d.str === 'foo', 'value'),
-})
-// output:
-[{ value: 4 }]
-```
 
 ---
 
