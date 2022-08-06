@@ -68,6 +68,7 @@ export { lead } from './vector/lead';
 
 // summary
 export { sum } from './summary/sum';
+export { sumWhere } from './summary/sumWhere';
 export { min } from './summary/min';
 export { max } from './summary/max';
 export { mean } from './summary/mean';
