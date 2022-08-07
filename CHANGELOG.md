@@ -5,6 +5,11 @@ Tidy follows semver.
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 2.5.1 (2022-08-07)
+- Fix(types): improve groupBy type inference (fixes #59)
+- Fix(types): improve mutate output type merging
+
+
 # 2.5.0 (2022-08-06)
 - Feat: update most accessor functions to take index and array instead of just the item, matching standard array options `(d, i, array) => ...`
 - Feat add options to `sum` and `n` to allow specifying a predicate
