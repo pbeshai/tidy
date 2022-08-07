@@ -65,6 +65,7 @@ export { cumsum } from './vector/cumsum';
 export { roll } from './vector/roll';
 export { lag } from './vector/lag';
 export { lead } from './vector/lead';
+export { rowNumber } from './vector/rowNumber';
 
 // summary
 export { sum } from './summary/sum';
