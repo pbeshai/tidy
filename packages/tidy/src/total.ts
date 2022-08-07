@@ -19,7 +19,7 @@ export function total<
 >(summarizeSpec: SummarizedSpec, mutateSpec: MutSpec): TidyFn<T> {
   const _total: TidyFn<T, T> = (items: T[]): T[] => {
     const summarized = summarize<T, SummarizedSpec>(summarizeSpec)(items);
-    const mutated = mutate<T, MutSpec>(mutateSpec)(summarized as T[]);
+    const mutated = mutate<T, MutSpec>(mutateSpec)(summarized as T[]) as T[];
     return [...items, ...mutated];
   };
 
@@ -38,7 +38,7 @@ export function totalAll<
 >(summaryFn: F, mutateSpec: MutSpec): TidyFn<T> {
   const _totalAll: TidyFn<T, T> = (items: T[]): T[] => {
     const summarized = summarizeAll<T, F>(summaryFn)(items);
-    const mutated = mutate<T, MutSpec>(mutateSpec)(summarized as T[]);
+    const mutated = mutate<T, MutSpec>(mutateSpec)(summarized as T[]) as T[];
     return [...items, ...mutated];
   };
 
@@ -61,7 +61,7 @@ export function totalIf<
 ): TidyFn<T> {
   const _totalIf: TidyFn<T, T> = (items: T[]): T[] => {
     const summarized = summarizeIf<T, F>(predicateFn, summaryFn)(items);
-    const mutated = mutate<T, MutSpec>(mutateSpec)(summarized as T[]);
+    const mutated = mutate<T, MutSpec>(mutateSpec)(summarized as T[]) as T[];
     return [...items, ...mutated];
   };
 
@@ -81,7 +81,7 @@ export function totalAt<
 >(keys: Keys, summaryFn: F, mutateSpec: MutSpec): TidyFn<T> {
   const _totalAt: TidyFn<T, T> = (items: T[]): T[] => {
     const summarized = summarizeAt<T, Keys, F>(keys, summaryFn)(items);
-    const mutated = mutate<T, MutSpec>(mutateSpec)(summarized as T[]);
+    const mutated = mutate<T, MutSpec>(mutateSpec)(summarized as T[]) as T[];
     return [...items, ...mutated];
   };
 
