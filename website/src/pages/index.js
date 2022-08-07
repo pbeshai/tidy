@@ -125,7 +125,7 @@ const functions = [
   {
     heading: 'Vector Functions',
     url: 'docs/api/vector',
-    items: ['cumsum', 'lag', 'lead', 'roll'],
+    items: ['cumsum', 'lag', 'lead', 'roll', 'rowNumber'],
   },
   {
     heading: 'Pivot',
