@@ -1,5 +1,5 @@
 import { TidyFn, NonFunctionValue, Key } from './types';
-import { A } from 'ts-toolbelt';
+import { A, O } from 'ts-toolbelt';
 
 type MutateSpecValue<T, O = any> =
   | ((item: T, index: number, array: Iterable<T>) => O)
@@ -13,7 +13,10 @@ export type ResolvedObj<Obj extends Record<Key, MutateSpecValue<any>>> = {
     : Obj[K];
 };
 
-type Mutated<T, MSpec extends MutateSpec<T>> = T & ResolvedObj<MSpec>;
+type Mutated<T extends object, MSpec extends MutateSpec<T>> = O.Merge<
+  ResolvedObj<MSpec>,
+  T
+>;
 
 type Compute<T> = A.Compute<T>;
 
@@ -44,10 +47,10 @@ export function mutate<T extends object, MSpec extends MutateSpec<T>>(
         const mutateSpecValue = mutateSpec[key];
         const mutatedResult =
           typeof mutateSpecValue === 'function'
-            ? mutateSpecValue(mutatedItem, i, mutatedItems)
+            ? mutateSpecValue(mutatedItem as T, i, mutatedItems as T[])
             : mutateSpecValue;
 
-        mutatedItem[key as keyof MutatedT] = mutatedResult;
+        mutatedItem[key as any] = mutatedResult;
       }
 
       ++i;
