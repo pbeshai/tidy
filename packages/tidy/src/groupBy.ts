@@ -107,7 +107,7 @@ type WithGroupKeys<
   T extends object,
   Out extends object,
   Keys extends GK<T>,
-  Opts extends GroupByOptions | undefined
+  Opts extends GroupByOptions
 > = NonNullable<Opts>['addGroupKeys'] extends false
   ? Out
   : MergeGroupKeys<T, Out, Keys>;
@@ -119,7 +119,7 @@ type GroupByOutput<
   T extends object,
   O extends object,
   Keys extends GK<T>,
-  Opts extends GroupByOptions | undefined
+  Opts extends GroupByOptions
 > = A.Compute<
   NonNullable<Opts>['export'] extends 'grouped'
     ? Grouped<WithGroupKeys<T, O, Keys, Opts>>
@@ -162,25 +162,45 @@ type GroupByFn<
  * Nests the data by the specified groupings
  */
 // prettier-ignore
-export function groupBy<T extends object, T1 extends object, Keys extends GK<T>, Opts extends GroupByOptions>(groupKeys: Keys, fns: F<T, T1>, options?: Opts): GroupByFn<T, T1, Keys, Opts>;
+export function groupBy<T extends object, T1 extends object, Keys extends GK<T>, Opts extends GroupByOptions>(groupKeys: Keys, fns: F<T, T1>, options: Opts): GroupByFn<T, T1, Keys, Opts>;
 // prettier-ignore
-export function groupBy<T extends object, T1 extends object, T2 extends object, T3 extends object, T4 extends object, T5 extends object, T6 extends object, T7 extends object, Keys extends GK<T>, Opts extends GroupByOptions>(groupKeys: Keys, fns: [F<T, T1>, F<T1, T2>, F<T2, T3>, F<T3, T4>, F<T4, T5>, F<T5, T6>, F<T6, T7>], options?: Opts): GroupByFn<T, T7, Keys, Opts>;
+export function groupBy<T extends object, T1 extends object, Keys extends GK<T>>(groupKeys: Keys, fns: F<T, T1>): GroupByFn<T, T1, Keys, GroupByOptions>;
 // prettier-ignore
-export function groupBy<T extends object, T1 extends object, T2 extends object, T3 extends object, T4 extends object, T5 extends object, T6 extends object, Keys extends GK<T>, Opts extends GroupByOptions>(groupKeys: Keys, fns: [F<T, T1>, F<T1, T2>, F<T2, T3>, F<T3, T4>, F<T4, T5>, F<T5, T6>], options?: Opts): GroupByFn<T, T6, Keys, Opts>;
+export function groupBy<T extends object, T1 extends object, T2 extends object, T3 extends object, T4 extends object, T5 extends object, T6 extends object, T7 extends object, Keys extends GK<T>, Opts extends GroupByOptions>(groupKeys: Keys, fns: [F<T, T1>, F<T1, T2>, F<T2, T3>, F<T3, T4>, F<T4, T5>, F<T5, T6>, F<T6, T7>], options: Opts): GroupByFn<T, T7, Keys, Opts>;
 // prettier-ignore
-export function groupBy<T extends object, T1 extends object, T2 extends object, T3 extends object, T4 extends object, T5 extends object, Keys extends GK<T>, Opts extends GroupByOptions>(groupKeys: Keys, fns: [F<T, T1>, F<T1, T2>, F<T2, T3>, F<T3, T4>, F<T4, T5>], options?: Opts): GroupByFn<T, T5, Keys, Opts>;
+export function groupBy<T extends object, T1 extends object, T2 extends object, T3 extends object, T4 extends object, T5 extends object, T6 extends object, T7 extends object, Keys extends GK<T>>(groupKeys: Keys, fns: [F<T, T1>, F<T1, T2>, F<T2, T3>, F<T3, T4>, F<T4, T5>, F<T5, T6>, F<T6, T7>]): GroupByFn<T, T7, Keys, GroupByOptions>;
 // prettier-ignore
-export function groupBy<T extends object, T1 extends object, T2 extends object, T3 extends object, T4 extends object, Keys extends GK<T>, Opts extends GroupByOptions>(groupKeys: Keys, fns: [F<T, T1>, F<T1, T2>, F<T2, T3>, F<T3, T4>], options?: Opts): GroupByFn<T, T4, Keys, Opts>;
+export function groupBy<T extends object, T1 extends object, T2 extends object, T3 extends object, T4 extends object, T5 extends object, T6 extends object, Keys extends GK<T>, Opts extends GroupByOptions>(groupKeys: Keys, fns: [F<T, T1>, F<T1, T2>, F<T2, T3>, F<T3, T4>, F<T4, T5>, F<T5, T6>], options: Opts): GroupByFn<T, T6, Keys, Opts>;
 // prettier-ignore
-export function groupBy<T extends object, T1 extends object, T2 extends object, T3 extends object, Keys extends GK<T>, Opts extends GroupByOptions>(groupKeys: Keys, fns: [F<T, T1>, F<T1, T2>, F<T2, T3>], options?: Opts): GroupByFn<T, T3, Keys, Opts>;
+export function groupBy<T extends object, T1 extends object, T2 extends object, T3 extends object, T4 extends object, T5 extends object, T6 extends object, Keys extends GK<T>>(groupKeys: Keys, fns: [F<T, T1>, F<T1, T2>, F<T2, T3>, F<T3, T4>, F<T4, T5>, F<T5, T6>]): GroupByFn<T, T6, Keys, GroupByOptions>;
 // prettier-ignore
-export function groupBy<T extends object, T1 extends object, T2 extends object, Keys extends GK<T>, Opts extends GroupByOptions>(groupKeys: Keys, fns: [F<T, T1>, F<T1, T2>], options?: Opts): GroupByFn<T, T2, Keys, Opts>;
+export function groupBy<T extends object, T1 extends object, T2 extends object, T3 extends object, T4 extends object, T5 extends object, Keys extends GK<T>, Opts extends GroupByOptions>(groupKeys: Keys, fns: [F<T, T1>, F<T1, T2>, F<T2, T3>, F<T3, T4>, F<T4, T5>], options: Opts): GroupByFn<T, T5, Keys, Opts>;
 // prettier-ignore
-export function groupBy<T extends object, T1 extends object, Keys extends GK<T>, Opts extends GroupByOptions>(groupKeys: Keys, fns: [F<T, T1>], options?: Opts): GroupByFn<T, T1, Keys, Opts>;
+export function groupBy<T extends object, T1 extends object, T2 extends object, T3 extends object, T4 extends object, T5 extends object, Keys extends GK<T>>(groupKeys: Keys, fns: [F<T, T1>, F<T1, T2>, F<T2, T3>, F<T3, T4>, F<T4, T5>]): GroupByFn<T, T5, Keys, GroupByOptions>;
 // prettier-ignore
-export function groupBy<T extends object, Keys extends GK<T>, Opts extends GroupByOptions>(groupKeys: Keys, fns: [], options?: Opts): GroupByFn<T, T, Keys, Opts>;
+export function groupBy<T extends object, T1 extends object, T2 extends object, T3 extends object, T4 extends object, Keys extends GK<T>, Opts extends GroupByOptions>(groupKeys: Keys, fns: [F<T, T1>, F<T1, T2>, F<T2, T3>, F<T3, T4>], options: Opts): GroupByFn<T, T4, Keys, Opts>;
 // prettier-ignore
-export function groupBy<T extends object, Keys extends GK<T>, Opts extends GroupByOptions>(groupKeys: Keys, options?: Opts): GroupByFn<T, T, Keys, Opts>;
+export function groupBy<T extends object, T1 extends object, T2 extends object, T3 extends object, T4 extends object, Keys extends GK<T>>(groupKeys: Keys, fns: [F<T, T1>, F<T1, T2>, F<T2, T3>, F<T3, T4>]): GroupByFn<T, T4, Keys, GroupByOptions>;
+// prettier-ignore
+export function groupBy<T extends object, T1 extends object, T2 extends object, T3 extends object, Keys extends GK<T>, Opts extends GroupByOptions>(groupKeys: Keys, fns: [F<T, T1>, F<T1, T2>, F<T2, T3>], options: Opts): GroupByFn<T, T3, Keys, Opts>;
+// prettier-ignore
+export function groupBy<T extends object, T1 extends object, T2 extends object, T3 extends object, Keys extends GK<T>>(groupKeys: Keys, fns: [F<T, T1>, F<T1, T2>, F<T2, T3>]): GroupByFn<T, T3, Keys, GroupByOptions>;
+// prettier-ignore
+export function groupBy<T extends object, T1 extends object, T2 extends object, Keys extends GK<T>, Opts extends GroupByOptions>(groupKeys: Keys, fns: [F<T, T1>, F<T1, T2>], options: Opts): GroupByFn<T, T2, Keys, Opts>;
+// prettier-ignore
+export function groupBy<T extends object, T1 extends object, T2 extends object, Keys extends GK<T>>(groupKeys: Keys, fns: [F<T, T1>, F<T1, T2>]): GroupByFn<T, T2, Keys, GroupByOptions>;
+// prettier-ignore
+export function groupBy<T extends object, T1 extends object, Keys extends GK<T>, Opts extends GroupByOptions>(groupKeys: Keys, fns: [F<T, T1>], options: Opts): GroupByFn<T, T1, Keys, Opts>;
+// prettier-ignore
+export function groupBy<T extends object, T1 extends object, Keys extends GK<T>>(groupKeys: Keys, fns: [F<T, T1>]): GroupByFn<T, T1, Keys, GroupByOptions>;
+// prettier-ignore
+export function groupBy<T extends object, Keys extends GK<T>, Opts extends GroupByOptions>(groupKeys: Keys, fns: [], options: Opts): GroupByFn<T, T, Keys, Opts>;
+// prettier-ignore
+export function groupBy<T extends object, Keys extends GK<T>>(groupKeys: Keys, fns: []): GroupByFn<T, T, Keys, GroupByOptions>;
+// prettier-ignore
+export function groupBy<T extends object, Keys extends GK<T>, Opts extends GroupByOptions>(groupKeys: Keys, options: Opts): GroupByFn<T, T, Keys, Opts>;
+// prettier-ignore
+export function groupBy<T extends object, Keys extends GK<T>>(groupKeys: Keys): GroupByFn<T, T, Keys, GroupByOptions>;
 export function groupBy<
   T extends object,
   O extends object,
@@ -188,7 +208,7 @@ export function groupBy<
   Opts extends GroupByOptions
 >(
   groupKeys: Keys,
-  fns: TidyFn<any, any>[] | TidyFn<any, any>,
+  fns?: TidyFn<any, any>[] | TidyFn<any, any>,
   options?: Opts
 ): GroupByFn<T, O, Keys, Opts> {
   if (typeof fns === 'function') {

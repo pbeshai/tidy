@@ -1,4 +1,13 @@
-import { tidy, map, groupBy, summarize, sum, LevelSpec } from './index';
+import {
+  TidyFn,
+  tidy,
+  map,
+  groupBy,
+  summarize,
+  mutate,
+  sum,
+  LevelSpec,
+} from './index';
 describe('groupBy / ungroup', () => {
   describe('groupBy', () => {
     it('groupBy works single keys', () => {
@@ -369,6 +378,20 @@ describe('groupBy / ungroup', () => {
         { ing: 'y', summedValue: 309 },
         { ing: 'z', summedValue: 411 },
       ]);
+
+      // testing types...
+      const data3 = [
+        { a: 1, b: 10, c: 'x' },
+        { a: 3, b: 12, c: 'x' },
+        { a: 2, b: 10, c: 'y' },
+      ];
+
+      const results3 = tidy(
+        data3,
+        mutate({ a: (d) => d.a * d.b }),
+        mutate({ ab: 125 }),
+        groupBy('ab')
+      );
     });
 
     it('group compute ungroup works with multiple keys', () => {
