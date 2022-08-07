@@ -247,3 +247,54 @@ tidy(data, mutateWithSummary({
 
 
 ---
+
+
+
+## rowNumber 
+
+Computes the row number for each item in the array. Note this can also be accomplished with a simple mutate, if you prefer:
+
+```js
+mutate({ row: (_, i) => i })
+```
+
+### Parameters
+
+
+#### `options`
+
+```ts
+{
+  startAt?: number
+}
+```
+- `startAt = 0` what to start counting at, default is 0 – so the first row is row 0, then row 1 for the second row.
+
+
+### Usage
+
+```js
+const data = [
+  { str: 'foo', value: 3 },
+  { str: 'foo', value: 1 },
+  { str: 'bar', value: 3 },
+  { str: 'bar', value: 1 },
+  { str: 'bar', value: 7 },
+];
+
+tidy(data, mutateWithSummary({
+  row: rowNumber(),
+  rowFrom1: rowNumber({ startAt: 1})
+}))
+// output:
+[
+  { str: 'foo', value: 3, row: 0, rowFrom1: 1 },
+  { str: 'foo', value: 1, row: 1, rowFrom1: 2 },
+  { str: 'bar', value: 3, row: 2, rowFrom1: 3 },
+  { str: 'bar', value: 1, row: 3, rowFrom1: 4 },
+  { str: 'bar', value: 7, row: 4, rowFrom1: 5 },
+]
+```
+
+
+---
