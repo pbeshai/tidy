@@ -5,6 +5,9 @@ Tidy follows semver.
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 2.5.2 (2022-11-20)
+- Fix: do not add `null` and `undefined` as group keys when doing groupBy exports
+
 # 2.5.1 (2022-08-07)
 - Fix(types): improve groupBy type inference (fixes #59)
 - Fix(types): improve mutate output type merging
