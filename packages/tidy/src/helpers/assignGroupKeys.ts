@@ -11,7 +11,7 @@ export function assignGroupKeys<T extends object>(d: T, keys: GroupKey[]) {
 
   // transform to { groupKey1: value, ... } excluding function group keys
   const keysObj = Object.fromEntries(
-    keys.filter((key) => typeof key[0] !== 'function')
+    keys.filter((key) => typeof key[0] !== 'function' && key[0] != null)
   );
 
   return Object.assign(keysObj, d);

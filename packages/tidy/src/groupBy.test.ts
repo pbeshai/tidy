@@ -158,6 +158,53 @@ describe('groupBy / ungroup', () => {
       );
     });
 
+    it('groupBy works null keys', () => {
+      const data = [
+        { str: 'a', ing: 'x', foo: 'G', value: 1 },
+        { str: 'b', ing: 'x', foo: 'H', value: 100 },
+        { str: 'b', ing: 'x', foo: 'K', value: 200 },
+        { str: 'a', ing: 'y', foo: 'G', value: 2 },
+        { str: 'a', ing: 'y', foo: 'H', value: 3 },
+        { str: 'a', ing: 'y', foo: 'K', value: 4 },
+        { str: 'b', ing: 'y', foo: 'G', value: 300 },
+        { str: 'b', ing: 'z', foo: 'H', value: 400 },
+        { str: 'a', ing: 'z', foo: 'K', value: 5 },
+        { str: 'a', ing: 'z', foo: 'G', value: 6 },
+      ];
+
+      const results = tidy(
+        data,
+        groupBy([null, undefined] as any, [], {
+          export: 'object',
+          addGroupKeys: true,
+        })
+      );
+
+      expect(results).toStrictEqual({
+        undefined: {
+          undefined: [
+            { str: 'a', ing: 'x', foo: 'G', value: 1 },
+            { str: 'b', ing: 'x', foo: 'H', value: 100 },
+            { str: 'b', ing: 'x', foo: 'K', value: 200 },
+            { str: 'a', ing: 'y', foo: 'G', value: 2 },
+            { str: 'a', ing: 'y', foo: 'H', value: 3 },
+            { str: 'a', ing: 'y', foo: 'K', value: 4 },
+            { str: 'b', ing: 'y', foo: 'G', value: 300 },
+            { str: 'b', ing: 'z', foo: 'H', value: 400 },
+            { str: 'a', ing: 'z', foo: 'K', value: 5 },
+            { str: 'a', ing: 'z', foo: 'G', value: 6 },
+          ],
+        },
+      });
+      // make sure "null" and "undefined" aren't added as keys
+      expect(Object.keys(results.undefined.undefined[0])).toEqual([
+        'str',
+        'ing',
+        'foo',
+        'value',
+      ]);
+    });
+
     it('groupBy works with null values', () => {
       const data = [
         { str: 'a', ing: 'x', foo: 'G', value: 1 },
