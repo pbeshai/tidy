@@ -47,11 +47,11 @@ Then import the functions you need:
 import { tidy, mutate, arrange, desc } from '@tidyjs/tidy'
 ```
 
-**Note** if you're just trying tidy in a browser, you can use the UMD version hosted on unpkg ([codesandbox example](https://codesandbox.io/s/tidyjs-umd-example-n1g4r?file=/index.html)):
+**Note** if you're just trying tidy in a browser, you can use the UMD version hosted on jsdelivr ([codesandbox example](https://codesandbox.io/s/tidyjs-umd-example-n1g4r?file=/index.html)):
 
 ```html
 <script src="https://d3js.org/d3-array.v2.min.js"></script>
-<script src="https://www.unpkg.com/@tidyjs/tidy/dist/umd/tidy.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tidyjs/tidy/dist/umd/tidy.min.js"></script>
 <script>
   const { tidy, mutate, arrange, desc } = Tidy;
   // ...
