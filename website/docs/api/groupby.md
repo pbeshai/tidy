@@ -141,7 +141,7 @@ These functions take options as their argument, which includes the options menti
 
   - `export = 'ungrouped'`: Specifies how the data should be exported from the groupBy function. If anything besides nully or "ungrouped", the remaining options will be interpreted to inform the output.
   - `flat?`: if all nested levels should be brought to a single top level
-  - `compositeKey?`: when *flat* is true, how to flatten nested keys (default joins with `"."`)
+  - `compositeKey?`: when *flat* is true, how to flatten nested keys (default joins with `"/"`)
   - `single?`: whether the leaf sets consist of just one item (typical after summarize). if true, uses the first element in the leaf set instead of an array
   - `mapLeaf?`: operation called on each leaf during export to map it to a different value (default: identity)
   - `mapLeaves?`: operation called on each leaf set to map the array of values to a different value. Similar to `rollup` from d3-collection nest or d3-array (default: identity)
