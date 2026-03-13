@@ -35,7 +35,7 @@ describe('mutate', () => {
         str2: (d) => 0,
       })
     );
-    const test2 = mutate<typeof data[number], { str2: (d: any) => number }>({
+    const test2 = mutate<(typeof data)[number], { str2: (d: any) => number }>({
       str2: (items) => 0,
     })(data);
     expect(test1).toEqual(test2);

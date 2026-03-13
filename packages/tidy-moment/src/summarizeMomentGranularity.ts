@@ -25,8 +25,7 @@ type SMGOutput<
 > = {
   // summarized values map to return type of the spec functions
   [K in keyof SumSpec]: ReturnType<SumSpec[K]>;
-} &
-  Exclude<T, keyof SumSpec> &
+} & Exclude<T, keyof SumSpec> &
   (Options['timestampKey'] extends string
     ? { [K in Options['timestampKey']]: string }
     : { timestamp: string }) &
@@ -102,7 +101,7 @@ export function summarizeMomentGranularity<
       )
     );
 
-    return (results as unknown) as Prettify<Output>[];
+    return results as unknown as Prettify<Output>[];
   };
 
   return _summarizeMomentGranularity;

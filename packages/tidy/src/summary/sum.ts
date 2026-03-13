@@ -13,7 +13,7 @@ export function sum<T extends object>(
   options?: SumOptions<T>
 ) {
   let keyFn =
-    typeof key === 'function' ? key : (d: T) => (d[key] as unknown) as number;
+    typeof key === 'function' ? key : (d: T) => d[key] as unknown as number;
 
   if (options?.predicate) {
     const originalKeyFn = keyFn;

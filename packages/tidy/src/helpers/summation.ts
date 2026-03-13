@@ -1,4 +1,4 @@
-import { fsum, Adder } from 'd3-array';
+import { Adder } from 'd3-array';
 
 // See also https://observablehq.com/@fil/fcumsum
 export function fcumsum<T>(
@@ -14,7 +14,7 @@ export function fcumsum<T>(
     // as @Fil demonstrated here: https://github.com/pbeshai/tidy/pull/5
     // so we can just tell typescript to be quiet.
     (value: T): number =>
-      (sum.add(+(accessor(value, i++, items) || 0)) as unknown) as number
+      sum.add(+(accessor(value, i++, items) || 0)) as unknown as number
   );
 }
 

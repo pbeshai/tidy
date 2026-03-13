@@ -61,9 +61,7 @@ export function pivotLonger<T extends object>(
       ? new Map(
           (nameValueKeysWithoutValuePrefix as string[]).map((nv) => [
             nv,
-            valuesToKeys.map(
-              (vk) => `${String(vk)}${namesSep}${String(nv)}`
-            ),
+            valuesToKeys.map((vk) => `${String(vk)}${namesSep}${String(nv)}`),
           ])
         )
       : null;

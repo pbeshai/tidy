@@ -13,11 +13,11 @@ export function meanRate<T extends object>(
   const numeratorFn =
     typeof numerator === 'function'
       ? numerator
-      : (d: T) => (d[numerator] as unknown) as number;
+      : (d: T) => d[numerator] as unknown as number;
   const denominatorFn =
     typeof denominator === 'function'
       ? denominator
-      : (d: T) => (d[denominator] as unknown) as number;
+      : (d: T) => d[denominator] as unknown as number;
 
   return (items: T[]) => {
     const numerator = fsum(items, numeratorFn);

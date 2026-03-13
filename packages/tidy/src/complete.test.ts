@@ -11,10 +11,7 @@ describe('complete', () => {
       { a: 2, b: 'b2', c: 201 },
     ];
 
-    const results = tidy(
-      data,
-      complete<typeof data[0]>('a', { b: 'n/a' })
-    );
+    const results = tidy(data, complete<(typeof data)[0]>('a', { b: 'n/a' }));
 
     expect(results).toEqual([
       { a: 1, b: 'b1', c: 100 },
@@ -24,12 +21,7 @@ describe('complete', () => {
       { a: 3, b: 'b1', c: 300 },
     ]);
 
-    expect(
-      tidy(
-        data,
-        complete<typeof data[0]>(['a', 'b'])
-      )
-    ).toEqual([
+    expect(tidy(data, complete<(typeof data)[0]>(['a', 'b']))).toEqual([
       { a: 1, b: 'b1', c: 100 },
       { a: 1, b: 'b2', c: 101 },
       { a: 2, b: 'b1', c: 200 },
@@ -39,10 +31,7 @@ describe('complete', () => {
     ]);
 
     expect(
-      tidy(
-        data,
-        complete<typeof data[0]>(['a', 'b'], { c: -1 })
-      )
+      tidy(data, complete<(typeof data)[0]>(['a', 'b'], { c: -1 }))
     ).toEqual([
       { a: 1, b: 'b1', c: 100 },
       { a: 1, b: 'b2', c: 101 },
@@ -61,7 +50,7 @@ describe('complete', () => {
 
     const results = tidy(
       data,
-      complete<typeof data[0]>(
+      complete<(typeof data)[0]>(
         { timestamp: fullSeqDateISOString('timestamp', 'day') },
         { val: 0, str: 'n/a' }
       )

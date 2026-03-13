@@ -3,11 +3,9 @@ import { Key, TidyFn } from './types';
 import { Prettify } from './type-utils';
 
 // helper types
-export type KeyMap<T extends object = any> = Partial<
-  {
-    [key in keyof T]: keyof T | Array<T[key]> | ((items: T[]) => T[key][]);
-  }
->;
+export type KeyMap<T extends object = any> = Partial<{
+  [key in keyof T]: keyof T | Array<T[key]> | ((items: T[]) => T[key][]);
+}>;
 
 /**
  * Expands a set of items to include all combinations of the specified keys.

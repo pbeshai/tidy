@@ -48,10 +48,7 @@ import { tidy, groupBy, summarize, sum } from '../index';
 // groupBy with no fns passes through input type with group keys
 {
   type Input = { group: string; value: number };
-  const result = tidy(
-    [] as Input[],
-    groupBy('group')
-  );
+  const result = tidy([] as Input[], groupBy('group'));
   expectTypeOf(result[0]).toHaveProperty('group');
   expectTypeOf(result[0]).toHaveProperty('value');
 }

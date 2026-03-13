@@ -24,13 +24,14 @@ import {
   const result = tidy(
     data,
     mutate({ chart_group: (d) => 'foo' as string }),
-    groupBy(['chart_group'], [
-      summarize({ total: sum('user_engagement_total') }),
-    ]),
+    groupBy(
+      ['chart_group'],
+      [summarize({ total: sum('user_engagement_total') })]
+    ),
     filter((d) => d.chart_group !== 'x'),
     mutateWithSummary({ grand_total: sum('total') }),
     mutate({ pct: (d) => d.total / d.grand_total }),
-    arrange(desc('total')),
+    arrange(desc('total'))
   );
   expectTypeOf(result[0]).toHaveProperty('chart_group');
   expectTypeOf(result[0]).toHaveProperty('total');
@@ -52,7 +53,7 @@ import {
     ]),
     filter((d) => d.total > 100),
     mutate({ label: (d) => `${d.category}: ${d.total}` }),
-    arrange(desc('total')),
+    arrange(desc('total'))
   );
   expectTypeOf(result[0]).toHaveProperty('category');
   expectTypeOf(result[0]).toHaveProperty('total');
@@ -72,7 +73,7 @@ import {
     innerJoin([] as Products[]),
     mutate({ line_total: (d) => d.qty * d.price }),
     groupBy('category', [summarize({ revenue: sum('line_total') })]),
-    arrange(desc('revenue')),
+    arrange(desc('revenue'))
   );
   expectTypeOf(result[0]).toHaveProperty('category');
   expectTypeOf(result[0]).toHaveProperty('revenue');
@@ -90,7 +91,7 @@ import {
     leftJoin([] as B[]),
     filter((d) => d.score != null),
     mutateWithSummary({ avg_score: mean('score') }),
-    mutate({ above_avg: (d) => (d.score ?? 0) > (d.avg_score ?? 0) }),
+    mutate({ above_avg: (d) => (d.score ?? 0) > (d.avg_score ?? 0) })
   );
   expectTypeOf(result[0]).toHaveProperty('name');
   expectTypeOf(result[0]).toHaveProperty('score');
@@ -106,7 +107,7 @@ import {
   const result = tidy(
     [] as Input[],
     groupBy(['region', 'city'], [summarize({ city_total: sum('sales') })]),
-    groupBy('region', [summarize({ region_total: sum('city_total') })]),
+    groupBy('region', [summarize({ region_total: sum('city_total') })])
   );
   expectTypeOf(result[0]).toHaveProperty('region');
   expectTypeOf(result[0]).toHaveProperty('region_total');

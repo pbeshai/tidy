@@ -27,7 +27,9 @@ import type { TidyFn } from '../types';
 {
   type Input = { a: number; b: string };
   const fn = mutate<Input, { c: (d: Input) => boolean }>({ c: (d) => d.a > 0 });
-  expectTypeOf(fn).toMatchTypeOf<TidyFn<Input, { a: number; b: string; c: boolean }>>();
+  expectTypeOf(fn).toMatchTypeOf<
+    TidyFn<Input, { a: number; b: string; c: boolean }>
+  >();
 }
 
 // ============================================================
@@ -40,7 +42,10 @@ import type { TidyFn } from '../types';
     summarize({ totalA: sum('a'), totalB: sum('b') })
   );
   type ResultItem = (typeof result)[number];
-  expectTypeOf({} as ResultItem).toMatchTypeOf<{ totalA: number; totalB: number }>();
+  expectTypeOf({} as ResultItem).toMatchTypeOf<{
+    totalA: number;
+    totalB: number;
+  }>();
 }
 
 // ============================================================
@@ -58,7 +63,10 @@ import type { TidyFn } from '../types';
   expectTypeOf<ResultItem>().toHaveProperty('total');
 
   // group key should retain its original type from T
-  expectTypeOf({} as ResultItem).toMatchTypeOf<{ group: string; total: number }>();
+  expectTypeOf({} as ResultItem).toMatchTypeOf<{
+    group: string;
+    total: number;
+  }>();
 }
 
 // ============================================================
@@ -71,7 +79,11 @@ import type { TidyFn } from '../types';
     groupBy(['g1', 'g2'], [summarize({ total: sum('value') })])
   );
   type ResultItem = (typeof result)[number];
-  expectTypeOf({} as ResultItem).toMatchTypeOf<{ g1: string; g2: number; total: number }>();
+  expectTypeOf({} as ResultItem).toMatchTypeOf<{
+    g1: string;
+    g2: number;
+    total: number;
+  }>();
 }
 
 // ============================================================
@@ -83,7 +95,11 @@ import type { TidyFn } from '../types';
   const result = tidy([] as A[], innerJoin([] as B[]));
   type ResultItem = (typeof result)[number];
   // A's id (number) takes precedence since it's the left side
-  expectTypeOf({} as ResultItem).toMatchTypeOf<{ id: number; name: string; score: number }>();
+  expectTypeOf({} as ResultItem).toMatchTypeOf<{
+    id: number;
+    name: string;
+    score: number;
+  }>();
 }
 
 // ============================================================
@@ -124,7 +140,10 @@ import type { TidyFn } from '../types';
 // ============================================================
 {
   type Input = { a: number; b: string };
-  const result = tidy([] as Input[], filter((d) => d.a > 0));
+  const result = tidy(
+    [] as Input[],
+    filter((d) => d.a > 0)
+  );
   expectTypeOf(result).toEqualTypeOf<Input[]>();
 }
 
@@ -171,13 +190,14 @@ import type { TidyFn } from '../types';
   const result = tidy(
     data,
     mutate({ chart_group: (d) => 'foo' as string }),
-    groupBy(['chart_group'], [
-      summarize({ total: sum('user_engagement_total') }),
-    ]),
+    groupBy(
+      ['chart_group'],
+      [summarize({ total: sum('user_engagement_total') })]
+    ),
     filter((d) => d.chart_group !== 'x'),
     mutateWithSummary({ grand_total: sum('total') }),
     mutate({ pct: (d) => d.total / d.grand_total }),
-    arrange(desc('total')),
+    arrange(desc('total'))
   );
 
   type FinalItem = (typeof result)[number];

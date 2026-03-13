@@ -317,9 +317,9 @@ describe('arrange', () => {
       )
     ).toEqual(['C', 'A', 'B']);
 
-    expect(
-      ['A', 'B', 'C'].sort(fixedOrder((d) => d, ['C', 'A', 'B']))
-    ).toEqual(['C', 'A', 'B']);
+    expect(['A', 'B', 'C'].sort(fixedOrder((d) => d, ['C', 'A', 'B']))).toEqual(
+      ['C', 'A', 'B']
+    );
   });
 
   it('arranges with accessor functions', () => {

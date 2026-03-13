@@ -1,5 +1,11 @@
 import { Datum, TidyFn } from './types';
-import { makeByMap, autodetectByMap, JoinOptions, buildJoinIndex, computeKey } from './innerJoin';
+import {
+  makeByMap,
+  autodetectByMap,
+  JoinOptions,
+  buildJoinIndex,
+  computeKey,
+} from './innerJoin';
 import { Merge } from './type-utils';
 
 /**

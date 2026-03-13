@@ -1,5 +1,13 @@
 import { expectTypeOf } from 'expect-type';
-import { tidy, summarize, summarizeAll, summarizeAt, sum, mean, first } from '../index';
+import {
+  tidy,
+  summarize,
+  summarizeAll,
+  summarizeAt,
+  sum,
+  mean,
+  first,
+} from '../index';
 
 // summarize produces an object with specified keys
 {
@@ -20,10 +28,7 @@ import { tidy, summarize, summarizeAll, summarizeAt, sum, mean, first } from '..
 // summarizeAll applies a function to all keys
 {
   type Input = { a: number; b: number };
-  const result = tidy(
-    [] as Input[],
-    summarizeAll(first)
-  );
+  const result = tidy([] as Input[], summarizeAll(first));
   expectTypeOf(result[0]).toHaveProperty('a');
   expectTypeOf(result[0]).toHaveProperty('b');
 }
@@ -31,10 +36,7 @@ import { tidy, summarize, summarizeAll, summarizeAt, sum, mean, first } from '..
 // summarizeAt applies to specified keys
 {
   type Input = { a: number; b: number; c: string };
-  const result = tidy(
-    [] as Input[],
-    summarizeAt(['a', 'b'], sum)
-  );
+  const result = tidy([] as Input[], summarizeAt(['a', 'b'], sum));
   expectTypeOf(result[0]).toHaveProperty('a');
   expectTypeOf(result[0]).toHaveProperty('b');
 }

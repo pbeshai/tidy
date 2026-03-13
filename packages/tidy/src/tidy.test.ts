@@ -27,7 +27,7 @@ describe('tidy', () => {
     expect(typeof results2).toBe('object');
     expect(Array.isArray(results2)).toBe(false);
 
-    const results3 = tidy(data, (items: typeof data[number][]) =>
+    const results3 = tidy(data, (items: (typeof data)[number][]) =>
       items.filter((d) => d.value > 2)
     );
     expect(Array.isArray(results3)).toBe(true);

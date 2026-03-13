@@ -52,9 +52,7 @@ import {
   type Input = { value: number; category: string };
   const result = tidy(
     [] as Input[],
-    groupBy((d: Input) => d.category, [
-      summarize({ total: sum('value') }),
-    ])
+    groupBy((d: Input) => d.category, [summarize({ total: sum('value') })])
   );
   // Function keys don't get merged back as named properties
   expectTypeOf(result[0]).toHaveProperty('total');
@@ -81,9 +79,7 @@ import {
   type Input = { region: string; city: string; sales: number };
   const step1 = tidy(
     [] as Input[],
-    groupBy(['region', 'city'], [
-      summarize({ city_total: sum('sales') }),
-    ])
+    groupBy(['region', 'city'], [summarize({ city_total: sum('sales') })])
   );
   expectTypeOf(step1[0]).toHaveProperty('region');
   expectTypeOf(step1[0]).toHaveProperty('city');
@@ -91,9 +87,7 @@ import {
 
   const step2 = tidy(
     step1,
-    groupBy('region', [
-      summarize({ region_total: sum('city_total') }),
-    ])
+    groupBy('region', [summarize({ region_total: sum('city_total') })])
   );
   expectTypeOf(step2[0]).toHaveProperty('region');
   expectTypeOf(step2[0]).toHaveProperty('region_total');
@@ -104,10 +98,7 @@ import {
 // ============================================================
 {
   type Input = { a: number | null; b: string | undefined; c: boolean };
-  const result = tidy(
-    [] as Input[],
-    replaceNully({ a: 0 })
-  );
+  const result = tidy([] as Input[], replaceNully({ a: 0 }));
   type R = (typeof result)[number];
   expectTypeOf({} as R).toHaveProperty('a');
   expectTypeOf({} as R).toHaveProperty('b');
@@ -119,10 +110,7 @@ import {
 // ============================================================
 {
   type Input = { a: number; b: string; c: boolean };
-  const result = tidy(
-    [] as Input[],
-    select(['-c'] as const)
-  );
+  const result = tidy([] as Input[], select(['-c'] as const));
   type R = (typeof result)[number];
   expectTypeOf({} as R).toHaveProperty('a');
   expectTypeOf({} as R).toHaveProperty('b');
@@ -133,10 +121,7 @@ import {
 // ============================================================
 {
   type Input = { a: number; b: string; c: boolean };
-  const result = tidy(
-    [] as Input[],
-    expand(['a', 'b'] as ['a', 'b'])
-  );
+  const result = tidy([] as Input[], expand(['a', 'b'] as ['a', 'b']));
   type R = (typeof result)[number];
   expectTypeOf({} as R).toMatchTypeOf<{ a: number; b: string }>();
 }
@@ -172,16 +157,16 @@ import {
   type Input = { a: number; b: string };
   const result = tidy(
     [] as Input[],
-    filter((d) => d.a > 0),           // 1
-    mutate({ c: (d) => d.a * 2 }),     // 2
-    filter((d) => d.c > 5),            // 3
-    mutate({ d: (d) => d.c + d.a }),   // 4
-    filter((d) => d.d > 10),           // 5
+    filter((d) => d.a > 0), // 1
+    mutate({ c: (d) => d.a * 2 }), // 2
+    filter((d) => d.c > 5), // 3
+    mutate({ d: (d) => d.c + d.a }), // 4
+    filter((d) => d.d > 10), // 5
     mutate({ e: (d) => String(d.d) }), // 6
-    filter((d) => d.e !== ''),         // 7
-    mutate({ f: (d) => d.e.length }),  // 8
-    filter((d) => d.f > 0),           // 9
-    arrange(asc('f')),                 // 10
+    filter((d) => d.e !== ''), // 7
+    mutate({ f: (d) => d.e.length }), // 8
+    filter((d) => d.f > 0), // 9
+    arrange(asc('f')) // 10
   );
   type R = (typeof result)[number];
   expectTypeOf({} as R).toHaveProperty('a');

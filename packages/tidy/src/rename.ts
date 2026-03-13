@@ -1,11 +1,9 @@
 import { TidyFn } from './types';
 import { Merge, KeysMatching } from './type-utils';
 
-type RenameSpec<T> = Partial<
-  {
-    [K in keyof T]: string;
-  }
->;
+type RenameSpec<T> = Partial<{
+  [K in keyof T]: string;
+}>;
 
 type OutputT<T extends object, Spec extends RenameSpec<T>> = Merge<
   Omit<T, keyof Spec>,
@@ -33,7 +31,7 @@ export function rename<T extends object, Spec extends RenameSpec<T>>(
       const keys = Object.keys(d) as (keyof T)[];
       for (const key of keys) {
         const newKey: keyof Output =
-          ((renameSpec[key] as unknown) as keyof Output) ?? key;
+          (renameSpec[key] as unknown as keyof Output) ?? key;
         mapped[newKey] = d[key];
       }
 

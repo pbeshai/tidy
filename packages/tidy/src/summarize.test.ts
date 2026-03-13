@@ -160,8 +160,9 @@ describe('summarize', () => {
       ];
       const results = tidy(
         data,
-        summarizeAt(['value', 'value2'], (key) => (items) =>
-          d3sum(items, (d) => d[key])
+        summarizeAt(
+          ['value', 'value2'],
+          (key) => (items) => d3sum(items, (d) => d[key])
         )
       );
 

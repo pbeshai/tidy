@@ -29,8 +29,8 @@ export function replaceNully<
     for (const d of items) {
       const obj = { ...d } as any;
       for (const key in replaceSpec) {
-        if (obj[(key as unknown) as keyof T] == null) {
-          obj[(key as unknown) as keyof T] = replaceSpec[key] as any;
+        if (obj[key as unknown as keyof T] == null) {
+          obj[key as unknown as keyof T] = replaceSpec[key] as any;
         }
       }
       replacedItems.push(obj);

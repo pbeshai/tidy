@@ -8,7 +8,7 @@ export function max<T extends object>(
   key: keyof T | ((d: T, index: number, array: Iterable<T>) => number)
 ) {
   const keyFn =
-    typeof key === 'function' ? key : (d: T) => (d[key] as unknown) as number;
+    typeof key === 'function' ? key : (d: T) => d[key] as unknown as number;
 
   return (items: T[]) => d3max(items, keyFn);
 }

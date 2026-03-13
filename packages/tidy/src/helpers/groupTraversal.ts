@@ -25,14 +25,7 @@ export function groupTraversal<
       const subgroup = addSubgroup(outputGrouped, keys, level);
 
       // recurse
-      groupTraversal(
-        value,
-        subgroup,
-        keys,
-        addSubgroup,
-        addLeaves,
-        level + 1
-      );
+      groupTraversal(value, subgroup, keys, addSubgroup, addLeaves, level + 1);
     } else {
       // leaf
       addLeaves(outputGrouped, keys, value, level);

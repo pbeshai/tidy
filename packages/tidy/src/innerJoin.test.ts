@@ -26,7 +26,7 @@ describe('innerJoin', () => {
 
     const results2 = tidy(
       data,
-      innerJoin<typeof data[0], typeof data2[0]>(data2, { by: 'a' })
+      innerJoin<(typeof data)[0], (typeof data2)[0]>(data2, { by: 'a' })
     );
     expect(results2).toEqual([
       { a: 1, b: 10, c: 100, x: 'x1', y: 'y1' },
@@ -56,7 +56,7 @@ describe('innerJoin', () => {
     ];
     const results = tidy(
       data,
-      innerJoin<typeof data[0], typeof data2[0]>(data2, { by: ['a', 'J'] })
+      innerJoin<(typeof data)[0], (typeof data2)[0]>(data2, { by: ['a', 'J'] })
     );
     expect(results).toEqual([
       { a: 1, J: 'j', altJ: 'j', b: 10, c: 100, x: 'x1', y: 'y1' },
@@ -89,7 +89,7 @@ describe('innerJoin', () => {
     ];
     const results = tidy(
       data,
-      innerJoin<typeof data[0], typeof data2[0]>(data2)
+      innerJoin<(typeof data)[0], (typeof data2)[0]>(data2)
     );
     expect(results).toEqual([
       { a: 1, J: 'j', altJ: 'j', b: 10, c: 100, x: 'x1', y: 'y1' },
@@ -111,7 +111,7 @@ describe('innerJoin', () => {
     ];
     const results = tidy(
       data,
-      innerJoin<typeof data[0], typeof data2[0]>(data2, { by: 'a' })
+      innerJoin<(typeof data)[0], (typeof data2)[0]>(data2, { by: 'a' })
     );
     expect(results).toEqual([
       { a: 1, b: 10, c: 100, x: 'x1', y: 'y1' },

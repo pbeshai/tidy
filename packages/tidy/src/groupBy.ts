@@ -317,7 +317,7 @@ function makeGrouped<T extends object>(
   groupKeys: SingleOrArray<keyof T | ((d: T) => any)>
 ): Grouped<T> {
   // convert string based keys to functions and keep the key name with the key value in a tuple
-  const groupKeyFns = singleOrArray(groupKeys).map((key, i) => {
+  const groupKeyFns = singleOrArray(groupKeys).map((key) => {
     const keyFn = typeof key === 'function' ? key : (d: T) => d[key];
 
     // use a cache so we don't generate new keys for the same tuple

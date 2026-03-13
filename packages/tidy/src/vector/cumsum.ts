@@ -6,7 +6,7 @@ export function cumsum<T extends object>(
     | ((d: T, index: number, array: Iterable<T>) => number | null | undefined)
 ) {
   const keyFn =
-    typeof key === 'function' ? key : (d: T) => (d[key] as unknown) as number;
+    typeof key === 'function' ? key : (d: T) => d[key] as unknown as number;
 
   // note returns Float64Array not a normal array
   return (items: T[]) => fcumsum(items, keyFn);

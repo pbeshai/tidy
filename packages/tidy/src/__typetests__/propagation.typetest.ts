@@ -39,9 +39,10 @@ import {
   // Step 2: groupBy with summarize should produce {chart_group: string, total: number}
   const afterGroupBy = tidy(
     afterMutate,
-    groupBy(['chart_group'], [
-      summarize({ total: sum('user_engagement_total') }),
-    ])
+    groupBy(
+      ['chart_group'],
+      [summarize({ total: sum('user_engagement_total') })]
+    )
   );
   expectTypeOf(afterGroupBy[0]).toHaveProperty('chart_group');
   expectTypeOf(afterGroupBy[0]).toHaveProperty('total');
@@ -84,10 +85,11 @@ import {
   const result = tidy(
     data,
     mutate({ chart_group: (d) => 'foo' as string }),
-    groupBy(['chart_group'], [
-      summarize({ total: sum('user_engagement_total') }),
-    ]),
-    filter((d) => d.total > 0),
+    groupBy(
+      ['chart_group'],
+      [summarize({ total: sum('user_engagement_total') })]
+    ),
+    filter((d) => d.total > 0)
   );
   expectTypeOf(result[0]).toHaveProperty('chart_group');
   expectTypeOf(result[0]).toHaveProperty('total');
@@ -101,9 +103,7 @@ import {
   type Input = { category: string; amount: number; label: string };
   const result = tidy(
     [] as Input[],
-    groupBy('category', [
-      summarize({ total: sum('amount'), count: n() }),
-    ])
+    groupBy('category', [summarize({ total: sum('amount'), count: n() })])
   );
   expectTypeOf(result[0]).toHaveProperty('category');
   expectTypeOf(result[0]).toHaveProperty('total');
@@ -120,9 +120,7 @@ import {
   type Input = { g1: string; g2: number; value: number };
   const result = tidy(
     [] as Input[],
-    groupBy(['g1', 'g2'], [
-      summarize({ avg: mean('value') }),
-    ])
+    groupBy(['g1', 'g2'], [summarize({ avg: mean('value') })])
   );
   expectTypeOf(result[0]).toHaveProperty('g1');
   expectTypeOf(result[0]).toHaveProperty('g2');

@@ -80,7 +80,7 @@ export function fixedOrder<T>(
   const keyFn =
     typeof key === 'function'
       ? key
-      : (d: T) => (d[key as keyof T] as unknown) as any;
+      : (d: T) => d[key as keyof T] as unknown as any;
 
   return function _fixedOrder(a: T, b: T) {
     const aIndex: number = indexMap.get(keyFn(a)) ?? -1;

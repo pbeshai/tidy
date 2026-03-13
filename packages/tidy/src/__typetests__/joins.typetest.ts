@@ -5,10 +5,7 @@ import { tidy, innerJoin, leftJoin, fullJoin } from '../index';
 {
   type A = { id: number; a: string };
   type B = { id: number; b: number };
-  const result = tidy(
-    [] as A[],
-    innerJoin([] as B[])
-  );
+  const result = tidy([] as A[], innerJoin([] as B[]));
   expectTypeOf(result[0]).toHaveProperty('id');
   expectTypeOf(result[0]).toHaveProperty('a');
   expectTypeOf(result[0]).toHaveProperty('b');
@@ -18,10 +15,7 @@ import { tidy, innerJoin, leftJoin, fullJoin } from '../index';
 {
   type A = { id: number; a: string };
   type B = { id: number; b: number };
-  const result = tidy(
-    [] as A[],
-    leftJoin([] as B[])
-  );
+  const result = tidy([] as A[], leftJoin([] as B[]));
   expectTypeOf(result[0]).toHaveProperty('id');
   expectTypeOf(result[0]).toHaveProperty('a');
   expectTypeOf(result[0]).toHaveProperty('b');
@@ -31,10 +25,7 @@ import { tidy, innerJoin, leftJoin, fullJoin } from '../index';
 {
   type A = { id: number; a: string };
   type B = { id: number; b: number };
-  const result = tidy(
-    [] as A[],
-    fullJoin([] as B[])
-  );
+  const result = tidy([] as A[], fullJoin([] as B[]));
   expectTypeOf(result[0]).toHaveProperty('id');
   expectTypeOf(result[0]).toHaveProperty('a');
   expectTypeOf(result[0]).toHaveProperty('b');

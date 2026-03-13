@@ -15,7 +15,10 @@ export type JoinOptions<JoinT extends Datum, T extends Datum> = {
  * elements don't have all keys, but scanning each entire set seems
  * unnecessarily slow for most cases.
  */
-export function autodetectByMap<A extends object, B extends object>(itemsA: A[], itemsB: B[]) {
+export function autodetectByMap<A extends object, B extends object>(
+  itemsA: A[],
+  itemsB: B[]
+) {
   if (itemsA.length === 0 || itemsB.length === 0) return {};
 
   // intersection of shared keys

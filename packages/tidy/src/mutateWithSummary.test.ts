@@ -41,7 +41,7 @@ describe('mutateWithSummary', () => {
       })
     );
     const test2 = mutateWithSummary<
-      typeof data[number],
+      (typeof data)[number],
       { str2: (d: any) => number }
     >({
       str2: (items) => 0,

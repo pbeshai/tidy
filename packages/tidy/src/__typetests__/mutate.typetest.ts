@@ -4,10 +4,7 @@ import { tidy, mutate } from '../index';
 // mutate with a function adds the new property
 {
   type Input = { a: number; b: string };
-  const result = tidy(
-    [] as Input[],
-    mutate({ c: (d) => d.a + 1 })
-  );
+  const result = tidy([] as Input[], mutate({ c: (d) => d.a + 1 }));
   expectTypeOf(result[0]).toHaveProperty('a');
   expectTypeOf(result[0]).toHaveProperty('b');
   expectTypeOf(result[0]).toHaveProperty('c');
@@ -19,10 +16,7 @@ import { tidy, mutate } from '../index';
 // mutate with a constant value
 {
   type Input = { a: number };
-  const result = tidy(
-    [] as Input[],
-    mutate({ b: 'hello' })
-  );
+  const result = tidy([] as Input[], mutate({ b: 'hello' }));
   expectTypeOf(result[0]).toHaveProperty('a');
   expectTypeOf(result[0]).toHaveProperty('b');
 }
@@ -30,10 +24,7 @@ import { tidy, mutate } from '../index';
 // mutate overriding an existing property narrows the type
 {
   type Input = { a: number | undefined; b: string };
-  const result = tidy(
-    [] as Input[],
-    mutate({ a: (d) => 42 })
-  );
+  const result = tidy([] as Input[], mutate({ a: (d) => 42 }));
   expectTypeOf(result[0]).toHaveProperty('a');
   expectTypeOf(result[0]).toHaveProperty('b');
 }

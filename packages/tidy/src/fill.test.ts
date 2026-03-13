@@ -18,7 +18,7 @@ describe('fill', () => {
       { c: 6 },
       { c: 7, d: 7 },
     ];
-    const results = tidy(data, fill<typeof data[number]>('a'));
+    const results = tidy(data, fill<(typeof data)[number]>('a'));
 
     expect(results).toEqual([
       { a: 1, b: null, c: undefined, d: 1 },
@@ -54,7 +54,7 @@ describe('fill', () => {
 
     const results = tidy(
       data,
-      complete<typeof data[0]>(
+      complete<(typeof data)[0]>(
         { timestamp: fullSeqDateISOString('timestamp', 'day') },
         { val: 0 }
       ),

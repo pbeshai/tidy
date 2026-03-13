@@ -76,10 +76,11 @@ import {
   const result = tidy(
     data,
     mutate({ chart_group: (d) => 'foo' as string }),
-    groupBy(['chart_group'], [
-      summarize({ total: sum('user_engagement_total') }),
-    ]),
-    filter((d) => d.chart_group !== 'x'),
+    groupBy(
+      ['chart_group'],
+      [summarize({ total: sum('user_engagement_total') })]
+    ),
+    filter((d) => d.chart_group !== 'x')
   );
   expectTypeOf(result[0]).toHaveProperty('chart_group');
   expectTypeOf(result[0]).toHaveProperty('total');

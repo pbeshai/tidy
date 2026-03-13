@@ -90,7 +90,7 @@ export function fullSeq<T extends object>(
     period = period ?? 1;
 
     const keyFn =
-      typeof key === 'function' ? key : (d: T) => (d[key] as unknown) as number;
+      typeof key === 'function' ? key : (d: T) => d[key] as unknown as number;
 
     return vectorSeq(items.map(keyFn), period);
   };
@@ -106,7 +106,7 @@ export function fullSeqDate<T extends object>(
     period = period ?? 1;
 
     const keyFn =
-      typeof key === 'function' ? key : (d: T) => (d[key] as unknown) as Date;
+      typeof key === 'function' ? key : (d: T) => d[key] as unknown as Date;
 
     return vectorSeqDate(items.map(keyFn), granularity, period);
   };
@@ -122,7 +122,7 @@ export function fullSeqDateISOString<T extends object>(
     period = period ?? 1;
 
     const keyFn =
-      typeof key === 'function' ? key : (d: T) => (d[key] as unknown) as string;
+      typeof key === 'function' ? key : (d: T) => d[key] as unknown as string;
 
     return vectorSeqDate(
       items.map((d) => new Date(keyFn(d))),

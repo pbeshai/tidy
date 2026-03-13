@@ -15,8 +15,8 @@ type SummarizedT<
 > = {
   [K in keyof SumSpec]: ReturnType<SumSpec[K]>;
 } & (NonNullable<Options>['rest'] extends Function
-    ? Omit<T, keyof SumSpec>
-    : {});
+  ? Omit<T, keyof SumSpec>
+  : {});
 
 /**
  * summarizes items
@@ -107,7 +107,7 @@ function _summarizeHelper<
         continue;
       }
     }
-    summarized[(key as unknown) as keyof SummarizedT] = summaryFn(key)(
+    summarized[key as unknown as keyof SummarizedT] = summaryFn(key)(
       items
     ) as any;
   }

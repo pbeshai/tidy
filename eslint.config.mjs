@@ -37,5 +37,12 @@ export default tseslint.config(
       'no-undef': 'off',
       'no-empty': 'off',
     },
+  },
+  {
+    files: ['**/*.typetest.ts'],
+    rules: {
+      '@typescript-eslint/no-unused-vars': 'off',
+      'no-unused-vars': 'off',
+    },
   }
 );

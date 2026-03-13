@@ -11,7 +11,7 @@ describe('leftJoin', () => {
     const data2 = [{ a: 1, x: 'x1', y: 'y1' }];
     const results = tidy(
       data,
-      leftJoin<typeof data[0], typeof data2[0]>(data2, { by: 'a' })
+      leftJoin<(typeof data)[0], (typeof data2)[0]>(data2, { by: 'a' })
     );
     expect(results).toEqual([
       { a: 1, b: 10, c: 100, x: 'x1', y: 'y1' },
@@ -26,7 +26,7 @@ describe('leftJoin', () => {
 
     const results2 = tidy(
       data,
-      leftJoin<typeof data[0], typeof data2[0]>(data2, { by: 'a' })
+      leftJoin<(typeof data)[0], (typeof data2)[0]>(data2, { by: 'a' })
     );
     expect(results2).toEqual([
       { a: 1, b: 10, c: 100, x: 'x1', y: 'y1' },
@@ -86,7 +86,7 @@ describe('leftJoin', () => {
     ];
     const results = tidy(
       data,
-      leftJoin<typeof data[0], typeof data2[0]>(data2, { by: ['a', 'J'] })
+      leftJoin<(typeof data)[0], (typeof data2)[0]>(data2, { by: ['a', 'J'] })
     );
     expect(results).toEqual([
       { a: 1, J: 'j', altJ: 'j', b: 10, c: 100, x: 'x1', y: 'y1' },
@@ -121,7 +121,7 @@ describe('leftJoin', () => {
     ];
     const results = tidy(
       data,
-      leftJoin<typeof data[0], typeof data2[0]>(data2)
+      leftJoin<(typeof data)[0], (typeof data2)[0]>(data2)
     );
     expect(results).toEqual([
       { a: 1, J: 'j', altJ: 'j', b: 10, c: 100, x: 'x1', y: 'y1' },
@@ -142,7 +142,7 @@ describe('leftJoin', () => {
     ];
     const results = tidy(
       data,
-      leftJoin<typeof data[0], typeof data2[0]>(data2, { by: 'a' })
+      leftJoin<(typeof data)[0], (typeof data2)[0]>(data2, { by: 'a' })
     );
     expect(results).toEqual([
       { a: 1, b: 10, c: 100, x: 'x1', y: 'y1' },

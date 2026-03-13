@@ -1,6 +1,6 @@
-import { Datum, TidyFn, Key } from './types';
 import { singleOrArray } from './helpers/singleOrArray';
 import { everything } from './selectors/everything';
+import { Key, TidyFn } from './types';
 type DropKey<T extends object> = keyof T extends string | number
   ? `-${keyof T}`
   : never;
