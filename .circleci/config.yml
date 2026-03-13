@@ -1,31 +1,31 @@
 version: 2.1
 orbs:
-  node: circleci/node@3.0.0
+  node: circleci/node@6.3.0
 jobs:
-  build-test: 
-    executor:     
+  build-test:
+    executor:
       name: node/default
-      tag: 14.15.4
-    steps:   
-      - checkout  
+      tag: '22.14'
+    steps:
+      - checkout
       - node/install-packages:
-          pkg-manager: yarn
+          pkg-manager: npm
       - run:
-          command: yarn run build
+          command: npm run build
           name: Build the library
       - run:
-          command: yarn run jest
+          command: npm test
           name: Run tests
-  lint: 
-    executor:     
+  lint:
+    executor:
       name: node/default
-      tag: 14.15.4
-    steps:   
-      - checkout  
+      tag: '22.14'
+    steps:
+      - checkout
       - node/install-packages:
-          pkg-manager: yarn
+          pkg-manager: npm
       - run:
-          command: yarn run lint
+          command: npm run lint
           name: Run linting
 workflows:
   build-test-lint:

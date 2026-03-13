@@ -8,7 +8,7 @@ const root = process.platform === 'win32' ? path.resolve('/') : '/';
 const external = (id) => !id.startsWith('.') && !id.startsWith(root);
 
 const cjs = {
-  input: 'src/index.ts',
+  input: './src/index.ts',
   output: {
     dir: 'dist/lib',
     format: 'cjs',
@@ -28,7 +28,7 @@ const cjs = {
 };
 
 const esm = {
-  input: 'src/index.ts',
+  input: './src/index.ts',
   output: {
     dir: 'dist/es',
     format: 'es',
@@ -49,7 +49,7 @@ const esm = {
 
 const globals = { '@tidyjs/tidy': 'Tidy', moment: 'moment' };
 const umd = {
-  input: 'src/index.ts',
+  input: './src/index.ts',
   output: {
     file: 'dist/umd/tidy-moment.js',
     name: 'TidyMoment',
@@ -69,7 +69,7 @@ const umd = {
 };
 
 const umdMin = {
-  input: 'src/index.ts',
+  input: './src/index.ts',
   output: {
     file: 'dist/umd/tidy-moment.min.js',
     name: 'TidyMoment',
@@ -90,7 +90,7 @@ const umdMin = {
 };
 
 const dts = {
-  input: 'src/index.ts',
+  input: './src/index.ts',
   output: {
     file: 'dist/tidy-moment.d.ts',
     format: 'es',

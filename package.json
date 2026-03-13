@@ -3,13 +3,13 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "build": "lerna run build --ignore \"@tidyjs/tidy-website\" --stream",
-    "build:web": "yarn workspace @tidyjs/tidy-website build",
-    "test": "lerna run test --stream",
-    "test:build": "lerna run test:build --stream",
-    "lint": "lerna run lint",
-    "prettier": "lerna run prettier",
-    "start:web": "yarn workspace @tidyjs/tidy-website start"
+    "build": "npm run build -w packages/tidy -w packages/tidy-moment",
+    "build:web": "npm run build -w website",
+    "test": "npm test --workspaces --if-present",
+    "test:build": "npm run test:build --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "prettier": "npm run prettier --workspaces --if-present",
+    "start:web": "npm start -w website"
   },
   "devDependencies": {
     "@commitlint/cli": "^11.0.0",
@@ -26,8 +26,6 @@
     "expect-type": "^1.3.0",
     "husky": "^4.3.6",
     "vitest": "^3.1.1",
-    "lerna": "^3.22.1",
-    "lerna-changelog": "^1.0.1",
     "lint-staged": "^10.5.3",
     "moment": "^2.27.0",
     "prettier": "^2.2.1",
@@ -36,12 +34,10 @@
     "rollup-plugin-esbuild": "^6.2.1",
     "typescript": "^5.9.3"
   },
-  "workspaces": {
-    "packages": [
-      "packages/*",
-      "website"
-    ]
-  },
+  "workspaces": [
+    "packages/*",
+    "website"
+  ],
   "commitlint": {
     "extends": [
       "@commitlint/config-conventional"
