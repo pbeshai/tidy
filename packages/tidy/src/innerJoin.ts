@@ -65,6 +65,43 @@ export function isMatch<T extends object, JoinT extends object>(
   return true;
 }
 
+const KEY_DELIMITER = '\x00';
+const NULL_SENTINEL = '\x01N';
+const UNDEF_SENTINEL = '\x01U';
+
+function serializeValue(v: any): string {
+  if (v === null) return NULL_SENTINEL;
+  if (v === undefined) return UNDEF_SENTINEL;
+  return String(v);
+}
+
+export function computeKey(row: any, keys: string[]): string {
+  if (keys.length === 1) return serializeValue(row[keys[0]]);
+  let key = '';
+  for (let i = 0; i < keys.length; i++) {
+    if (i > 0) key += KEY_DELIMITER;
+    key += serializeValue(row[keys[i]]);
+  }
+  return key;
+}
+
+export function buildJoinIndex<JoinT extends object>(
+  itemsToJoin: JoinT[],
+  joinKeys: string[]
+): Map<string, JoinT[]> {
+  const index = new Map<string, JoinT[]>();
+  for (const j of itemsToJoin) {
+    const key = computeKey(j, joinKeys);
+    let bucket = index.get(key);
+    if (bucket === undefined) {
+      bucket = [];
+      index.set(key, bucket);
+    }
+    bucket.push(j);
+  }
+  return index;
+}
+
 /**
  * Performs an inner join on two collections
  * @param itemsToJoin The rows/items to be appended to end of collection
@@ -82,8 +119,14 @@ export function innerJoin<T extends object, JoinT extends object>(
         ? autodetectByMap(items, itemsToJoin)
         : makeByMap(options.by);
 
+    const joinKeys = Object.keys(byMap);
+    const itemKeys = joinKeys.map((jKey) => byMap[jKey] as string);
+    const index = buildJoinIndex(itemsToJoin, joinKeys);
+
     const joined = items.flatMap((d: T) => {
-      const matches = itemsToJoin.filter((j: JoinT) => isMatch(d, j, byMap));
+      const key = computeKey(d, itemKeys);
+      const matches = index.get(key);
+      if (matches === undefined) return [];
       return matches.map((j: JoinT) => ({ ...d, ...j }));
     });
 

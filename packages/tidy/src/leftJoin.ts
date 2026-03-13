@@ -1,5 +1,5 @@
 import { Datum, TidyFn } from './types';
-import { isMatch, makeByMap, autodetectByMap, JoinOptions } from './innerJoin';
+import { makeByMap, autodetectByMap, JoinOptions, buildJoinIndex, computeKey } from './innerJoin';
 import { Merge } from './type-utils';
 
 /**
@@ -21,13 +21,18 @@ export function leftJoin<T extends Datum, JoinT extends Datum>(
         ? autodetectByMap(items, itemsToJoin)
         : makeByMap(options.by);
 
+    const joinKeys = Object.keys(byMap);
+    const itemKeys = joinKeys.map((jKey) => byMap[jKey] as string);
+    const index = buildJoinIndex(itemsToJoin, joinKeys);
+
     // when we miss a join, we want to explicitly add in undefined
     // so our rows all have the same keys. get those keys here.
     const joinObjectKeys = Object.keys(itemsToJoin[0]);
 
     const joined = items.flatMap((d: T) => {
-      const matches = itemsToJoin.filter((j: JoinT) => isMatch(d, j, byMap));
-      if (matches.length) {
+      const key = computeKey(d, itemKeys);
+      const matches = index.get(key);
+      if (matches !== undefined) {
         return matches.map((j: JoinT) => ({ ...d, ...j }));
       }
 

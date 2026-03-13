@@ -1,5 +1,5 @@
 import { Datum, TidyFn } from './types';
-import { isMatch, makeByMap, autodetectByMap, JoinOptions } from './innerJoin';
+import { makeByMap, autodetectByMap, JoinOptions, buildJoinIndex, computeKey } from './innerJoin';
 import { Merge } from './type-utils';
 
 /**
@@ -22,23 +22,25 @@ export function fullJoin<T extends Datum, JoinT extends Datum>(
         ? autodetectByMap(items, itemsToJoin)
         : makeByMap(options.by);
 
-    // keep track of what has been matched
-    const matchMap = new Map();
+    const joinKeys = Object.keys(byMap);
+    const itemKeys = joinKeys.map((jKey) => byMap[jKey] as string);
+    const index = buildJoinIndex(itemsToJoin, joinKeys);
+
+    // keep track of matched join items by reference
+    const matchedItems = new Set<JoinT>();
 
     // when we miss a join, we want to explicitly add in undefined
     // so our rows all have the same keys. get those keys here.
     const joinObjectKeys = Object.keys(itemsToJoin[0]);
 
     const joined = items.flatMap((d: T) => {
-      const matches = itemsToJoin.filter((j: JoinT) => {
-        const matched = isMatch(d, j, byMap);
-        if (matched) {
-          matchMap.set(j, true);
-        }
-        return matched;
-      });
+      const key = computeKey(d, itemKeys);
+      const matches = index.get(key);
 
-      if (matches.length) {
+      if (matches !== undefined) {
+        for (const j of matches) {
+          matchedItems.add(j);
+        }
         return matches.map((j: JoinT) => ({ ...d, ...j }));
       }
 
@@ -55,12 +57,12 @@ export function fullJoin<T extends Datum, JoinT extends Datum>(
     });
 
     // add in the ones we missed
-    if (matchMap.size < itemsToJoin.length) {
+    if (matchedItems.size < itemsToJoin.length) {
       const leftEmptyObject = Object.fromEntries(
         Object.keys(items[0]).map((key) => [key, undefined])
       );
       for (const item of itemsToJoin) {
-        if (!matchMap.has(item)) {
+        if (!matchedItems.has(item)) {
           joined.push({ ...leftEmptyObject, ...item });
         }
       }
