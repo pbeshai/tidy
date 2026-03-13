@@ -8,6 +8,7 @@
     "test": "npm test --workspaces --if-present",
     "test:build": "npm run test:build --workspaces --if-present",
     "lint": "npm run lint --workspaces --if-present",
+    "lint:fix": "npm run lint --workspaces --if-present -- --fix",
     "prettier": "npm run prettier --workspaces --if-present",
     "start:web": "npm start -w website"
   },
