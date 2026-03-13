@@ -5,6 +5,11 @@ Tidy follows semver.
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 2.6.0 (2026-03-13)
+
+- Perf: improve joins to O(m+n) from O(m*n), and various other perf updates
+- Types: Various improvements to types
+
 # 2.5.2 (2022-11-20)
 - Fix: do not add `null` and `undefined` as group keys when doing groupBy exports
 
