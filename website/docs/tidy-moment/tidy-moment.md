@@ -40,7 +40,7 @@ Typically used as a precursor to a moving average computed by a subsequence `mut
 }
 ```
 
-Mapping from key to summary functions, the same as used in [**summarize**](#summarize).
+Mapping from key to summary functions, the same as used in [**summarize**](../api/tidy.md#summarize).
 
 #### `options?`
 
@@ -54,7 +54,7 @@ Mapping from key to summary functions, the same as used in [**summarize**](#summ
 
 * `dateKey = 'date'`: The key in the input objects where the UTC moment dates are stored. Will be modified to be at the specified granularity.
 * `timestampKey = 'timestamp'`: An ISO string of the rolled up date will be saved on this key.
-* `rest = first`: The same as used in [**summarize**](#summarize), defaults to first value encountered.
+* `rest = first`: The same as used in [**summarize**](../api/tidy.md#summarize), defaults to first value encountered.
 
 
 ### Usage

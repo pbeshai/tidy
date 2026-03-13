@@ -1,5 +1,5 @@
-import Editor, { monaco } from '@monaco-editor/react';
-import useThemeContext from '@theme/hooks/useThemeContext';
+import Editor from '@monaco-editor/react';
+import { useColorMode } from '@docusaurus/theme-common';
 import Layout from '@theme/Layout';
 import debounce from 'lodash.debounce';
 import * as React from 'react';
@@ -10,17 +10,6 @@ import ConsoleOutput from '../components/ConsoleOutput';
 import DataInput from '../components/DataInput';
 import mtcars from '../data/mtcars.json';
 import moment from 'moment';
-
-if (typeof window !== 'undefined') {
-  monaco
-    .init()
-    .catch((error) =>
-      console.error(
-        'An error occurred during initialization of Monaco: ',
-        error
-      )
-    );
-}
 
 const EDITOR_OPTIONS = {
   minimap: { enabled: false },
@@ -78,7 +67,7 @@ function runCodeWithInput(input, T, codeStr) {
   return Function(`
     let output;
     let logs = [];
-    
+
     let consoleProxy = new Proxy(console, {
       get(obj, prop) {
         if (prop === 'log') {
@@ -107,7 +96,7 @@ function CodeEditor({ initialCodeStr, onChangeCodeStr }) {
 
   const debouncedSetCodeStr = debounce(onChangeCodeStr, 1000);
 
-  function handleEditorDidMount(_, editor) {
+  function handleEditorDidMount(editor, monaco) {
     setIsEditorReady(true);
     editorRef.current = editor;
 
@@ -117,14 +106,15 @@ function CodeEditor({ initialCodeStr, onChangeCodeStr }) {
     });
   }
 
-  const { isDarkTheme } = useThemeContext();
+  const { colorMode } = useColorMode();
+  const isDarkTheme = colorMode === 'dark';
 
   return (
     <Editor
       language="javascript"
       value={initialCodeStr}
       theme={isDarkTheme ? 'dark' : 'light'}
-      editorDidMount={handleEditorDidMount}
+      onMount={handleEditorDidMount}
       options={EDITOR_OPTIONS}
     />
   );
@@ -133,17 +123,17 @@ function CodeEditor({ initialCodeStr, onChangeCodeStr }) {
 function Playground() {
   // prettier-ignore
   const initialCodeStr = `${''
-}// {T.*}    - all Tidy.js functions are available directly and as T.* 
+}// {T.*}    - all Tidy.js functions are available directly and as T.*
 // {input}  - \`input\` variable matches mtcars or iris based on input selection
 // {output} - put your output in the predefined output variable
 
 output = tidy(input,
   groupBy(['cyl', 'gear'], [
-    summarize({ 
+    summarize({
       n: n(),
-      mpg: mean('mpg'), 
-      hp: mean('hp'), 
-      wt: mean('wt'), 
+      mpg: mean('mpg'),
+      hp: mean('hp'),
+      wt: mean('wt'),
     }),
   ]),
   select(['cyl', 'gear', everything()]),

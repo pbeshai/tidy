@@ -200,7 +200,7 @@ The keys to expand the collection to have all combinations of. This can be speci
 
 - `{ a: 'a' }`: the key name itself. In this case, the values to use for the combinations will be derived from what is in the data currently. 
 - `{ a: [1, 2, 3, 4] }` an array of values denoting all possible values for this key, even if they do not occur in the data.
-- `{ a: fullSeq('a') }` a function mapping from the items in the collection to an array of all possible values. This is typically used in combination with sequence helper functions like [**fullSeq**](#fullseq). 
+- `{ a: fullSeq('a') }` a function mapping from the items in the collection to an array of all possible values. This is typically used in combination with sequence helper functions like [**fullSeq**](./sequences.md#fullseq). 
 
 #### `replaceNullySpec`
 
@@ -238,7 +238,7 @@ tidy(data, complete(['a', 'b'], { c: 0 }))
 
 ## count
 
-Tallies the number distinct values for the specified keys and adds the count as a new key (default `n`). Optionally sorts by the count. This is a convenience wrapper around [**groupBy**](./groupby.md), [**tally**](#tally), and optionally [**arrange**](#arrange).
+Tallies the number distinct values for the specified keys and adds the count as a new key (default `n`). Optionally sorts by the count. This is a convenience wrapper around [**groupBy**](./groupby.md), [**tally**](#tally), and optionally [**arrange**](#arrange--sort).
 
 ### Parameters
 
@@ -419,7 +419,7 @@ The keys to expand the collection to have all combinations of. This can be speci
 
 - `{ a: 'a' }`: the key name itself. In this case, the values to use for the combinations will be derived from what is in the data currently. 
 - `{ a: [1, 2, 3, 4] }` an array of values denoting all possible values for this key, even if they do not occur in the data.
-- `{ a: fullSeq('a') }` a function mapping from the items in the collection to an array of all possible values. This is typically used in combination with sequence helper functions like [**fullSeq**](#fullseq). 
+- `{ a: fullSeq('a') }` a function mapping from the items in the collection to an array of all possible values. This is typically used in combination with sequence helper functions like [**fullSeq**](./sequences.md#fullseq). 
 
 
 ### Usage
@@ -637,7 +637,7 @@ tidy(data, fullJoin(joinData, { by: { a: 'a', altJ: 'J' } }))
 
 ## groupBy 
 
-Restructures the data to be nested by the specified group keys then runs a tidy flow on each of the leaf sets. Grouped data can be exported into different shapes via [**group export helpers**](#groupexports), or if not specified, will be ungrouped back to a flat list of items. 
+Restructures the data to be nested by the specified group keys then runs a tidy flow on each of the leaf sets. Grouped data can be exported into different shapes via [**group export helpers**](./groupby.md#group-exports), or if not specified, will be ungrouped back to a flat list of items. 
 
 See the [**groupBy docs**](./groupby.md) for details.
 
@@ -1262,7 +1262,7 @@ tidy(data, sliceTail(2))
 
 ## sliceMin
 
-Selects the minimum N items in the collection ordered by some comparators, similar to [**arrange**](#arrange).
+Selects the minimum N items in the collection ordered by some comparators, similar to [**arrange**](#arrange--sort).
 
 
 ### Parameters
@@ -1284,7 +1284,7 @@ The number of items to select.
 | Array<string | ((a: object, b: object) => number)>
 ```
 
-A key or set of keys of the item to sort by, or comparator functions that return -1, 0, or 1 if a < b, a == b, a > b respectively. See [**arrange**](#arrange) for details.
+A key or set of keys of the item to sort by, or comparator functions that return -1, 0, or 1 if a < b, a == b, a > b respectively. See [**arrange**](#arrange--sort) for details.
 
 
 ### Usage
@@ -1309,7 +1309,7 @@ tidy(data, sliceMin(2, 'value'))
 
 ## sliceMax
 
-Selects the maximum N items in the collection ordered by some comparators, similar to [**arrange**](#arrange).
+Selects the maximum N items in the collection ordered by some comparators, similar to [**arrange**](#arrange--sort).
 
 
 ### Parameters
@@ -1331,7 +1331,7 @@ The number of items to select.
 | Array<string | ((a: object, b: object) => number)>
 ```
 
-A key or set of keys of the item to sort by, or comparator functions that return -1, 0, or 1 if a < b, a == b, a > b respectively. See [**arrange**](#arrange) for details.
+A key or set of keys of the item to sort by, or comparator functions that return -1, 0, or 1 if a < b, a == b, a > b respectively. See [**arrange**](#arrange--sort) for details.
 
 
 ### Usage

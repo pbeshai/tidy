@@ -140,7 +140,7 @@ tidy(
 
 ## Moving Average by Date 
 
-When working with time series data, we often want be able to re-aggregate the data to a variety of different granularities: e.g., a 7-day moving average (7DMA), 45DMA, 5-week moving average (5WMA), daily, weekly, and so on. For this purpose, we can use the [**summarizeMomentGranularity**](../api/tidy.md#summarizemomentgranularity) tidy function. Note this requires our dates to be stored as [moment](https://momentjs.com) objects and that moment is installed as a dependency in our project. 
+When working with time series data, we often want be able to re-aggregate the data to a variety of different granularities: e.g., a 7-day moving average (7DMA), 45DMA, 5-week moving average (5WMA), daily, weekly, and so on. For this purpose, we can use the [**summarizeMomentGranularity**](../tidy-moment/tidy-moment.md#summarizemomentgranularity) tidy function. Note this requires our dates to be stored as [moment](https://momentjs.com) objects and that moment is installed as a dependency in our project. 
 
 *If projects are not using moment but would like this functionality, please get in touch and we can figure out a reusable solution.*
 
@@ -304,7 +304,7 @@ tidy(
 
 As you can see, the moving average doesn't account for the missing days. 
 
-To get around this, we can use [**complete**](../api/tidy.md#complete) on the data to expand it to include rows for when there is data missing from the expected day-by-day sequence. Since our `date` column uses moments, we will have to convert it to an ISO timestamp string first so we can use [**fullSeqDateISOString**](../api/sequences#fullseqdateisostring) on it. This can be done via [**summarizeMomentGranularity**](../api/tidy.md#summarizemomentgranularity) as shown above or with a simple mutate since we're going to work with daily data.
+To get around this, we can use [**complete**](../api/tidy.md#complete) on the data to expand it to include rows for when there is data missing from the expected day-by-day sequence. Since our `date` column uses moments, we will have to convert it to an ISO timestamp string first so we can use [**fullSeqDateISOString**](../api/sequences#fullseqdateisostring) on it. This can be done via [**summarizeMomentGranularity**](../tidy-moment/tidy-moment.md#summarizemomentgranularity) as shown above or with a simple mutate since we're going to work with daily data.
 
 ```js {3-7}
 tidy(

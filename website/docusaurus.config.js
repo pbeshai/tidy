@@ -8,8 +8,11 @@ module.exports = {
   projectName: 'tidy', // Usually your repo name.
   plugins: [],
   themeConfig: {
-    hideableSidebar: true,
-    sidebarCollapsible: false,
+    docs: {
+      sidebar: {
+        hideable: true,
+      },
+    },
     colorMode: {
       defaultMode: 'light',
       disableSwitch: false,
@@ -71,19 +74,6 @@ module.exports = {
         },
       ],
       copyright: `Built with Docusaurus`,
-    },
-
-    algolia: {
-      apiKey: '28ec6a5936dd807831d61e0f52ce2852',
-      indexName: 'tidy',
-
-      // Optional: see doc section bellow
-      contextualSearch: false,
-
-      // Optional: Algolia search parameters
-      searchParameters: {},
-
-      //... other Algolia params
     },
   },
   presets: [

@@ -5,7 +5,7 @@ sidebar_label: Sequences
 
 ## fullSeq
 
-Creates a full sequence of number values for a key given a set of data. The bounds of the sequence are determined from the existing values within the data. Typically used in combination with [**expand**](#expand) or [**complete**](#complete).
+Creates a full sequence of number values for a key given a set of data. The bounds of the sequence are determined from the existing values within the data. Typically used in combination with [**expand**](./tidy.md#expand) or [**complete**](./tidy.md#complete).
 
 ### Parameters
 
@@ -46,7 +46,7 @@ fullSeq(data, 'value', 1);
 
 ## fullSeqDate
 
-Creates a full sequence of date values for a key given a set of data. The bounds of the sequence are determined from the existing values within the data. Typically used in combination with [**expand**](#expand) or [**complete**](#complete).
+Creates a full sequence of date values for a key given a set of data. The bounds of the sequence are determined from the existing values within the data. Typically used in combination with [**expand**](./tidy.md#expand) or [**complete**](./tidy.md#complete).
 
 Similar to [**fullSeq**](#fullseq).
 
@@ -106,7 +106,7 @@ fullSeqDate(data, 'date', 'day', 1)
 
 ## fullSeqDateISOString
 
-Creates a full sequence of date ISO string values for a key given a set of data. The bounds of the sequence are determined from the existing values within the data. Typically used in combination with [**expand**](#expand) or [**complete**](#complete).
+Creates a full sequence of date ISO string values for a key given a set of data. The bounds of the sequence are determined from the existing values within the data. Typically used in combination with [**expand**](./tidy.md#expand) or [**complete**](./tidy.md#complete).
 
 Similar to [**fullSeq**](#fullseq).
 
