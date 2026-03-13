@@ -8,8 +8,9 @@ import {
   TidyFn,
   SummarizeSpec,
   SummarizeOptions,
-  Prettify,
 } from '@tidyjs/tidy';
+
+type Prettify<T> = { [K in keyof T]: T[K] } & {};
 import { GranularityWithQuarter } from './types';
 
 interface SummarizeMGOptions<T> extends SummarizeOptions<T> {
