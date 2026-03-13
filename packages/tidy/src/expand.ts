@@ -1,6 +1,6 @@
-import { A, O } from 'ts-toolbelt';
 import { SingleOrArray } from './helpers/singleOrArray';
 import { Key, TidyFn } from './types';
+import { Prettify } from './type-utils';
 
 // helper types
 export type KeyMap<T extends object = any> = Partial<
@@ -13,11 +13,11 @@ export type KeyMap<T extends object = any> = Partial<
  * Expands a set of items to include all combinations of the specified keys.
  */
 // prettier-ignore
-export function expand<T extends object = any, K extends keyof T = keyof T>(expandKeys: K): TidyFn<T, A.Compute<Pick<T, K>>>;
+export function expand<T extends object = any, K extends keyof T = keyof T>(expandKeys: K): TidyFn<T, Prettify<Pick<T, K>>>;
 // prettier-ignore
-export function expand<T extends object = any, K extends (keyof T)[] = (keyof T)[]>(expandKeys: K): TidyFn<T, A.Compute<Pick<T, K[number]>>>;
+export function expand<T extends object = any, K extends (keyof T)[] = (keyof T)[]>(expandKeys: K): TidyFn<T, Prettify<Pick<T, K[number]>>>;
 // prettier-ignore
-export function expand<T extends object = any, K extends KeyMap<T> = KeyMap<T>>(expandKeys: K): TidyFn<T, O.Pick<T, keyof K>>
+export function expand<T extends object = any, K extends KeyMap<T> = KeyMap<T>>(expandKeys: K): TidyFn<T, Pick<T, Extract<keyof K, keyof T>>>
 // prettier-ignore
 export function expand<T extends object>(expandKeys: SingleOrArray<Key> | KeyMap<T>): TidyFn<T> {
   const _expand: TidyFn<T> = (items: T[]) => {

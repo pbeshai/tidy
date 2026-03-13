@@ -1,8 +1,6 @@
 import { Datum, TidyFn, Key } from './types';
 import { singleOrArray } from './helpers/singleOrArray';
 import { everything } from './selectors/everything';
-import { O, U } from 'ts-toolbelt';
-
 type DropKey<T extends Datum> = keyof T extends string | number
   ? `-${keyof T}`
   : never;
@@ -19,28 +17,28 @@ type Output<
   KS extends KeysInput<T>
   // is it an array of drop keys?
 > = KS extends readonly DropKey<T>[]
-  ? O.Pick<
+  ? Pick<
       T,
       {
-        [TK in keyof T]: `-${U.Intersect<TK, string>}` extends KS[number]
+        [TK in keyof T]: `-${Extract<TK, string>}` extends KS[number]
           ? never
           : TK;
       }[keyof T]
     >
   : // is an array of keys?
   KS extends readonly Key[]
-  ? O.Pick<T, KS[number]>
+  ? Pick<T, Extract<KS[number], keyof T>>
   : // is a single drop key?
   KS extends DropKey<T>
-  ? O.Pick<
+  ? Pick<
       T,
       {
-        [TK in keyof T]: `-${U.Intersect<TK, string>}` extends KS ? never : TK;
+        [TK in keyof T]: `-${Extract<TK, string>}` extends KS ? never : TK;
       }[keyof T]
     >
   : // is a single key?
   KS extends Key
-  ? O.Pick<T, U.Intersect<KS, keyof T>>
+  ? Pick<T, Extract<KS, keyof T>>
   : // any other case, just be dumb and say T was returned
     T;
 

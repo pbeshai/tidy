@@ -1,5 +1,5 @@
 import { TidyFn, NonFunctionValue, Key } from './types';
-import { A, O } from 'ts-toolbelt';
+import { Prettify, Merge } from './type-utils';
 
 type MutateSpecValue<T, O = any> =
   | ((item: T, index: number, array: Iterable<T>) => O)
@@ -13,12 +13,12 @@ export type ResolvedObj<Obj extends Record<Key, MutateSpecValue<any>>> = {
     : Obj[K];
 };
 
-type Mutated<T extends object, MSpec extends MutateSpec<T>> = O.Merge<
+type Mutated<T extends object, MSpec extends MutateSpec<T>> = Merge<
   ResolvedObj<MSpec>,
   T
 >;
 
-type Compute<T> = A.Compute<T>;
+type Compute<T> = Prettify<T>;
 
 /**
  * Mutates items, one item at a time. For mutating across multiple items,

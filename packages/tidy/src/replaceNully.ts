@@ -1,11 +1,11 @@
-import { O } from 'ts-toolbelt';
 import { TidyFn } from './types';
+import { Merge } from './type-utils';
 
 type Spec<T extends object> = {
   [K in keyof T]: T[K];
 };
 
-type Output<T extends object, ReplaceSpec extends Partial<Spec<T>>> = O.Merge<
+type Output<T extends object, ReplaceSpec extends Partial<Spec<T>>> = Merge<
   Omit<T, keyof ReplaceSpec>,
   {
     [K in keyof ReplaceSpec]: K extends keyof T

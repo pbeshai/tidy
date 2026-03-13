@@ -1,5 +1,4 @@
 import moment, { Moment } from 'moment';
-import { A } from 'ts-toolbelt';
 import {
   tidy,
   first,
@@ -10,6 +9,8 @@ import {
   SummarizeSpec,
   SummarizeOptions,
 } from '@tidyjs/tidy';
+
+type Prettify<T> = { [K in keyof T]: T[K] } & {};
 import { GranularityWithQuarter } from './types';
 
 interface SummarizeMGOptions<T> extends SummarizeOptions<T> {
@@ -41,12 +42,12 @@ export function summarizeMomentGranularity<
   granularity: GranularityWithQuarter,
   summarySpec: SummarizedSpec,
   options?: Options
-): TidyFn<T, A.Compute<SMGOutput<T, SummarizedSpec, Options>, 'flat'>> {
+): TidyFn<T, Prettify<SMGOutput<T, SummarizedSpec, Options>>> {
   type Output = SMGOutput<T, SummarizedSpec, Options>;
 
-  const _summarizeMomentGranularity: TidyFn<T, A.Compute<Output, 'flat'>> = (
+  const _summarizeMomentGranularity: TidyFn<T, Prettify<Output>> = (
     items: T[]
-  ): A.Compute<Output, 'flat'>[] => {
+  ): Prettify<Output>[] => {
     options = options ?? ({} as Options);
     const {
       timestampKey = 'timestamp',
@@ -101,7 +102,7 @@ export function summarizeMomentGranularity<
       )
     );
 
-    return (results as unknown) as A.Compute<Output, 'flat'>[];
+    return (results as unknown) as Prettify<Output>[];
   };
 
   return _summarizeMomentGranularity;
