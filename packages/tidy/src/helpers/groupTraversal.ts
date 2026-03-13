@@ -18,25 +18,27 @@ export function groupTraversal<
   level: number = 0
 ) {
   for (const [key, value] of grouped.entries()) {
-    const keysHere = [...keys, key];
+    keys.push(key);
 
     // internal node
     if (value instanceof Map) {
-      const subgroup = addSubgroup(outputGrouped, keysHere, level);
+      const subgroup = addSubgroup(outputGrouped, keys, level);
 
       // recurse
       groupTraversal(
         value,
         subgroup,
-        keysHere,
+        keys,
         addSubgroup,
         addLeaves,
         level + 1
       );
     } else {
       // leaf
-      addLeaves(outputGrouped, keysHere, value, level);
+      addLeaves(outputGrouped, keys, value, level);
     }
+
+    keys.pop();
   }
 
   return outputGrouped;

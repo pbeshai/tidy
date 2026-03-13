@@ -9,7 +9,7 @@ export function nDistinct<T extends object>(
   const keyFn = typeof key === 'function' ? key : (d: T) => d[key];
 
   return (items: T[]) => {
-    const uniques = new Map();
+    const uniques = new Set();
     let count = 0;
 
     let i = 0;
@@ -26,7 +26,7 @@ export function nDistinct<T extends object>(
         }
 
         count += 1;
-        uniques.set(value, true);
+        uniques.add(value);
       }
     }
 

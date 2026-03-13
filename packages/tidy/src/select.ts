@@ -74,8 +74,9 @@ export function processSelectors<T extends object, Keys extends KeysInput<T>>(
       negationMap[key] = false;
       continue;
     }
-    keysWithoutNegations.unshift(key);
+    keysWithoutNegations.push(key);
   }
+  keysWithoutNegations.reverse();
 
   // remove duplicates
   processedSelectKeys = Array.from(new Set(keysWithoutNegations));

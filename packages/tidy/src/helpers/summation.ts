@@ -23,13 +23,15 @@ export function mean<T>(
   accessor: (element: T, i: number, array: Iterable<T>) => any
 ): number | undefined {
   let n = 0;
+  const sum = new Adder();
   for (let i = 0; i < items.length; ++i) {
     const value = accessor(items[i], i, items);
     // count it if we have a valid number
     if (+value === value) {
+      sum.add(+value);
       n += 1;
     }
   }
 
-  return n ? fsum(items, accessor) / n : undefined;
+  return n ? +sum / n : undefined;
 }

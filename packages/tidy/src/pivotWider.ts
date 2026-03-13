@@ -121,29 +121,32 @@ export function pivotWider<T extends object>(
 /*
   Recursively compute key combinations
 */
-function makeCombinations(separator = '_', arrays: string[][]): string[] {
-  function combine(
-    accum: string[],
-    prefix: string | null,
-    remainingArrays: string[][]
-  ) {
-    if (!remainingArrays.length && prefix != null) {
-      accum.push(prefix);
-      return;
-    }
+const PIVOT_WARN_THRESHOLD = 100_000;
 
-    const array = remainingArrays[0];
-    const newRemainingArrays = remainingArrays.slice(1);
-    for (const item of array) {
-      combine(
-        accum,
-        prefix == null ? item : `${prefix}${separator}${item}`,
-        newRemainingArrays
-      );
-    }
+/*
+  Iteratively compute key combinations (avoids recursive array slicing)
+*/
+function makeCombinations(separator = '_', arrays: string[][]): string[] {
+  if (!arrays.length) return [];
+
+  // warn if Cartesian product will be very large
+  const totalSize = arrays.reduce((acc, v) => acc * v.length, 1);
+  if (totalSize > PIVOT_WARN_THRESHOLD) {
+    console.warn(
+      `tidy pivotWider: generating ${totalSize.toLocaleString()} column combinations. ` +
+        `This may be slow or use excessive memory.`
+    );
   }
 
-  const result: string[] = [];
-  combine(result, null, arrays);
+  let result: string[] = [null as any];
+  for (const array of arrays) {
+    const next: string[] = [];
+    for (const prefix of result) {
+      for (const item of array) {
+        next.push(prefix == null ? item : `${prefix}${separator}${item}`);
+      }
+    }
+    result = next;
+  }
   return result;
 }

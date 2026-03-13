@@ -291,11 +291,17 @@ function runFlow<T extends object>(
     result = groupMap(result, (items, keys) => {
       // ensure we kept the group keys in the object
       // (necessary for e.g. summarize which may remove them)
-      const context = { groupKeys: keys };
+      // snapshot keys since groupTraversal reuses the array
+      const keysSnapshot = keys.slice();
+      const context = { groupKeys: keysSnapshot };
       let leafItemsMapped = fn(items, context);
       if (addGroupKeys !== false) {
+        // pre-filter keys once per group instead of per item
+        const filteredKeys = keysSnapshot.filter(
+          (key: any) => typeof key[0] !== 'function' && key[0] != null
+        );
         leafItemsMapped = leafItemsMapped.map((item: T) =>
-          assignGroupKeys(item, keys)
+          assignGroupKeys(item, keysSnapshot, filteredKeys)
         );
       }
 
@@ -350,7 +356,11 @@ function ungroup<T extends object>(
     // ensure we have group keys on items (in case runFlow didn't run)
     let valuesToAdd = values;
     if (addGroupKeys !== false) {
-      valuesToAdd = values.map((d) => assignGroupKeys(d, keys));
+      // pre-filter keys once per group instead of per item
+      const filteredKeys = keys.filter(
+        (key: any) => typeof key[0] !== 'function' && key[0] != null
+      );
+      valuesToAdd = values.map((d) => assignGroupKeys(d, keys, filteredKeys));
     }
     root.push(...valuesToAdd);
   });

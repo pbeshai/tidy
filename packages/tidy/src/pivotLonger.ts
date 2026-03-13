@@ -26,41 +26,69 @@ export function pivotLonger<T extends object>(
 
     const longer: PivotOutput[] = [];
 
+    if (!items.length) return longer;
+
+    // keys not included in colsKeys must be kept (same for all items)
+    const colsKeysSet = new Set<keyof T>(colsKeys);
+    const remainingKeys = Object.keys(items[0]).filter(
+      (key) => !colsKeysSet.has(key as keyof T)
+    ) as (keyof T)[];
+
+    // remove the `${valueKey}_` prefix when we have multiple values
+    // (invariant across items, compute once)
+    const nameValueKeysWithoutValuePrefix = hasMultipleValuesTo
+      ? Array.from(
+          new Set(
+            colsKeys.map((key) =>
+              (key as string).substring((key as string).indexOf(namesSep) + 1)
+            )
+          )
+        )
+      : colsKeys;
+
+    // pre-compute split parts for each nameValue (invariant across items)
+    const nameValuePartsMap = hasMultipleNamesTo
+      ? new Map(
+          (nameValueKeysWithoutValuePrefix as string[]).map((nv) => [
+            nv,
+            nv.split(namesSep),
+          ])
+        )
+      : null;
+
+    // pre-compute item keys for each nameValue+valueKey combination
+    const itemKeysMap = hasMultipleValuesTo
+      ? new Map(
+          (nameValueKeysWithoutValuePrefix as string[]).map((nv) => [
+            nv,
+            valuesToKeys.map(
+              (vk) => `${String(vk)}${namesSep}${String(nv)}`
+            ),
+          ])
+        )
+      : null;
+
     // expand each item into multiple items
     for (const item of items) {
-      // keys not included in colsKeys must be kept
-      const remainingKeys = Object.keys(item).filter(
-        (key) => !colsKeys.includes(key as keyof T)
-      ) as (keyof T)[];
-
       // the keys not in `cols` are the same for each row
       const baseObj = {} as PivotOutput;
       for (const key of remainingKeys) {
         baseObj[key as keyof PivotOutput] = item[key];
       }
 
-      // remove the `${valueKey}_` prefix when we have multiple values
-      const nameValueKeysWithoutValuePrefix = hasMultipleValuesTo
-        ? Array.from(
-            new Set(
-              colsKeys.map((key) =>
-                (key as string).substring((key as string).indexOf(namesSep) + 1)
-              )
-            )
-          )
-        : colsKeys;
-
       // e.g. `nameValue` or `nameValue1_nameValue2`
       for (const nameValue of nameValueKeysWithoutValuePrefix) {
         const entryObj = { ...baseObj };
-        for (const valueKey of valuesToKeys) {
-          // e.g. `valueKey_nameValue1_nameValue2`
-          const itemKey = hasMultipleValuesTo
-            ? `${String(valueKey)}${namesSep}${String(nameValue)}`
-            : nameValue;
-          const nameValueParts = hasMultipleNamesTo
-            ? (nameValue as string).split(namesSep)
-            : [nameValue];
+        const nameValueParts = nameValuePartsMap
+          ? nameValuePartsMap.get(nameValue as string)!
+          : [nameValue];
+        const itemKeys = itemKeysMap
+          ? itemKeysMap.get(nameValue as string)!
+          : null;
+
+        for (let vi = 0; vi < valuesToKeys.length; vi++) {
+          const valueKey = valuesToKeys[vi];
+          const itemKey = itemKeys ? itemKeys[vi] : nameValue;
 
           let i = 0;
           for (const nameKey of namesToKeys) {

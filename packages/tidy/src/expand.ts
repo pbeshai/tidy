@@ -50,22 +50,33 @@ export function expand<T extends object>(expandKeys: SingleOrArray<Key> | KeyMap
 /*
   Recursively compute key combinations
 */
-function makeCombinations(vectors: any[][]): any[] {
-  function combine(accum: any[], baseObj: any, remainingVectors: any[][]) {
-    if (!remainingVectors.length && baseObj != null) {
-      accum.push(baseObj);
-      return;
-    }
+const EXPAND_WARN_THRESHOLD = 100_000;
 
-    const vector = remainingVectors[0];
-    const newRemainingArrays = remainingVectors.slice(1);
-    for (const item of vector) {
-      combine(accum, { ...baseObj, ...item }, newRemainingArrays);
-    }
+/*
+  Iteratively compute key combinations (avoids recursive array slicing)
+*/
+function makeCombinations(vectors: any[][]): any[] {
+  if (!vectors.length) return [];
+
+  // warn if Cartesian product will be very large
+  const totalSize = vectors.reduce((acc, v) => acc * v.length, 1);
+  if (totalSize > EXPAND_WARN_THRESHOLD) {
+    console.warn(
+      `tidy expand: generating ${totalSize.toLocaleString()} combinations. ` +
+        `This may be slow or use excessive memory.`
+    );
   }
 
-  const result: any[] = [];
-  combine(result, null, vectors);
+  let result: any[] = [null];
+  for (const vector of vectors) {
+    const next: any[] = [];
+    for (const baseObj of result) {
+      for (const item of vector) {
+        next.push(baseObj == null ? item : { ...baseObj, ...item });
+      }
+    }
+    result = next;
+  }
   return result;
 }
 

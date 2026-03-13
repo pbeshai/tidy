@@ -5,14 +5,21 @@ import { GroupKey } from '../types';
  * set the keys as properties within the object: { [keyName]: keyValue, ... }
  * (creates a new object with these properties added)
  */
-export function assignGroupKeys<T extends object>(d: T, keys: GroupKey[]) {
+export function assignGroupKeys<T extends object>(
+  d: T,
+  keys: GroupKey[],
+  filteredKeys?: GroupKey[]
+) {
   // abort if atypical input
   if (d == null || typeof d !== 'object' || Array.isArray(d)) return d;
 
+  // use pre-filtered keys if provided, otherwise filter here
+  const validKeys =
+    filteredKeys ??
+    keys.filter((key) => typeof key[0] !== 'function' && key[0] != null);
+
   // transform to { groupKey1: value, ... } excluding function group keys
-  const keysObj = Object.fromEntries(
-    keys.filter((key) => typeof key[0] !== 'function' && key[0] != null)
-  );
+  const keysObj = Object.fromEntries(validKeys);
 
   return Object.assign(keysObj, d);
 }

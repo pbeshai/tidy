@@ -47,9 +47,10 @@ export function summarize<
     // if we a function to apply to the rest of the keys is supplied, use it
     // TODO: improve types for rest
     if (options.rest && items.length) {
+      const keysSet = new Set<string | number | symbol>(keys);
       const objectKeys = Object.keys(items[0]) as (keyof T)[];
       for (const objKey of objectKeys) {
-        if (keys.includes(objKey as any)) {
+        if (keysSet.has(objKey as any)) {
           continue;
         }
 
