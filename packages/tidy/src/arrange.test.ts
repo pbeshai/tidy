@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { tidy, arrange, asc, desc, fixedOrder } from './index';
 import { ascending } from 'd3-array';
 

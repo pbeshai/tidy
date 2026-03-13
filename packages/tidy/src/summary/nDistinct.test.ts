@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { tidy, mutateWithSummary, summarize, nDistinct } from '../index';
 
 describe('nDistinct', () => {

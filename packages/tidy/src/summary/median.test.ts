@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { tidy, summarize, median } from '../index';
 
 type MixedDatum = { str: string; value: number };

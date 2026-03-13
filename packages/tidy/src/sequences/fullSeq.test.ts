@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { fullSeq, fullSeqDate, fullSeqDateISOString } from '../index';
 
 describe('fullSeq', () => {

@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { tidy, when, mutate } from './index';
 
 describe('when', () => {

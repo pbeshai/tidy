@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { tidy, summarize, filter, arrange, distinct } from './index';
 import { sum as d3sum } from 'd3-array';
 

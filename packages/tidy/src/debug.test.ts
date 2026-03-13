@@ -1,3 +1,4 @@
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { tidy, debug, groupBy } from './index';
 
 describe('debug', () => {

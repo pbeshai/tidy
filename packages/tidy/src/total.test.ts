@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { tidy, total, totalAll, totalIf, totalAt, sum } from './index';
 import { sum as d3sum } from 'd3-array';
 import { startsWith } from './selectors/startsWith';

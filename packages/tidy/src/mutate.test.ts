@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { tidy, rate, mutate, groupBy } from './index';
 
 describe('mutate', () => {

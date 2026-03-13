@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { TMath, tidy, mutateWithSummary, mutate, lead } from '../index';
 
 describe('lead', () => {

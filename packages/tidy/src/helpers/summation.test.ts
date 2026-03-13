@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { fcumsum, mean } from './summation';
 
 const data = [1, 2, 3, 4, 5];

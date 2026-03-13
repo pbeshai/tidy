@@ -1,3 +1,4 @@
+import { describe, it, test, expect } from 'vitest';
 import { everything, tidy, pivotLonger } from './index';
 
 describe('pivotLonger', () => {

@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { endsWith } from '../index';
 
 describe('selectors', () => {

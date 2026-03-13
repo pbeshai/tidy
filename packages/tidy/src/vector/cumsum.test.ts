@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { tidy, mutateWithSummary, cumsum, pick } from '../index';
 import { cumsum as d3cumsum } from 'd3-array';
 

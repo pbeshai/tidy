@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { computeKey, buildJoinIndex } from './innerJoin';
 
 describe('computeKey', () => {

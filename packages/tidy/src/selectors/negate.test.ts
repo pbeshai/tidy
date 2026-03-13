@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { negate, startsWith, matches } from '../index';
 
 describe('selectors', () => {

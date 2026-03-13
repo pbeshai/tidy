@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { tidy, fullJoin, select, everything } from './index';
 
 describe('fullJoin', () => {

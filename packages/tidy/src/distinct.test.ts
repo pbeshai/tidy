@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { tidy, distinct } from './index';
 
 describe('distinct', () => {

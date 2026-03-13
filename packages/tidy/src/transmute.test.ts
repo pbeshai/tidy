@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { tidy, transmute, groupBy, sum } from './index';
 
 describe('transmute', () => {

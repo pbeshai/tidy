@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { TMath } from '../index';
 
 describe('TMath', () => {
