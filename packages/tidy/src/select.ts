@@ -1,11 +1,11 @@
 import { Datum, TidyFn, Key } from './types';
 import { singleOrArray } from './helpers/singleOrArray';
 import { everything } from './selectors/everything';
-type DropKey<T extends Datum> = keyof T extends string | number
+type DropKey<T extends object> = keyof T extends string | number
   ? `-${keyof T}`
   : never;
 // type KeysInput1<T> = readonly (keyof T)[] | keyof T;
-export type KeysInput<T> =
+export type KeysInput<T extends object> =
   | (Key | ((items: T[]) => Key[]))[]
   | readonly DropKey<T>[]
   | readonly (keyof T)[]

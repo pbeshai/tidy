@@ -5,7 +5,8 @@ import dtsPlugin from 'rollup-plugin-dts';
 import path from 'path';
 
 const root = process.platform === 'win32' ? path.resolve('/') : '/';
-const external = (id) => !id.startsWith('.') && !id.startsWith(root);
+const external = (id, parentId) =>
+  parentId !== undefined && !id.startsWith('.') && !id.startsWith(root);
 
 const cjs = {
   input: 'src/index.ts',

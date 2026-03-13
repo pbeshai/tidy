@@ -56,7 +56,7 @@ export function pivotLonger<T extends object>(
         for (const valueKey of valuesToKeys) {
           // e.g. `valueKey_nameValue1_nameValue2`
           const itemKey = hasMultipleValuesTo
-            ? `${valueKey}${namesSep}${nameValue}`
+            ? `${String(valueKey)}${namesSep}${String(nameValue)}`
             : nameValue;
           const nameValueParts = hasMultipleNamesTo
             ? (nameValue as string).split(namesSep)

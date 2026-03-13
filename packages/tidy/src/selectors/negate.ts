@@ -19,7 +19,7 @@ export function negate<T extends object>(
         keySet.add(selector);
       }
     }
-    const keys = Array.from(keySet).map((key) => `-${key}`);
+    const keys = Array.from(keySet).map((key) => `-${String(key)}`);
     return keys as (keyof T)[];
   };
 }

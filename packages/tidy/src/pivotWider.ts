@@ -72,7 +72,7 @@ export function pivotWider<T extends object>(
       }
 
       for (const valueKey of valuesFromKeys) {
-        baseWideObj[`${valueKey}${namesSep}${nameKey}`] =
+        baseWideObj[`${String(valueKey)}${namesSep}${nameKey}`] =
           valuesFillMap != null ? valuesFillMap[valueKey as any] : valuesFill;
       }
     }
@@ -98,7 +98,7 @@ export function pivotWider<T extends object>(
         }
 
         for (const valueKey of valuesFromKeys) {
-          wide[`${valueKey}${namesSep}${nameKey}`] = item[valueKey];
+          wide[`${String(valueKey)}${namesSep}${nameKey}`] = item[valueKey];
         }
       }
       return [wide];

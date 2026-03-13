@@ -16,7 +16,7 @@
     "prepublishOnly": "npm run test && npm run test:build && npm run clean && npm run build",
     "lint": "eslint --ext js,ts,tsx src",
     "prettier": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
-    "test": "jest",
+    "test": "jest && npm run test:build && npm run test:types",
     "test:build": "tsc --noEmit -p tsconfig.json",
     "test:types": "tsc --noEmit -p tsconfig.typetest.json",
     "test:watch": "jest --watchAll",
@@ -39,7 +39,12 @@
     "d3-array": "^2.9.1"
   },
   "devDependencies": {
-    "rollup-plugin-dts": "^2.0.1"
+    "@rollup/plugin-commonjs": "^29.0.2",
+    "@rollup/plugin-node-resolve": "^16.0.3",
+    "esbuild": "^0.27.4",
+    "rollup": "^3.30.0",
+    "rollup-plugin-dts": "^6.4.0",
+    "rollup-plugin-esbuild": "^6.2.1"
   },
   "publishConfig": {
     "access": "public"
