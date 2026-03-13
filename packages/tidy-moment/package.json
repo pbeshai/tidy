@@ -16,10 +16,10 @@
     "prepublishOnly": "npm run test && npm run test:build && npm run clean && npm run build",
     "lint": "eslint --ext js,ts,tsx src",
     "prettier": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
-    "test": "jest",
+    "test": "vitest run",
     "test:build": "tsc --noEmit -p tsconfig.json",
-    "test:watch": "jest --watchAll",
-    "test:coverage": "jest --coverage"
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
   },
   "keywords": [
     "data",

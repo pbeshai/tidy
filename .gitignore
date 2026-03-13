@@ -88,5 +88,4 @@ esm/
 es/
 .DS_Store
 examples/**/package-lock.json
-.jestCache
 dist/

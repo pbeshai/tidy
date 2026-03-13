@@ -16,11 +16,11 @@
     "prepublishOnly": "npm run test && npm run test:build && npm run clean && npm run build",
     "lint": "eslint --ext js,ts,tsx src",
     "prettier": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
-    "test": "jest && npm run test:build && npm run test:types",
+    "test": "vitest run && npm run test:build && npm run test:types",
     "test:build": "tsc --noEmit -p tsconfig.json",
     "test:types": "tsc --noEmit -p tsconfig.typetest.json",
-    "test:watch": "jest --watchAll",
-    "test:coverage": "jest --coverage"
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
   },
   "keywords": [
     "data",

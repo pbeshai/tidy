@@ -3,12 +3,12 @@ import { tidy, debug, groupBy } from './index';
 describe('debug', () => {
   beforeEach(() => {
     // prevent debug from spamming the output
-    jest.spyOn(console, 'log').mockImplementation(() => {});
-    jest.spyOn(console, 'table').mockImplementation(() => {});
+    vi.spyOn(console, 'log').mockImplementation(() => {});
+    vi.spyOn(console, 'table').mockImplementation(() => {});
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('debug works', () => {
