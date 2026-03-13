@@ -1,6 +1,6 @@
 import { Datum, TidyFn } from './types';
 import { isMatch, makeByMap, autodetectByMap, JoinOptions } from './innerJoin';
-import { O } from 'ts-toolbelt';
+import { Merge } from './type-utils';
 
 /**
  * Performs a full join on two collections
@@ -9,10 +9,10 @@ import { O } from 'ts-toolbelt';
 export function fullJoin<T extends Datum, JoinT extends Datum>(
   itemsToJoin: JoinT[],
   options?: JoinOptions<JoinT, T> | null | undefined
-): TidyFn<T, O.Merge<T, Partial<JoinT>>> {
-  const _fullJoin: TidyFn<T, O.Merge<T, Partial<JoinT>>> = (
+): TidyFn<T, Merge<T, Partial<JoinT>>> {
+  const _fullJoin: TidyFn<T, Merge<T, Partial<JoinT>>> = (
     items: T[]
-  ): O.Merge<T, Partial<JoinT>>[] => {
+  ): Merge<T, Partial<JoinT>>[] => {
     if (!itemsToJoin.length) return items as any;
     if (!items.length) return itemsToJoin as any;
 

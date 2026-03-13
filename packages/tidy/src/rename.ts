@@ -1,5 +1,5 @@
-import { O } from 'ts-toolbelt';
 import { TidyFn } from './types';
+import { Merge, KeysMatching } from './type-utils';
 
 type RenameSpec<T> = Partial<
   {
@@ -7,14 +7,14 @@ type RenameSpec<T> = Partial<
   }
 >;
 
-// helper types
-type OutputT<T extends object, Spec extends RenameSpec<T>> = O.Merge<
+type OutputT<T extends object, Spec extends RenameSpec<T>> = Merge<
   Omit<T, keyof Spec>,
   {
-    [NewKey in Exclude<Spec[keyof Spec], undefined>]: T[O.SelectKeys<
+    [NewKey in Exclude<Spec[keyof Spec], undefined>]: T[KeysMatching<
       Spec,
       NewKey
-    >];
+    > &
+      keyof T];
   }
 >;
 

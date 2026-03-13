@@ -1,4 +1,5 @@
 export * from './types';
+export type { Prettify, Merge, KeysMatching } from './type-utils';
 export { tidy } from './tidy';
 export { filter } from './filter';
 export { when } from './when';

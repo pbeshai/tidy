@@ -1,6 +1,6 @@
 import { Datum, TidyFn } from './types';
 import { isMatch, makeByMap, autodetectByMap, JoinOptions } from './innerJoin';
-import { O } from 'ts-toolbelt';
+import { Merge } from './type-utils';
 
 /**
  * Performs a left join on two collections
@@ -9,10 +9,10 @@ import { O } from 'ts-toolbelt';
 export function leftJoin<T extends Datum, JoinT extends Datum>(
   itemsToJoin: JoinT[],
   options?: JoinOptions<JoinT, T> | null | undefined
-): TidyFn<T, O.Merge<T, Partial<JoinT>>> {
-  const _leftJoin: TidyFn<T, O.Merge<T, Partial<JoinT>>> = (
+): TidyFn<T, Merge<T, Partial<JoinT>>> {
+  const _leftJoin: TidyFn<T, Merge<T, Partial<JoinT>>> = (
     items: T[]
-  ): O.Merge<T, Partial<JoinT>>[] => {
+  ): Merge<T, Partial<JoinT>>[] => {
     if (!itemsToJoin.length) return items as any;
 
     // convert by option in to a map from T key to JoinT key

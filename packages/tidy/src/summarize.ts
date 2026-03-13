@@ -1,4 +1,4 @@
-import { A } from 'ts-toolbelt';
+import { Prettify } from './type-utils';
 import { singleOrArray } from './helpers/singleOrArray';
 import { Key, TidyFn, Vector } from './types';
 
@@ -13,12 +13,10 @@ type SummarizedT<
   SumSpec extends SummarizeSpec<T>,
   Options extends SummarizeOptions<T> | undefined
 > = {
-  // summarized values map to return type of the spec functions
   [K in keyof SumSpec]: ReturnType<SumSpec[K]>;
-} & // if there is a 'rest' option, add in the other values from T
-  (NonNullable<Options>['rest'] extends Function
-    ? Exclude<T, keyof SumSpec>
-    : void);
+} & (NonNullable<Options>['rest'] extends Function
+    ? Omit<T, keyof SumSpec>
+    : {});
 
 /**
  * summarizes items
@@ -30,12 +28,12 @@ export function summarize<
 >(
   summarizeSpec: SummarizedSpec,
   options?: Options
-): TidyFn<T, A.Compute<SummarizedT<T, SummarizedSpec, Options>>> {
+): TidyFn<T, Prettify<SummarizedT<T, SummarizedSpec, Options>>> {
   type Output = SummarizedT<T, SummarizedSpec, Options>;
 
-  const _summarize: TidyFn<T, A.Compute<Output>> = (
+  const _summarize: TidyFn<T, Prettify<Output>> = (
     items: T[]
-  ): A.Compute<Output>[] => {
+  ): Prettify<Output>[] => {
     options = options ?? ({} as Options);
 
     // reduce but use a loop to be more readable
@@ -59,7 +57,7 @@ export function summarize<
       }
     }
 
-    return [summarized] as A.Compute<Output>[];
+    return [summarized] as Prettify<Output>[];
   };
 
   return _summarize;
@@ -124,11 +122,11 @@ type SummaryFnOutput<T extends object, F extends SummaryKeyFn<T>> = ReturnType<
 
 export function summarizeAll<T extends object, F extends SummaryKeyFn<T>>(
   summaryFn: F
-): TidyFn<T, A.Compute<Record<keyof T, SummaryFnOutput<T, F>>>> {
+): TidyFn<T, Prettify<Record<keyof T, SummaryFnOutput<T, F>>>> {
   const _summarizeAll: TidyFn<
     T,
-    A.Compute<Record<keyof T, SummaryFnOutput<T, F>>>
-  > = (items: T[]): A.Compute<Record<keyof T, SummaryFnOutput<T, F>>>[] =>
+    Prettify<Record<keyof T, SummaryFnOutput<T, F>>>
+  > = (items: T[]): Prettify<Record<keyof T, SummaryFnOutput<T, F>>>[] =>
     _summarizeHelper(items, summaryFn);
 
   return _summarizeAll;
@@ -139,11 +137,11 @@ export function summarizeAll<T extends object, F extends SummaryKeyFn<T>>(
 export function summarizeIf<T extends object, F extends SummaryKeyFn<T>>(
   predicateFn: (vector: Vector<T>) => boolean,
   summaryFn: F
-): TidyFn<T, A.Compute<Record<keyof T, SummaryFnOutput<T, F>>>> {
+): TidyFn<T, Prettify<Record<keyof T, SummaryFnOutput<T, F>>>> {
   const _summarizeIf: TidyFn<
     T,
-    A.Compute<Record<keyof T, SummaryFnOutput<T, F>>>
-  > = (items: T[]): A.Compute<Record<keyof T, SummaryFnOutput<T, F>>>[] =>
+    Prettify<Record<keyof T, SummaryFnOutput<T, F>>>
+  > = (items: T[]): Prettify<Record<keyof T, SummaryFnOutput<T, F>>>[] =>
     _summarizeHelper(items, summaryFn, predicateFn);
 
   return _summarizeIf;
@@ -157,11 +155,11 @@ export function summarizeAt<
 >(
   keys: Keys,
   summaryFn: F
-): TidyFn<T, A.Compute<Record<Keys[number], SummaryFnOutput<T, F>>>> {
+): TidyFn<T, Prettify<Record<Keys[number], SummaryFnOutput<T, F>>>> {
   const _summarizeAt: TidyFn<
     T,
-    A.Compute<Record<Keys[number], SummaryFnOutput<T, F>>>
-  > = (items: T[]): A.Compute<Record<Keys[number], SummaryFnOutput<T, F>>>[] =>
+    Prettify<Record<Keys[number], SummaryFnOutput<T, F>>>
+  > = (items: T[]): Prettify<Record<Keys[number], SummaryFnOutput<T, F>>>[] =>
     _summarizeHelper(items, summaryFn, undefined, keys);
 
   return _summarizeAt;

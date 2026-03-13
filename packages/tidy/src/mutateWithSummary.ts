@@ -1,5 +1,5 @@
 import { TidyFn, NonFunctionValue, Key } from './types';
-import { A } from 'ts-toolbelt';
+import { Prettify } from './type-utils';
 
 type MutateSpecValue<T, O = any> = ((items: T[]) => O[] | O) | NonFunctionValue;
 export type MutateSummarySpec<T> = Record<Key, MutateSpecValue<T>>;
@@ -15,7 +15,7 @@ export type ResolvedObj<Obj extends Record<Key, MutateSpecValue<any>>> = {
 
 type Mutated<T, MSpec extends MutateSummarySpec<T>> = T & ResolvedObj<MSpec>;
 
-type Compute<T> = A.Compute<T>;
+type Compute<T> = Prettify<T>;
 
 /**
  * Mutates items, looking at multiple items at a time to enable summarization.

@@ -1,5 +1,5 @@
 import { group } from 'd3-array';
-import { A, O } from 'ts-toolbelt';
+import { Prettify, Merge } from './type-utils';
 import { assignGroupKeys } from './helpers/assignGroupKeys';
 import { groupMap } from './helpers/groupMap';
 import { groupTraversal } from './helpers/groupTraversal';
@@ -97,9 +97,9 @@ type MergeGroupKeys<
   Out extends object,
   Keys extends GK<T>
 > = Keys extends keyof T
-  ? O.Merge<Pick<T, Keys>, Out>
+  ? Merge<Pick<T, Keys>, Out>
   : Keys extends (keyof T)[]
-  ? O.Merge<Pick<T, Keys[number]>, Out>
+  ? Merge<Pick<T, Keys[number]>, Out>
   : Out;
 
 // do not merge in group keys if explicitly said not to
@@ -120,7 +120,7 @@ type GroupByOutput<
   O extends object,
   Keys extends GK<T>,
   Opts extends GroupByOptions
-> = A.Compute<
+> = Prettify<
   NonNullable<Opts>['export'] extends 'grouped'
     ? Grouped<WithGroupKeys<T, O, Keys, Opts>>
     : NonNullable<Opts>['export'] extends 'entries'
@@ -155,8 +155,7 @@ type GroupByFn<
   | 'values'
   | 'levels'
   ? TidyGroupExportFn<T, GroupByOutput<T, O, Keys, Opts>>
-  : // default is no export, ungrouped and back in simple form
-    TidyFn<T, WithGroupKeys<T, O, Keys, Opts>>;
+  : TidyFn<T, Prettify<WithGroupKeys<T, O, Keys, Opts>>>;
 
 /**
  * Nests the data by the specified groupings

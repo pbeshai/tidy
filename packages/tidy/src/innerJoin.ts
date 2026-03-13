@@ -1,5 +1,5 @@
-import { O } from 'ts-toolbelt';
 import { TidyFn, Datum } from './types';
+import { Merge } from './type-utils';
 
 type ByMap<JoinT extends Datum, T extends Datum> = Partial<
   Record<keyof JoinT, keyof T>
@@ -72,10 +72,10 @@ export function isMatch<T extends object, JoinT extends object>(
 export function innerJoin<T extends object, JoinT extends object>(
   itemsToJoin: JoinT[],
   options?: JoinOptions<JoinT, T> | null | undefined
-): TidyFn<T, O.Merge<T, JoinT>> {
-  const _innerJoin: TidyFn<T, O.Merge<T, JoinT>> = (
+): TidyFn<T, Merge<T, JoinT>> {
+  const _innerJoin: TidyFn<T, Merge<T, JoinT>> = (
     items: T[]
-  ): O.Merge<T, JoinT>[] => {
+  ): Merge<T, JoinT>[] => {
     // convert by option in to a map from JoinT to T key
     const byMap =
       options?.by == null
@@ -87,7 +87,7 @@ export function innerJoin<T extends object, JoinT extends object>(
       return matches.map((j: JoinT) => ({ ...d, ...j }));
     });
 
-    return joined as O.Merge<T, JoinT>[];
+    return joined as Merge<T, JoinT>[];
   };
   return _innerJoin;
 }

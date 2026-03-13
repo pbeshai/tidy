@@ -38,8 +38,7 @@
   },
   "dependencies": {
     "@tidyjs/tidy": "^2.0.1",
-    "moment": "2",
-    "ts-toolbelt": "^8.0.7"
+    "moment": "2"
   },
   "publishConfig": {
     "access": "public"
