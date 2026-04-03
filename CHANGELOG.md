@@ -5,6 +5,12 @@ Tidy follows semver.
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 2.6.1 (2026-04-03)
+
+- Docs: add AI-optimized genai-docs bundle to npm package (15 markdown files)
+- Docs: add llms.txt to docs site for AI tool discovery
+- Docs: add Claude Code skill at skill/SKILL.md
+
 # 2.6.0 (2026-03-13)
 
 - Perf: improve joins to O(m+n) from O(m*n), and various other perf updates
