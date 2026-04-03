@@ -1,0 +1,41 @@
+# tidyjs
+
+> Tidy up your data with JavaScript! A data wrangling library inspired by R's dplyr and the tidyverse.
+
+## Docs
+
+- [Getting Started](https://pbeshai.github.io/tidy/docs/getting_started): Installation and basic usage
+- [API: Tidy Functions](https://pbeshai.github.io/tidy/docs/api/tidy): Core tidy verbs reference
+- [API: groupBy](https://pbeshai.github.io/tidy/docs/api/groupby): Grouping operations
+- [API: Summary Functions](https://pbeshai.github.io/tidy/docs/api/summary): Aggregation functions
+- [API: Vector Functions](https://pbeshai.github.io/tidy/docs/api/vector): Cross-item operations
+- [API: Pivot Functions](https://pbeshai.github.io/tidy/docs/api/pivot): Reshaping data
+- [API: Selectors](https://pbeshai.github.io/tidy/docs/api/selectors): Column selection helpers
+- [API: Sequences](https://pbeshai.github.io/tidy/docs/api/sequences): Sequence generation
+- [API: Math](https://pbeshai.github.io/tidy/docs/api/math): Math utilities
+- [API: Item Functions](https://pbeshai.github.io/tidy/docs/api/item): Per-item operations
+- [Playground](https://pbeshai.github.io/tidy/playground): Interactive playground
+
+## AI-Optimized Documentation
+
+- [Index](https://pbeshai.github.io/tidy/genai-docs/index.md): Entry point and file manifest for AI tools
+- [Mental Model](https://pbeshai.github.io/tidy/genai-docs/mental-model.md): Pipeline pattern, accessors, function taxonomy
+- [Quick Reference](https://pbeshai.github.io/tidy/genai-docs/quick-reference.md): Task-to-function cheat sheet
+- [Gotchas](https://pbeshai.github.io/tidy/genai-docs/gotchas.md): Common mistakes and anti-patterns
+- [Patterns](https://pbeshai.github.io/tidy/genai-docs/patterns.md): Multi-verb recipes
+- [API: Core](https://pbeshai.github.io/tidy/genai-docs/api-core.md): tidy, filter, mutate, arrange, select, etc.
+- [API: Grouping](https://pbeshai.github.io/tidy/genai-docs/api-grouping.md): groupBy + export modes
+- [API: Summarize](https://pbeshai.github.io/tidy/genai-docs/api-summarize.md): summarize + summary functions
+- [API: Vector](https://pbeshai.github.io/tidy/genai-docs/api-vector.md): mutateWithSummary + vector functions
+- [API: Joins](https://pbeshai.github.io/tidy/genai-docs/api-joins.md): innerJoin, leftJoin, fullJoin
+- [API: Pivot](https://pbeshai.github.io/tidy/genai-docs/api-pivot.md): pivotWider, pivotLonger
+- [API: Slice](https://pbeshai.github.io/tidy/genai-docs/api-slice.md): slice, sliceHead, sliceMax, etc.
+- [API: Selectors](https://pbeshai.github.io/tidy/genai-docs/api-selectors.md): everything, startsWith, etc.
+- [API: Sequences](https://pbeshai.github.io/tidy/genai-docs/api-sequences.md): fullSeq, fullSeqDate, etc.
+- [API: Other](https://pbeshai.github.io/tidy/genai-docs/api-other.md): complete, expand, fill, TMath, etc.
+
+## Optional
+
+- [GitHub Repository](https://github.com/pbeshai/tidy)
+- [npm Package](https://www.npmjs.com/package/@tidyjs/tidy)
+- [Observable Examples](https://observablehq.com/collection/@pbeshai/tidy-js)

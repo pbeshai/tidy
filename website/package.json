@@ -3,6 +3,8 @@
   "version": "2.6.0",
   "private": true,
   "scripts": {
+    "prebuild": "cp -r ../packages/tidy/genai-docs static/genai-docs",
+    "prestart": "cp -r ../packages/tidy/genai-docs static/genai-docs",
     "start": "docusaurus start",
     "build": "docusaurus build",
     "swizzle": "docusaurus swizzle",

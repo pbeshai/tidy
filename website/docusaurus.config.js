@@ -70,6 +70,10 @@ module.exports = {
               label: 'GitHub Code Repository',
               href: 'https://github.com/pbeshai/tidy',
             },
+            {
+              label: 'AI Docs (genai-docs)',
+              href: 'https://pbeshai.github.io/tidy/genai-docs/index.md',
+            },
           ],
         },
       ],
