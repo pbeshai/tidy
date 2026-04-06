@@ -1,5 +1,5 @@
 ---
-name: tidyjs
+name: using-tidyjs
 description: Write correct, idiomatic tidyjs code. Activates when the user works with @tidyjs/tidy imports, mentions tidyjs, or asks about JavaScript data wrangling in a project that uses tidyjs.
 ---
 
